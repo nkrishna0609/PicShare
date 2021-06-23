@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:weightSum="5"
+        android:weightSum="6"
         android:id="@+id/linLayoutTop">
 
         <ImageButton
@@ -32,8 +32,20 @@
             android:textColor="@color/white"
             android:textSize="25dp"
             android:paddingTop="20dp"
+            android:paddingLeft="11dp"
             android:paddingBottom="20dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:paddingStart="11dp" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:backgroundTint="@color/black"
+            android:paddingLeft="50dp"
+            android:paddingStart="50dp" />
 
     </LinearLayout>
 
@@ -59,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="9.5"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="0dp"
             android:text="niranjan.k0609"
             android:textColor="@color/white"
             android:textSize="20dp"

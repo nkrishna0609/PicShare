@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:weightSum="5"
+        android:weightSum="6"
         android:id="@+id/linLayoutTop">
 
         <TextView
@@ -37,6 +37,15 @@
             android:src="@drawable/ic_baseline_add_box_24"
             android:backgroundTint="@color/black"
             android:layout_marginStart="20dp" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_menu_24"
+            android:backgroundTint="@color/black"
+             />
 
     </LinearLayout>
 
