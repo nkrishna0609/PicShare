@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:weightSum="5"
+        android:id="@+id/linLayoutTop">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingRight="50dp"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
+            android:backgroundTint="@color/black"
+            android:paddingEnd="50dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Posts"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linLayoutTop"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:weightSum="10"
+        android:id="@+id/linLayoutUsername">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/kobe_profile_placeholder"
+            android:layout_weight="0.5"
+            android:paddingRight="12dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9.5"
+            android:layout_marginLeft="20dp"
+            android:text="niranjan.k0609"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1080px"
+        android:layout_below="@id/linLayoutUsername"
+        android:id="@+id/picture"
+        android:src="@drawable/landscape_kobe_img"
+        android:scaleType="fitEnd"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/picture"
+        android:layout_above="@id/linLayoutBottom"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/linLayoutUsernameCaption">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="niranjan.k0609"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="caption here"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_gravity="left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linLayoutBottom">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_home_24"
+            android:backgroundTint="@color/black"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_search_24"
+            android:backgroundTint="@color/black"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            android:backgroundTint="@color/black"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
