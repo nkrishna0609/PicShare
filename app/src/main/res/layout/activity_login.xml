@@ -62,8 +62,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:gravity="center_horizontal"
             android:layout_marginBottom="20dp">
 
             <TextView
@@ -120,9 +119,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginBottom="70dp"
-            android:layout_marginRight="60dp">
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="70dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="35dp"
@@ -159,10 +157,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="85dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="85dp">
+                android:gravity="center_horizontal">
 
                 <TextView
                     android:layout_height="wrap_content"
