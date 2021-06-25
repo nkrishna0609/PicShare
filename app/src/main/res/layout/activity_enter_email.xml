@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black">
 
     <LinearLayout
@@ -9,75 +10,57 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
         android:id="@+id/LinCenterLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="160dp"
+            android:layout_height="180dp"
+            android:src="@drawable/sign_up_account_icon"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"/>
 
         <TextView
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="PicShare"
+            android:layout_width="match_parent"
+            android:text="Email"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="50dp"
             android:textStyle="bold"
-            android:fontFamily="cursive"
-            android:layout_gravity="center"
-            android:layout_marginTop="180dp"/>
+            android:textSize="18dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="18dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/dark_grey"
+            android:inputType="text"
+            android:hint="Email"
+            android:textColorHint="@color/grey"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Log in with Facebook"
+            android:text="Next"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textSize="16dp"
-            android:backgroundTint="@color/blue"
-            android:layout_marginTop="107dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="25dp">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="10dp" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="OR"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:textSize="18dp"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:text="Sign up with email"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:onClick="emailSignup"
-            android:gravity="center_horizontal"/>
+            android:backgroundTint="@color/blue" />
 
     </LinearLayout>
 
@@ -103,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:text="Already have an account?"
                 android:textColor="@color/grey"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="0dp"
                 android:layout_marginTop="15dp"
                 android:textSize="16dp"/>
 
