@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:id="@+id/LinCenterLayout">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="220dp"
+            android:text="Welcome to PicShare,"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="niranjan.k0609"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Find people to follow and start sharing photos."
+            android:textColor="@color/grey"
+            android:textSize="16dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="You can change your username anytime."
+            android:textColor="@color/grey"
+            android:textSize="16dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="25dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:backgroundTint="@color/blue"
+            android:textStyle="bold"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Change Username"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:onClick="changeUsername"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
