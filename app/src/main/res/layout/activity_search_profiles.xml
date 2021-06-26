@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="16dp"
+        android:weightSum="6"
+        android:id="@+id/linLayoutTop"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:paddingRight="50dp"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
+            android:backgroundTint="@color/black"
+            android:paddingEnd="50dp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:layout_gravity="center_vertical"
+            android:background="@color/dark_grey"
+            android:inputType="text"
+            android:hint="Search"
+            android:textColorHint="@color/grey"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linLayoutBottom">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_home_24"
+            android:backgroundTint="@color/black"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_search_24"
+            android:backgroundTint="@color/black"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            android:backgroundTint="@color/black"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
