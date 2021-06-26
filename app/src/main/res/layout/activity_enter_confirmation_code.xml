@@ -56,9 +56,11 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="25dp"
+            android:textColor="@color/white"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="25dp"

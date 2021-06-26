@@ -46,6 +46,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
             android:text="Add a Photo"
+            android:id="@+id/addPhotoButton"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textSize="16dp"
@@ -59,7 +60,7 @@
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="16dp"
-            android:onClick="skip"
+            android:onClick="skipAddingPhoto"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>

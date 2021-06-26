@@ -72,11 +72,12 @@
         <TextView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:id="@+id/emailSignUp"
             android:text="Sign up with email"
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:onClick="emailSignup"
+            android:onClick="emailSignUp"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>
@@ -101,6 +102,8 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:id="@+id/loginButton"
+                android:onClick="goToLoginPage"
                 android:text="Already have an account?"
                 android:textColor="@color/grey"
                 android:layout_marginBottom="15dp"
@@ -113,7 +116,7 @@
                 android:text=" Log in."
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:onClick="logIn"
+                android:onClick="goToLoginPage"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:textSize="16dp"/>

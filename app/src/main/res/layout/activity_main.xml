@@ -217,7 +217,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_home_24"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black" />
 
         <ImageButton
             android:layout_width="0dp"
@@ -225,7 +225,8 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_search_24"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black"
+            android:id="@+id/searchPageButton"/>
 
         <ImageButton
             android:layout_width="0dp"
@@ -233,7 +234,8 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_account_circle_24"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black"
+            android:id="@+id/myAccountPageButton"/>
 
     </LinearLayout>
 

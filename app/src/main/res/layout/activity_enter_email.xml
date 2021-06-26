@@ -51,11 +51,13 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:id="@+id/nextButton"
             android:text="Next"
             android:textStyle="bold"
             android:textAllCaps="false"
@@ -96,7 +98,7 @@
                 android:text=" Log in."
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:onClick="logIn"
+                android:onClick="goToLoginPage"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:textSize="16dp"/>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "932115900566",
+    "project_id": "picshare-d7f04",
+    "storage_bucket": "picshare-d7f04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932115900566:android:c637e4b08f39c5ca12bab7",
+        "android_client_info": {
+          "package_name": "ca.nkrishnaswamy.picshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932115900566-mgseaovsfhqt156pk0ceuluk72sh6oku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEsWKqnfir_NTp9JjxD4YGIpScHHOdHY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932115900566-mgseaovsfhqt156pk0ceuluk72sh6oku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

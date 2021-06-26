@@ -9,13 +9,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PicShare">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EnterEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EnterConfirmationCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EnterNamePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddProfilePhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConfirmPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchAccountsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
