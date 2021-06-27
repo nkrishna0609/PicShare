@@ -12,7 +12,6 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,7 +22,7 @@
             android:name=".EnterEmailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EnterConfirmationCodeActivity"
+            android:name=".ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EnterNamePasswordActivity"
@@ -42,6 +41,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FindAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PickUsernameActivity"
             android:screenOrientation="portrait" />
     </application>
 

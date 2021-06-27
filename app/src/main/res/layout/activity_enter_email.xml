@@ -45,6 +45,7 @@
             android:background="@color/dark_grey"
             android:inputType="text"
             android:hint="Email"
+            android:id="@+id/emailEditText"
             android:textColorHint="@color/grey"
             android:singleLine="true"
             android:imeOptions="actionNext"

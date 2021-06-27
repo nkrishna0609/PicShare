@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun forgotLogin(view: View){
-        val forgotLoginIntent: Intent = Intent(this@LoginActivity, EnterConfirmationCodeActivity::class.java)
+        val forgotLoginIntent: Intent = Intent(this@LoginActivity, FindAccountActivity::class.java)
         startActivity(forgotLoginIntent)
     }
 }
