@@ -12,4 +12,8 @@ class AuthRepository {
     suspend fun checkIfEmailExistsAlready(email: String): Boolean{
         return firebaseauthclass.checkIfEmailExistsAlready(email)
     }
+
+    suspend fun sendPasswordResetEmail(email: String){
+        firebaseauthclass.sendPasswordResetEmail(email)
+    }
 }

@@ -15,4 +15,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     suspend fun checkIfEmailExistsAlready(email: String): Boolean{
         return repository.checkIfEmailExistsAlready(email)
     }
+
+    suspend fun sendPasswordResetEmail(email: String){
+        repository.sendPasswordResetEmail(email)
+    }
 }

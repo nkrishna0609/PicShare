@@ -26,4 +26,8 @@ class FirebaseAuthentication {
         return task.signInMethods?.isEmpty() as Boolean
     }
 
+    suspend fun sendPasswordResetEmail(email: String){
+        auth.sendPasswordResetEmail(email).await()
+    }
+
 }

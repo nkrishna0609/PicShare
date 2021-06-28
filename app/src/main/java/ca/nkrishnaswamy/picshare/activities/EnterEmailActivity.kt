@@ -48,7 +48,7 @@ class EnterEmailActivity : AppCompatActivity() {
                 CoroutineScope(IO).launch{
                     val emailExistCheck: Boolean = checkIfEmailExistsAlready(email)
                     withContext(Dispatchers.Main){
-                        if (emailExistCheck){
+                        if (emailExistCheck){ //if email address is NOT associated to an existing account
                             errorMessageTV.text=""
                             newAccount = UserModel(email,"", "")
                             val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
