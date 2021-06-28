@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.regex.Pattern
 
 class EnterEmailActivity : AppCompatActivity() {
     lateinit var nextButton: MaterialButton
@@ -32,16 +34,22 @@ class EnterEmailActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.emailEditText)
 
         errorMessageTV = findViewById(R.id.errorMessage)
-        errorMessageTV.visibility = View.INVISIBLE
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
-            if (!TextUtils.isEmpty(emailEditText.text)){
-                val email: String = emailEditText.text.toString()
-                    CoroutineScope(IO).launch{
+            val email: String = emailEditText.text.toString()
+            if (TextUtils.isEmpty(emailEditText.text)){
+                errorMessageTV.text = "Email Field is Empty"
+            }
+            else if (!checkFormatOfEmail(email)){
+                errorMessageTV.text = "Email Format is Invalid"
+            }
+            else{
+                CoroutineScope(IO).launch{
                     val emailExistCheck: Boolean = checkIfEmailExistsAlready(email)
                     withContext(Dispatchers.Main){
                         if (emailExistCheck){
+                            errorMessageTV.text=""
                             newAccount = UserModel(email,"", "")
                             val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
                             intent.putExtra("userAccount", newAccount)
@@ -49,7 +57,7 @@ class EnterEmailActivity : AppCompatActivity() {
 
                         }
                         else{
-                            errorMessageTV.visibility = View.VISIBLE
+                            errorMessageTV.text = "This Email is on Another Account"
                         }
                     }
                 }
@@ -60,6 +68,11 @@ class EnterEmailActivity : AppCompatActivity() {
     fun goToLoginPage(view: View){
         val loginIntent: Intent = Intent(this@EnterEmailActivity, LoginActivity::class.java)
         startActivity(loginIntent)
+    }
+
+    private fun checkFormatOfEmail(email: String): Boolean{
+        val pattern: Pattern = Patterns.EMAIL_ADDRESS
+        return pattern.matcher(email).matches()
     }
 
     private suspend fun checkIfEmailExistsAlready(email: String): Boolean{
