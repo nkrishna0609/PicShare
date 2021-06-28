@@ -11,4 +11,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun registerUserByEmailAndPassword(email: String, password: String){
         repository.registerUserByEmail(email, password)
     }
+
+    suspend fun checkIfEmailExistsAlready(email: String): Boolean{
+        return repository.checkIfEmailExistsAlready(email)
+    }
 }

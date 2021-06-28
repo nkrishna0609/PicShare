@@ -8,4 +8,8 @@ class AuthRepository {
     fun registerUserByEmail(email: String, password: String){
         firebaseauthclass.registerUserWithEmailAndPassword(email, password)
     }
+
+    suspend fun checkIfEmailExistsAlready(email: String): Boolean{
+        return firebaseauthclass.checkIfEmailExistsAlready(email)
+    }
 }
