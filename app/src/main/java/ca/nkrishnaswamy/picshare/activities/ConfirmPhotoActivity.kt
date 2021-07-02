@@ -1,20 +1,35 @@
 package ca.nkrishnaswamy.picshare
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ca.nkrishnaswamy.picshare.models.UserModel
 import com.google.android.material.button.MaterialButton
+import de.hdodenhof.circleimageview.CircleImageView
 
 class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var nextButton: MaterialButton
+    private lateinit var img: CircleImageView
+    private var user: UserModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_pic_confirmation)
 
+        user = intent.getParcelableExtra("userAccount") as? UserModel
+
+        val selectedProfilePicBitmap = user?.getProfilePic()
+
+        img = findViewById(R.id.profilePic)
+        img.setImageBitmap(selectedProfilePicBitmap)
+
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
-            val confirmaPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
-            startActivity(confirmaPhotoIntent)
+            val confirmPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
+            intent.putExtra("userAccount", user)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(confirmPhotoIntent)
         }
     }
 }
