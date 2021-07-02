@@ -1,11 +1,10 @@
 package ca.nkrishnaswamy.picshare
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -19,10 +18,10 @@ class ConfirmPhotoActivity : AppCompatActivity() {
 
         user = intent.getParcelableExtra("userAccount") as? UserModel
 
-        val selectedProfilePicBitmap = user?.getProfilePic()
+        val selectedProfilePicPath: String? = user?.getProfilePicPath()
 
         img = findViewById(R.id.profilePic)
-        img.setImageBitmap(selectedProfilePicBitmap)
+        img.setImageURI(Uri.parse(selectedProfilePicPath))
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {

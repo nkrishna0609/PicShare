@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import com.google.android.material.button.MaterialButton
 
 class WelcomeActivity : AppCompatActivity() {

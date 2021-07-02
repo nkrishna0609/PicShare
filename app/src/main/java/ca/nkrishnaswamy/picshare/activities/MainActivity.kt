@@ -1,12 +1,11 @@
 package ca.nkrishnaswamy.picshare
 
 import android.content.Intent
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : AppCompatActivity() {

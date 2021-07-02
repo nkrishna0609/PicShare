@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +50,7 @@ class EnterEmailActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main){
                         if (emailExistCheck){ //if email address is NOT associated to an existing account
                             errorMessageTV.text=""
-                            newAccount = UserModel(email,"", "", null)
+                            newAccount = UserModel(email,"", "", "")
                             val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
                             intent.putExtra("userAccount", newAccount)
                             startActivity(intent)

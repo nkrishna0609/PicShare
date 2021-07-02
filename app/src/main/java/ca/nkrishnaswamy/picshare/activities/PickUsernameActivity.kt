@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.EditText
-import android.widget.ImageButton
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import com.google.android.material.button.MaterialButton
 
 class PickUsernameActivity : AppCompatActivity() {

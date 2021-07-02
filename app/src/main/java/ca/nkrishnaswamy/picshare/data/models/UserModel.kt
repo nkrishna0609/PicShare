@@ -1,11 +1,10 @@
-package ca.nkrishnaswamy.picshare.models
+package ca.nkrishnaswamy.picshare.data.models
 
-import android.graphics.Bitmap
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserModel(private var email: String, private var username: String, private var name: String, private var profilePic: Bitmap?): Parcelable {
+data class UserModel(private var email: String, private var username: String, private var name: String, private var profilePicPathFromUri: String): Parcelable {
 
     fun getEmail():String {
         return email
@@ -27,12 +26,12 @@ data class UserModel(private var email: String, private var username: String, pr
         return name
     }
 
-    fun getProfilePic(): Bitmap? {
-        return profilePic
+    fun getProfilePicPath(): String {
+        return profilePicPathFromUri
     }
 
-    fun setProfilePic(img: Bitmap?) {
-        profilePic = img
+    fun setProfilePic(imgPath: String) {
+        profilePicPathFromUri = imgPath
     }
 
 }

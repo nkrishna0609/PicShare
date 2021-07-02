@@ -10,12 +10,14 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import ca.nkrishnaswamy.picshare.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var addPhotoButton: MaterialButton
@@ -31,7 +33,22 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         if (bitmapImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
-        user?.setProfilePic(bitmapImg)
+
+        val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
+        file.delete()
+        file.createNewFile()
+        val fileOutputStream = file.outputStream()
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmapImg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        fileOutputStream.write(byteArray)
+        fileOutputStream.flush()
+        fileOutputStream.close()
+        byteArrayOutputStream.close()
+
+        val uriImg = file.toURI()
+
+        user?.setProfilePic(uriImg.toString())
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
