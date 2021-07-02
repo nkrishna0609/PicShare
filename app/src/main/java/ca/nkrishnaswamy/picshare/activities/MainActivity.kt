@@ -12,7 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class MainActivity : AppCompatActivity() {
     private var user: UserModel? = null
     var password: String? = ""
-    private var bitmapImg: Bitmap? = null
+    //private var bitmapImg: Bitmap? = null
     private lateinit var searchPageButton: ImageButton
     private lateinit var usernameTV: TextView
     private lateinit var nameTV: TextView
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         user = intent.getParcelableExtra("userAccount") as? UserModel
         password = intent.getStringExtra("password")
         profilePic = findViewById(R.id.profileImage)
-        bitmapImg = user?.getProfilePic()
+    /*    bitmapImg = user?.getProfilePic()         //bug in this section (img not loading in img view) - fix later (will need to persist user data in room db)
 
         if (bitmapImg == null) {
             profilePic.setImageResource(R.drawable.profile_placeholder_pic)
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             profilePic.setImageBitmap(bitmapImg)
         }
 
+     */
         usernameTV = findViewById(R.id.username)
         usernameTV.text = user?.getUsername()
         nameTV = findViewById(R.id.name)

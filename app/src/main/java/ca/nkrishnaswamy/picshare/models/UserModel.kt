@@ -31,7 +31,7 @@ data class UserModel(private var email: String, private var username: String, pr
         return profilePic
     }
 
-    fun setProfilePic(img: Bitmap) {
+    fun setProfilePic(img: Bitmap?) {
         profilePic = img
     }
 

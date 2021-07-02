@@ -2,7 +2,6 @@ package ca.nkrishnaswamy.picshare
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,7 +14,6 @@ import ca.nkrishnaswamy.picshare.models.UserModel
 import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
@@ -26,7 +24,6 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var authViewModel: AuthViewModel
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -69,8 +66,10 @@ class AddProfilePhotoActivity : AppCompatActivity() {
                     }
                 }
                 1 -> {
-                    val intentPickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    pickPhotoLauncher.launch(intentPickPhoto)
+                    CoroutineScope(IO).launch {
+                        val intentPickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        pickPhotoLauncher.launch(intentPickPhoto)
+                    }
                 }
             }
         }
