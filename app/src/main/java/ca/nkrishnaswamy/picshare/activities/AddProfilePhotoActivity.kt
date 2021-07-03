@@ -99,16 +99,6 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             }
         }
 
-        val checkToManuallyUpdateImageView : Boolean = intent.getBooleanExtra("checkToManuallyUpdateImageView", false)
-        if (checkToManuallyUpdateImageView){
-            val lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", 0)
-            val intentManualImageViewUpdate = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
-            intentManualImageViewUpdate.putExtra("userAccount", user)
-            intentManualImageViewUpdate.putExtra("password", password)
-            intentManualImageViewUpdate.putExtra("lastPhotoTakenType", lastPhotoTakenType)
-            startActivity(intentManualImageViewUpdate)
-        }
-
         addPhotoButton = findViewById(R.id.addPhotoButton)
         addPhotoButton.setOnClickListener {
             showDialogPhotoOption()

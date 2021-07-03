@@ -86,63 +86,6 @@
             android:gravity="center_horizontal"
             android:textSize="16dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10"
-            android:layout_marginBottom="20dp">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="10dp" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="OR"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:textSize="18dp"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="70dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/fb_logo"
-                />
-
-            <TextView
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:text=" Log in with Facebook"
-                android:textColor="@color/blue"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:onClick="facebookLogin"
-                android:gravity="center_vertical"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>

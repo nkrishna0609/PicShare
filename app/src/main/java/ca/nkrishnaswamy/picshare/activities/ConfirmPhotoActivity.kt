@@ -49,12 +49,13 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         }
         user.setProfilePicPathFromUri(uriImg.toString())
         lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
-        val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
+        val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
         intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         intent.putExtra("checkToManuallyUpdateImageView", true)
         startActivity(intent)
+        finish()
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -80,12 +81,13 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         user.setProfilePicPathFromUri(uriImg.toString())
         if (lastPhotoTakenType == LAST_PROFILE_PIC_FROM_GALLERY) {
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
+            val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
             intent.putExtra("userAccount", user)
             intent.putExtra("password", password)
             intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
             intent.putExtra("checkToManuallyUpdateImageView", true)
             startActivity(intent)
+            finish()
         }
         else{
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA

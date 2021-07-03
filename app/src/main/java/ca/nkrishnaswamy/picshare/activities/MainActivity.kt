@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
-
+        
         profilePic = findViewById(R.id.profileImage)
         usernameTV = findViewById(R.id.username)
         fullNameTV = findViewById(R.id.name)
@@ -59,6 +59,17 @@ class MainActivity : AppCompatActivity() {
         searchPageButton.setOnClickListener {
             val searchPageIntent: Intent = Intent(this@MainActivity, SearchAccountsActivity::class.java)
             startActivity(searchPageIntent)
+        }
+
+        editProfileButton = findViewById(R.id.editProfileButton)
+        editProfileButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch{
+                authViewModel.signOutUserFromFirebase()
+                signedInUserViewModel.signOut()
+            }
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 }

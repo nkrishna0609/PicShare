@@ -27,58 +27,12 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Log in with Facebook"
-            android:textStyle="bold"
+            android:text="Sign Up"
             android:textAllCaps="false"
+            android:id="@+id/signUpButton"
             android:textSize="16dp"
             android:backgroundTint="@color/blue"
             android:layout_marginTop="107dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="25dp">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="10dp" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="OR"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
-                android:textSize="18dp"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="4.5"
-                android:background="@color/dark_grey"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:id="@+id/emailSignUp"
-            android:text="Sign up with email"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:onClick="emailSignUp"
-            android:gravity="center_horizontal"/>
 
     </LinearLayout>
 
