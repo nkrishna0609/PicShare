@@ -2,22 +2,15 @@ package ca.nkrishnaswamy.picshare
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var searchPageButton: ImageButton
@@ -59,17 +52,6 @@ class MainActivity : AppCompatActivity() {
         searchPageButton.setOnClickListener {
             val searchPageIntent: Intent = Intent(this@MainActivity, SearchAccountsActivity::class.java)
             startActivity(searchPageIntent)
-        }
-
-        editProfileButton = findViewById(R.id.editProfileButton)
-        editProfileButton.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch{
-                authViewModel.signOutUserFromFirebase()
-                signedInUserViewModel.signOut()
-            }
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
         }
     }
 }
