@@ -35,7 +35,6 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         if (bitmapImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
-
         val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
         file.delete()
         file.createNewFile()
@@ -106,7 +105,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
-            signedInUserVM.logInNewUser(user)
+            signedInUserVM.logInUser(user)
         }
         val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

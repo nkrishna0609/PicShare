@@ -200,6 +200,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:text="Edit Profile"
+        android:id="@+id/editProfileButton"
         android:textAllCaps="false"
         android:textSize="16dp"
         android:textStyle="bold"

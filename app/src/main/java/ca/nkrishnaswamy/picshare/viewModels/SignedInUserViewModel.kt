@@ -17,12 +17,12 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return repository.getCurrentLoggedInUser()
     }
 
-    fun logInNewUser(account: UserModel) {
+    fun logInUser(account: UserModel) {
         repository.logInNewUser(account)
     }
 
-    fun signOutCurrentUser(account: UserModel) {
-        repository.signOutCurrentUser(account)
+    fun signOut() {
+        repository.signOut()
     }
 
 }

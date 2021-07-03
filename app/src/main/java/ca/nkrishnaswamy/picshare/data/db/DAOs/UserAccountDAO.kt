@@ -16,7 +16,7 @@ interface UserAccountDAO {
     @Insert
     fun logInUser(currentUser: UserModel)
 
-    @Delete
-    fun signOutCurrentUser(currentUser: UserModel)
+    @Query("DELETE FROM signedInAccount")
+    fun signOut()
 
 }

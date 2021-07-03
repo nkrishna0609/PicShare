@@ -14,8 +14,8 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         accountDao.logInUser(account)
     }
 
-    fun signOutCurrentUser(account: UserModel) {
-        accountDao.signOutCurrentUser(account)
+    fun signOut() {
+        accountDao.signOut()
     }
 
 }

@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:text="Change Photo"
+            android:onClick="changePhoto"
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="16dp"
