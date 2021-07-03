@@ -10,7 +10,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return accountDao.retrieveCurrentLoggedInUser()
     }
 
-    fun logInNewUser(account: UserModel) {
+    fun logInUser(account: UserModel) {
         accountDao.logInUser(account)
     }
 

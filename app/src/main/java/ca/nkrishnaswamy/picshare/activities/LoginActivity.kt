@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
+import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,16 +19,26 @@ import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var emailEnterText: EditText
-    lateinit var passwordEnterText: EditText
-    lateinit var errorMessageTV : TextView
-    lateinit var loginButton : MaterialButton
-    lateinit var authViewModel: AuthViewModel
+    private lateinit var emailEnterText: EditText
+    private lateinit var passwordEnterText: EditText
+    private lateinit var errorMessageTV : TextView
+    private lateinit var loginButton : MaterialButton
+    private lateinit var authViewModel: AuthViewModel
+    private lateinit var signedInUserVM : SignedInUserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        signedInUserVM = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+
+        val fireBaseCurrentLoggedInUser = authViewModel.getCurrentSignedInFirebaseUser()
+        if (fireBaseCurrentLoggedInUser != null){
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }
 
         emailEnterText = findViewById(R.id.emailEnter)
         passwordEnterText = findViewById(R.id.passwordEnter)
@@ -54,6 +65,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else{
                         errorMessageTV.text=""
+                        CoroutineScope(Dispatchers.IO).launch{
+                            //TODO: Retrieve account user from Node.js server with entered email
+                            //signedInUserVM.logInUser(account from Node.js server here)
+                        }
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)

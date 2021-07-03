@@ -28,4 +28,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
         return repository.getCurrentSignedInFirebaseUser()
     }
+
+    fun signOutFirebase() {
+        repository.signOutOfFirebase()
+    }
 }

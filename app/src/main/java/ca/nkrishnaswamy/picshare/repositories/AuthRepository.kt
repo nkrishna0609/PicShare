@@ -25,4 +25,8 @@ class AuthRepository {
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
         return firebaseauthclass.getCurrentSignedOnUser()
     }
+
+    fun signOutOfFirebase(){
+        firebaseauthclass.signOut()
+    }
 }

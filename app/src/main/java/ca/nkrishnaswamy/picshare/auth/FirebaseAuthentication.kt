@@ -45,6 +45,10 @@ class FirebaseAuthentication {
         return check
     }
 
+    fun signOut() {
+        auth.signOut()
+    }
+
     fun getCurrentSignedOnUser(): FirebaseUser? {
         return auth.currentUser
     }

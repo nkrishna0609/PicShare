@@ -18,7 +18,7 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun logInUser(account: UserModel) {
-        repository.logInNewUser(account)
+        repository.logInUser(account)
     }
 
     fun signOut() {

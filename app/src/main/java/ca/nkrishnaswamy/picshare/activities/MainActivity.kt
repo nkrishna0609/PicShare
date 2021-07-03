@@ -25,9 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
-
         profilePic = findViewById(R.id.profileImage)
         usernameTV = findViewById(R.id.username)
         fullNameTV = findViewById(R.id.name)
