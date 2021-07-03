@@ -18,7 +18,7 @@ data class UserModel(
     private var name: String,
     @ColumnInfo(name="user_profile_pic_path_from_uri")
     private var profilePicPathFromUri: String
-    ): Parcelable {
+): Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private var id: Long = 0

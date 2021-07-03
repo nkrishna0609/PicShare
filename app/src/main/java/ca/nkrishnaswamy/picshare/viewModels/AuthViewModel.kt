@@ -29,7 +29,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getCurrentSignedInFirebaseUser()
     }
 
-    fun signOutFirebase() {
+    fun signOutUserFromFirebase() {
         repository.signOutOfFirebase()
     }
 }

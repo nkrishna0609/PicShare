@@ -2,7 +2,6 @@ package ca.nkrishnaswamy.picshare.data.db.DAOs
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import ca.nkrishnaswamy.picshare.data.models.UserModel

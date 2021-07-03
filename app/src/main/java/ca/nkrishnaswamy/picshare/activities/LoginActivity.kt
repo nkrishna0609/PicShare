@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton : MaterialButton
     private lateinit var authViewModel: AuthViewModel
     private lateinit var signedInUserVM : SignedInUserViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

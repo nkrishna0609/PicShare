@@ -2,12 +2,13 @@ package ca.nkrishnaswamy.picshare
 
 import android.content.ContentResolver
 import android.content.Intent
+import android.content.Intent.*
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,22 +24,35 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+const val LAST_PROFILE_PIC_FROM_CAMERA = 1
+const val LAST_PROFILE_PIC_FROM_GALLERY = 2
+
 class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var addPhotoButton: MaterialButton
     private lateinit var user: UserModel
     private lateinit var password: String
     private lateinit var authViewModel: AuthViewModel
     private lateinit var signedInUserVM : SignedInUserViewModel
+    private var lastPhotoTakenType = 0
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
         if (uriImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
+        val takeFlags = result.data!!.flags and FLAG_GRANT_READ_URI_PERMISSION
+        CoroutineScope(IO).launch {
+            val resolver : ContentResolver = applicationContext.contentResolver
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                resolver.takePersistableUriPermission(uriImg, takeFlags)
+            }
+        }
         user.setProfilePicPathFromUri(uriImg.toString())
+        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
+        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         startActivity(intent)
     }
 
@@ -62,9 +76,11 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.setProfilePicPathFromUri(uriImg.toString())
+        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
+        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         startActivity(intent)
     }
 
@@ -85,9 +101,11 @@ class AddProfilePhotoActivity : AppCompatActivity() {
 
         val checkToManuallyUpdateImageView : Boolean = intent.getBooleanExtra("checkToManuallyUpdateImageView", false)
         if (checkToManuallyUpdateImageView){
+            val lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", 0)
             val intentManualImageViewUpdate = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
             intentManualImageViewUpdate.putExtra("userAccount", user)
             intentManualImageViewUpdate.putExtra("password", password)
+            intentManualImageViewUpdate.putExtra("lastPhotoTakenType", lastPhotoTakenType)
             startActivity(intentManualImageViewUpdate)
         }
 
@@ -112,8 +130,17 @@ class AddProfilePhotoActivity : AppCompatActivity() {
                 }
                 1 -> {
                     CoroutineScope(IO).launch {
-                        val intentPickPhoto = Intent(Intent.ACTION_PICK, EXTERNAL_CONTENT_URI)
+                        lateinit var intentPickPhoto : Intent
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            intentPickPhoto = Intent(ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            intentPickPhoto.addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                        }
+                        else{
+                            intentPickPhoto = Intent(Intent.ACTION_GET_CONTENT)
+                        }
+                        intentPickPhoto.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
                         intentPickPhoto.type = "image/*"
+                        intentPickPhoto.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
                         pickPhotoLauncher.launch(intentPickPhoto)
                     }
                 }

@@ -1,12 +1,13 @@
 package ca.nkrishnaswamy.picshare
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +32,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var signedInUserVM : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
     private lateinit var selectedProfilePicPath: String
+    private var lastPhotoTakenType = 0
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -38,10 +40,19 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             return@registerForActivityResult
         }
         img.setImageDrawable(null)
+        val takeFlags = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
+        CoroutineScope(Dispatchers.IO).launch {
+            val resolver : ContentResolver = applicationContext.contentResolver
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                resolver.takePersistableUriPermission(uriImg, takeFlags)
+            }
+        }
         user.setProfilePicPathFromUri(uriImg.toString())
+        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
         val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
+        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         intent.putExtra("checkToManuallyUpdateImageView", true)
         startActivity(intent)
     }
@@ -67,11 +78,19 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.setProfilePicPathFromUri(uriImg.toString())
-        val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
-        intent.putExtra("userAccount", user)
-        intent.putExtra("password", password)
-        intent.putExtra("checkToManuallyUpdateImageView", true)
-        startActivity(intent)
+        if (lastPhotoTakenType == LAST_PROFILE_PIC_FROM_GALLERY) {
+            lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
+            val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
+            intent.putExtra("userAccount", user)
+            intent.putExtra("password", password)
+            intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
+            intent.putExtra("checkToManuallyUpdateImageView", true)
+            startActivity(intent)
+        }
+        else{
+            lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
+            img.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +106,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             }
         }
         password = intent.getStringExtra("password") as String
+        lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", 0)
 
         selectedProfilePicPath = user.getProfilePicPathFromUri()
 
@@ -101,7 +121,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
                 authViewModel.registerUserByEmailAndPassword(email, password)
                 signedInUserVM.logInUser(user)
             }
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            confirmPhotoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(confirmPhotoIntent)
         }
     }
@@ -121,8 +141,17 @@ class ConfirmPhotoActivity : AppCompatActivity() {
                 }
                 1 -> {
                     CoroutineScope(Dispatchers.IO).launch {
-                        val intentPickPhoto = Intent(Intent.ACTION_PICK, EXTERNAL_CONTENT_URI)
+                        lateinit var intentPickPhoto : Intent
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            intentPickPhoto = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            intentPickPhoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                        }
+                        else{
+                            intentPickPhoto = Intent(Intent.ACTION_GET_CONTENT)
+                        }
+                        intentPickPhoto.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
                         intentPickPhoto.type = "image/*"
+                        intentPickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         pickPhotoLauncher.launch(intentPickPhoto)
                     }
                 }
@@ -130,4 +159,5 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         }
         builder.show()
     }
+
 }
