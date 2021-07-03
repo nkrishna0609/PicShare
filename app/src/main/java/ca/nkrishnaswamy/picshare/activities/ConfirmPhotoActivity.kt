@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,10 +30,20 @@ class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var signedInUserVM : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
-
     private lateinit var selectedProfilePicPath: String
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val uriImg : Uri? = result.data?.data
+        if (uriImg == null || result.resultCode != RESULT_OK) {
+            return@registerForActivityResult
+        }
+        img.setImageDrawable(null)
+        user.setProfilePicPathFromUri(uriImg.toString())
+        val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
+        intent.putExtra("userAccount", user)
+        intent.putExtra("password", password)
+        intent.putExtra("checkToManuallyUpdateImageView", true)
+        startActivity(intent)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -40,6 +51,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         if (bitmapImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
+        img.setImageDrawable(null)
         val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
         file.delete()
         file.createNewFile()
@@ -55,8 +67,11 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.setProfilePicPathFromUri(uriImg.toString())
-        img.setImageDrawable(null)
-        img.setImageURI(Uri.parse(selectedProfilePicPath))
+        val intent = Intent(this@ConfirmPhotoActivity, AddProfilePhotoActivity::class.java)
+        intent.putExtra("userAccount", user)
+        intent.putExtra("password", password)
+        intent.putExtra("checkToManuallyUpdateImageView", true)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,7 +121,8 @@ class ConfirmPhotoActivity : AppCompatActivity() {
                 }
                 1 -> {
                     CoroutineScope(Dispatchers.IO).launch {
-                        val intentPickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        val intentPickPhoto = Intent(Intent.ACTION_PICK, EXTERNAL_CONTENT_URI)
+                        intentPickPhoto.type = "image/*"
                         pickPhotoLauncher.launch(intentPickPhoto)
                     }
                 }

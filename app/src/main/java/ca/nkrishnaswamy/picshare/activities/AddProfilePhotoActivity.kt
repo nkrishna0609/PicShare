@@ -1,10 +1,13 @@
 package ca.nkrishnaswamy.picshare
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +31,15 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var signedInUserVM : SignedInUserViewModel
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val uriImg : Uri? = result.data?.data
+        if (uriImg == null || result.resultCode != RESULT_OK) {
+            return@registerForActivityResult
+        }
+        user.setProfilePicPathFromUri(uriImg.toString())
+        val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
+        intent.putExtra("userAccount", user)
+        intent.putExtra("password", password)
+        startActivity(intent)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -71,6 +83,14 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             }
         }
 
+        val checkToManuallyUpdateImageView : Boolean = intent.getBooleanExtra("checkToManuallyUpdateImageView", false)
+        if (checkToManuallyUpdateImageView){
+            val intentManualImageViewUpdate = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
+            intentManualImageViewUpdate.putExtra("userAccount", user)
+            intentManualImageViewUpdate.putExtra("password", password)
+            startActivity(intentManualImageViewUpdate)
+        }
+
         addPhotoButton = findViewById(R.id.addPhotoButton)
         addPhotoButton.setOnClickListener {
             showDialogPhotoOption()
@@ -92,7 +112,8 @@ class AddProfilePhotoActivity : AppCompatActivity() {
                 }
                 1 -> {
                     CoroutineScope(IO).launch {
-                        val intentPickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        val intentPickPhoto = Intent(Intent.ACTION_PICK, EXTERNAL_CONTENT_URI)
+                        intentPickPhoto.type = "image/*"
                         pickPhotoLauncher.launch(intentPickPhoto)
                     }
                 }
@@ -102,6 +123,8 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     }
 
     fun skipAddingPhoto(view: View){
+        val uriDefaultImgString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + resources.getResourcePackageName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceTypeName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceEntryName(R.drawable.profile_placeholder_pic)
+        user.setProfilePicPathFromUri(uriDefaultImgString)
         val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)

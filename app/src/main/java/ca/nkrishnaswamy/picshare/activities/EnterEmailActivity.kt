@@ -1,6 +1,5 @@
 package ca.nkrishnaswamy.picshare
 
-import android.content.ContentResolver
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -51,8 +50,7 @@ class EnterEmailActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main){
                         if (emailExistCheck){ //if email address is NOT associated to an existing account
                             errorMessageTV.text=""
-                            val uriDefaultImgString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + resources.getResourcePackageName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceTypeName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceEntryName(R.drawable.profile_placeholder_pic)
-                            newAccount = UserModel(email,"", "", uriDefaultImgString)
+                            newAccount = UserModel(email,"", "", "")
                             val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
                             intent.putExtra("userAccount", newAccount)
                             startActivity(intent)
