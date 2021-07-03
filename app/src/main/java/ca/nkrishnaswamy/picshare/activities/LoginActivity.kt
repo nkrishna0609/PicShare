@@ -9,9 +9,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
             else{
                 CoroutineScope(Dispatchers.IO).launch{
                     val check: Boolean = authViewModel.loginWithEmailAndPassword(email, password)
-                    val currentFirebaseUser = authViewModel.getCurrentSignedOnUser() as FirebaseUser
                     if (!check){
                         withContext(Dispatchers.Main){
                             errorMessageTV.text = "Email and/or Password are Incorrect"
@@ -57,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
                     else{
                         errorMessageTV.text=""
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("currentSignedInFirebaseUser", currentFirebaseUser)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                     }

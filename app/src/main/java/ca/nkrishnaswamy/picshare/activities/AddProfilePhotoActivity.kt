@@ -11,7 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
+import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -21,9 +22,10 @@ import java.io.File
 
 class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var addPhotoButton: MaterialButton
-    private var user: UserModel? = null
-    var password: String = ""
+    private lateinit var user: UserModel
+    private lateinit var password: String
     private lateinit var authViewModel: AuthViewModel
+    private lateinit var signedInUserVM : SignedInUserViewModel
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
     }
@@ -48,7 +50,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
 
         val uriImg = file.toURI()
 
-        user?.setProfilePic(uriImg.toString())
+        user.setProfilePicPathFromUri(uriImg.toString())
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
@@ -59,9 +61,16 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_pic_add)
 
-        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        password = intent.getStringExtra("password") as String
 
-        user = intent.getParcelableExtra("userAccount") as? UserModel
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        signedInUserVM = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+
+        intent.getParcelableExtra<UserModel?>("userAccount").also {
+            if (it != null) {
+                user = it
+            }
+        }
 
         addPhotoButton = findViewById(R.id.addPhotoButton)
         addPhotoButton.setOnClickListener {
@@ -94,13 +103,12 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     }
 
     fun skipAddingPhoto(view: View){
-        password = intent.getStringExtra("password") as String
-        val email :String = user?.getEmail() as String
+        val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
+            signedInUserVM.logInNewUser(user)
         }
         val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
-        intent.putExtra("userAccount", user)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }

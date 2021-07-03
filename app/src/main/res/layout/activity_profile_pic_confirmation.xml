@@ -39,7 +39,6 @@
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="16dp"
-            android:onClick="changePhoto"
             android:gravity="center_horizontal"/>
 
         <com.google.android.material.button.MaterialButton

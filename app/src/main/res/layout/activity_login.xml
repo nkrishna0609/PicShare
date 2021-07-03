@@ -149,7 +149,6 @@
                 android:textColor="@color/blue"
                 android:textStyle="bold"
                 android:textSize="18dp"
-                android:onClick="facebookLogin"
                 android:gravity="center_vertical"/>
 
         </LinearLayout>

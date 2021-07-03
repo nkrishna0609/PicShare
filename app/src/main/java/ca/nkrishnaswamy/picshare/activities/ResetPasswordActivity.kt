@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import ca.nkrishnaswamy.picshare.viewmodels.AuthViewModel
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

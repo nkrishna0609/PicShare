@@ -22,7 +22,7 @@ class AuthRepository {
         return firebaseauthclass.loginWithEmailAndPassword(email, password)
     }
 
-    fun getCurrentUser(): FirebaseUser? {
+    fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
         return firebaseauthclass.getCurrentSignedOnUser()
     }
 }

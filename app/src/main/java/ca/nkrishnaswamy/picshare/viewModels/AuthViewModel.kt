@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare.viewmodels
+package ca.nkrishnaswamy.picshare.viewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -25,7 +25,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         return repository.loginWithEmailAndPassword(email, password)
     }
 
-    fun getCurrentSignedOnUser(): FirebaseUser? {
-        return repository.getCurrentUser()
+    fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
+        return repository.getCurrentSignedInFirebaseUser()
     }
 }

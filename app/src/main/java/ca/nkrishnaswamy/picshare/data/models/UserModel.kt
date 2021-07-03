@@ -1,10 +1,35 @@
 package ca.nkrishnaswamy.picshare.data.models
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserModel(private var email: String, private var username: String, private var name: String, private var profilePicPathFromUri: String): Parcelable {
+@Entity(tableName="signedInAccount", indices = [Index(value=["user_email"], unique=true)])
+data class UserModel(
+    @ColumnInfo(name="user_email")
+    private var email: String,
+    @ColumnInfo(name="user_username")
+    private var username: String,
+    @ColumnInfo(name="user_name")
+    private var name: String,
+    @ColumnInfo(name="user_profile_pic_path_from_uri")
+    private var profilePicPathFromUri: String
+    ): Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    private var id: Long = 0
+
+    fun getId(): Long{
+        return id
+    }
+
+    fun setId(num: Long){
+        id=num
+    }
 
     fun getEmail():String {
         return email
@@ -26,11 +51,11 @@ data class UserModel(private var email: String, private var username: String, pr
         return name
     }
 
-    fun getProfilePicPath(): String {
+    fun getProfilePicPathFromUri(): String {
         return profilePicPathFromUri
     }
 
-    fun setProfilePic(imgPath: String) {
+    fun setProfilePicPathFromUri(imgPath: String) {
         profilePicPathFromUri = imgPath
     }
 
