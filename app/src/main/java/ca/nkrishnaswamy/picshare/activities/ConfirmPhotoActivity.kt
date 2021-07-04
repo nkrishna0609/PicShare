@@ -32,7 +32,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var signedInUserVM : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
     private lateinit var selectedProfilePicPath: String
-    private var lastPhotoTakenType = 0
+    private var lastPhotoTakenType = NO_PROFILE_PIC
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -108,7 +108,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             }
         }
         password = intent.getStringExtra("password") as String
-        lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", 0)
+        lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", NO_PROFILE_PIC)
 
         selectedProfilePicPath = user.getProfilePicPathFromUri()
 
@@ -118,6 +118,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
             val email : String = user.getEmail()
+            user.setTypeOfProfilePic(lastPhotoTakenType)
             val confirmPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 authViewModel.registerUserByEmailAndPassword(email, password)

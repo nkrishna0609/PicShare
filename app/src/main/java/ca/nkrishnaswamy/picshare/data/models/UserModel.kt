@@ -17,8 +17,10 @@ data class UserModel(
     @ColumnInfo(name="user_name")
     private var name: String,
     @ColumnInfo(name="user_profile_pic_path_from_uri")
-    private var profilePicPathFromUri: String
-): Parcelable {
+    private var profilePicPathFromUri: String,
+    @ColumnInfo(name="user_type_of_Profile_Pic")
+    private var typeOfProfilePic : Int
+    ): Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private var id: Long = 0
@@ -57,6 +59,14 @@ data class UserModel(
 
     fun setProfilePicPathFromUri(imgPath: String) {
         profilePicPathFromUri = imgPath
+    }
+
+    fun getTypeOfProfilePic() : Int {
+        return typeOfProfilePic
+    }
+
+    fun setTypeOfProfilePic(type : Int) {
+        typeOfProfilePic = type
     }
 
 }

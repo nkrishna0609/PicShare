@@ -20,8 +20,8 @@ abstract class CurrentLoggedInUserCache : RoomDatabase() {
                 var instance = INSTANCE
 
                 if (instance == null){
-                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv2").addMigrations(
-                        MIGRATION_1_2).build()
+                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv3").addMigrations(
+                        MIGRATION_2_3).build()
                     INSTANCE = instance
                 }
                 return instance

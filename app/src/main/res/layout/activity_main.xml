@@ -46,6 +46,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_menu_24"
+            android:id="@+id/verticalPopUpMenu"
             android:backgroundTint="@color/black"
             />
 

@@ -32,4 +32,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun signOutUserFromFirebase() {
         repository.signOutOfFirebase()
     }
+
+    fun deleteAccountFromFirebase(user : FirebaseUser) : Boolean {
+        return repository.deleteAccountFromFirebase(user)
+    }
 }

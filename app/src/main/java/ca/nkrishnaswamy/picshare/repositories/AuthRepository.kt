@@ -29,4 +29,8 @@ class AuthRepository {
     fun signOutOfFirebase(){
         firebaseauthclass.signOut()
     }
+
+    fun deleteAccountFromFirebase(user : FirebaseUser) : Boolean {
+        return firebaseauthclass.deleteAccountFromFirebase(user)
+    }
 }

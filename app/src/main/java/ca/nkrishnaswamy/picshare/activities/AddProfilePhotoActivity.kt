@@ -26,6 +26,7 @@ import java.io.File
 
 const val LAST_PROFILE_PIC_FROM_CAMERA = 1
 const val LAST_PROFILE_PIC_FROM_GALLERY = 2
+const val NO_PROFILE_PIC = 0
 
 class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var addPhotoButton: MaterialButton
@@ -33,7 +34,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var authViewModel: AuthViewModel
     private lateinit var signedInUserVM : SignedInUserViewModel
-    private var lastPhotoTakenType = 0
+    private var lastPhotoTakenType = NO_PROFILE_PIC
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -142,13 +143,14 @@ class AddProfilePhotoActivity : AppCompatActivity() {
     fun skipAddingPhoto(view: View){
         val uriDefaultImgString = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + resources.getResourcePackageName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceTypeName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceEntryName(R.drawable.profile_placeholder_pic)
         user.setProfilePicPathFromUri(uriDefaultImgString)
+        user.setTypeOfProfilePic(lastPhotoTakenType)
         val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
             signedInUserVM.logInUser(user)
         }
         val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
 }

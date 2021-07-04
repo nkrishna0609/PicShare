@@ -1,5 +1,6 @@
 package ca.nkrishnaswamy.picshare.auth
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
@@ -49,6 +50,16 @@ class FirebaseAuthentication {
 
     fun getCurrentSignedOnUser(): FirebaseUser? {
         return auth.currentUser
+    }
+
+    fun deleteAccountFromFirebase(user : FirebaseUser) : Boolean {
+        var check : Boolean = true
+        user.delete().addOnCompleteListener {
+            if (!it.isSuccessful) {
+                check = false
+            }
+        }
+        return check
     }
 
 }
