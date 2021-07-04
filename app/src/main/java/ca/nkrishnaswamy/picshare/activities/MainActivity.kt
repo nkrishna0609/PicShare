@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
+import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -69,6 +70,11 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        editProfileButton.setOnClickListener {
+            val intentEditProfile = Intent(this@MainActivity, EditProfileActivity::class.java)
+            startActivity(intentEditProfile)
+        }
+
         verticalPopUpMenuButton.setOnClickListener {
             val verticalMenu = layoutInflater.inflate(R.layout.layout_modal_bottom_sheel, null)
             verticalMenuDialog = BottomSheetDialog(this)
@@ -106,7 +112,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDialogDeleteAccount() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this,
+            R.style.Theme_AppCompat_Dialog_Alert
+        )
         builder.setTitle("Delete " + username +  "?")
         builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
             CoroutineScope(Dispatchers.IO).launch{

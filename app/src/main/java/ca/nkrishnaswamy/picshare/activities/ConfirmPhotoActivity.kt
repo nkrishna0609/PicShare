@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.content.ContentResolver
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
@@ -131,7 +132,9 @@ class ConfirmPhotoActivity : AppCompatActivity() {
 
     fun changePhoto(view: View){
         val buttonList  = arrayOf("Take Photo", "Choose From Library")
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this,
+            R.style.Theme_AppCompat_Dialog_Alert
+        )
         builder.setTitle("Change Profile Photo")
 
         builder.setItems(buttonList) { _, which ->

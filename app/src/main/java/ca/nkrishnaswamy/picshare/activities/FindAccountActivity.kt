@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope

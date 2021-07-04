@@ -1,9 +1,10 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import ca.nkrishnaswamy.picshare.R
 import com.google.android.material.button.MaterialButton
 
 class SignUpActivity : AppCompatActivity() {

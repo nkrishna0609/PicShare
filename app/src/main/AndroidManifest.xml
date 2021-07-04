@@ -10,44 +10,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PicShare">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EnterEmailActivity"
+            android:name=".activities.EnterEmailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EnterNamePasswordActivity"
+            android:name=".activities.EnterNamePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".activities.WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AddProfilePhotoActivity"
+            android:name=".activities.AddProfilePhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ConfirmPhotoActivity"
+            android:name=".activities.ConfirmPhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SearchAccountsActivity"
+            android:name=".activities.SearchAccountsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FindAccountActivity"
+            android:name=".activities.FindAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PickUsernameActivity"
+            android:name=".activities.PickUsernameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait" />
     </application>
 

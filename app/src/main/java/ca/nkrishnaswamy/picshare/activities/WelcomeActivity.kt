@@ -1,9 +1,10 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 import com.google.android.material.button.MaterialButton
 

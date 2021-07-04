@@ -1,9 +1,10 @@
-package ca.nkrishnaswamy.picshare
+package ca.nkrishnaswamy.picshare.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import ca.nkrishnaswamy.picshare.R
 
 class SearchAccountsActivity : AppCompatActivity() {
     lateinit var myAccountPageButton: ImageButton
