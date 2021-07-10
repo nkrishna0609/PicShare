@@ -1,65 +1,74 @@
-package ca.nkrishnaswamy.picshare.activities
+package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
 
-class FindAccountActivity : AppCompatActivity() {
+class EnterEmailActivity : AppCompatActivity() {
     lateinit var nextButton: MaterialButton
-    lateinit var editTextEnterEmail: EditText
+    lateinit var emailEditText: EditText
+    lateinit var newAccount: UserModel
     lateinit var authViewModel: AuthViewModel
-    lateinit var errorMessageTV : TextView
+    lateinit var errorMessageTV: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_find_account)
+        setContentView(R.layout.activity_enter_email)
 
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
-        editTextEnterEmail = findViewById(R.id.editTextEnterEmail)
+        emailEditText = findViewById(R.id.emailEditText)
 
         errorMessageTV = findViewById(R.id.errorMessage)
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
-            val email:String = editTextEnterEmail.text.toString()
-            if (TextUtils.isEmpty(editTextEnterEmail.text)){
+            val email: String = emailEditText.text.toString()
+            if (TextUtils.isEmpty(emailEditText.text)){
                 errorMessageTV.text = "Email Field is Empty"
             }
             else if (!checkFormatOfEmail(email)){
                 errorMessageTV.text = "Email Format is Invalid"
             }
             else{
-                CoroutineScope(Dispatchers.IO).launch{
+                CoroutineScope(IO).launch{
                     val emailExistCheck: Boolean = checkIfEmailExistsAlready(email)
                     withContext(Dispatchers.Main){
-                        if (!emailExistCheck){ //if email address is associated to an existing account
-                            withContext((Dispatchers.IO)){
-                                authViewModel.sendPasswordResetEmail(email)
-                            }
-                            val intent = Intent(this@FindAccountActivity, ResetPasswordActivity::class.java)
-                            intent.putExtra("email", email)
+                        if (emailExistCheck){ //if email address is NOT associated to an existing account
+                            errorMessageTV.text=""
+                            newAccount = UserModel(email,"", "", "", "")
+                            val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
+                            intent.putExtra("userAccount", newAccount)
                             startActivity(intent)
+
                         }
                         else{
-                            errorMessageTV.text = "This Email does not Belong to an Existing Account"
+                            errorMessageTV.text = "This Email is on Another Account"
                         }
                     }
                 }
             }
         }
+    }
+
+    fun goToLoginPage(view: View){
+        val loginIntent: Intent = Intent(this@EnterEmailActivity, LoginActivity::class.java)
+        startActivity(loginIntent)
     }
 
     private fun checkFormatOfEmail(email: String): Boolean{

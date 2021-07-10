@@ -10,47 +10,50 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PicShare">
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name="ca.nkrishnaswamy.picshare.ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EnterEmailActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.EnterEmailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EnterNamePasswordActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.EnterNamePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.AddProfilePhotoActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.AddProfilePhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ConfirmPhotoActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.ConfirmPhotoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SearchAccountsActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.SearchAccountsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.FindAccountActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.FindAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.PickUsernameActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.PickUsernameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.NewPostActivity"
             android:screenOrientation="portrait" />
     </application>
 

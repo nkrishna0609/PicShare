@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare.activities
+package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

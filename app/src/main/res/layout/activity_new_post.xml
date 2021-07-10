@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:weightSum="6"
+        android:id="@+id/linLayoutTop">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_close_24"
+            android:backgroundTint="@color/black"
+            android:id="@+id/cancel_button"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="New Post"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="11dp"
+            android:paddingBottom="20dp"
+            android:textStyle="bold"
+            android:paddingStart="11dp" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_check_24"
+            android:backgroundTint="@color/black"
+            android:id="@+id/confirm_button"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1080px"
+        android:layout_below="@id/linLayoutTop"
+        android:id="@+id/picture"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:text="Change Photo"
+        android:onClick="changePhoto"
+        android:layout_below="@+id/picture"
+        android:textColor="@color/blue"
+        android:textSize="22dp"
+        android:id="@+id/changeProfilePicTV"
+        android:gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/changeProfilePicTV"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:id="@+id/linLayoutUsernameCaption">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            android:inputType="text"
+            android:hint="Write a caption..."
+            android:id="@+id/postCaption"
+            android:textColorHint="@color/grey"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.MainActivity"
+    tools:context=".ui.activities.MainActivity"
     android:background="@color/black">
 
     <LinearLayout
@@ -35,6 +35,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
+            android:id="@+id/newPostButton"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_add_box_24"
             android:backgroundTint="@color/black"
@@ -199,7 +200,8 @@
         android:layout_below="@id/linLayoutNameBio"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="Edit Profile"
         android:id="@+id/editProfileButton"
         android:textAllCaps="false"
@@ -207,6 +209,13 @@
         android:textStyle="bold"
         app:strokeColor="@color/dark_grey"
         app:strokeWidth="2dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/editProfileButton"
+        android:layout_above="@id/linLayoutBottom"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,11 +1,10 @@
 package ca.nkrishnaswamy.picshare.data.db.DAOs
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.relations.SignedInAccountWithUserPosts
 
 @Dao
 interface UserAccountDAO {
@@ -21,5 +20,12 @@ interface UserAccountDAO {
 
     @Update
     fun updateUser(currentUser: UserModel)
+
+    @Insert
+    fun insertPost(post: UserPost)
+
+    @Transaction
+    @Query("SELECT * FROM signedInAccount")
+    fun getUserModelWithUserPosts() : LiveData<List<SignedInAccountWithUserPosts>>
 
 }
