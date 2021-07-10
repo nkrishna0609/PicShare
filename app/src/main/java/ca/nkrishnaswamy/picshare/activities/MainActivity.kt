@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bio : String
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
-    private var typeOfProfilePic = NO_PROFILE_PIC
     private lateinit var usernameTV : TextView
     private lateinit var fullNameTV : TextView
     private lateinit var bioTV : TextView
@@ -71,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 fullNameTV.text = fullName
                 bio = t.getBio()
                 bioTV.text = bio
-                typeOfProfilePic = t.getTypeOfProfilePic()
                 uriImgPathString = t.getProfilePicPathFromUri()
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
@@ -133,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(baseContext, "Account Deleted.", Toast.LENGTH_LONG).show()
                             CoroutineScope(Dispatchers.IO).launch{
                                 val profilePicCache = File(uriImgPathString)
-                                if (typeOfProfilePic == LAST_PROFILE_PIC_FROM_CAMERA &&  profilePicCache.exists()) {
+                                if (profilePicCache.exists()) {
                                     if (!profilePicCache.delete()) {
                                         profilePicCache.canonicalFile.delete()
                                         if (profilePicCache.exists()) {

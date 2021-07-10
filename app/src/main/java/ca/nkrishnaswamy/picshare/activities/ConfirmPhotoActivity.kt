@@ -54,7 +54,6 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
         intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
-        intent.putExtra("checkToManuallyUpdateImageView", true)
         startActivity(intent)
         finish()
     }
@@ -86,7 +85,6 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             intent.putExtra("userAccount", user)
             intent.putExtra("password", password)
             intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
-            intent.putExtra("checkToManuallyUpdateImageView", true)
             startActivity(intent)
             finish()
         }
@@ -119,7 +117,6 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
             val email : String = user.getEmail()
-            user.setTypeOfProfilePic(lastPhotoTakenType)
             val confirmPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 authViewModel.registerUserByEmailAndPassword(email, password)

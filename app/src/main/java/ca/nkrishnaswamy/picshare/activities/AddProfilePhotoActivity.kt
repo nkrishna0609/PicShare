@@ -150,7 +150,6 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             R.drawable.profile_placeholder_pic
         )
         user.setProfilePicPathFromUri(uriDefaultImgString)
-        user.setTypeOfProfilePic(lastPhotoTakenType)
         val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)

@@ -1,10 +1,18 @@
 package ca.nkrishnaswamy.picshare.activities
 
+import android.content.ContentResolver
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
+import android.view.View
 import android.widget.ImageButton
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
@@ -16,6 +24,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var exitButton : ImageButton
@@ -31,8 +41,50 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var usernameET : TextInputEditText
     private lateinit var bioET : TextInputEditText
     private lateinit var user: UserModel
+    private var changeCheck : Boolean = false
 
-    private var typeOfProfilePic = NO_PROFILE_PIC
+    private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val uriImg : Uri? = result.data?.data
+        if (uriImg == null || result.resultCode != RESULT_OK) {
+            return@registerForActivityResult
+        }
+        profilePic.setImageDrawable(null)
+        val takeFlags = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
+        CoroutineScope(Dispatchers.IO).launch {
+            val resolver : ContentResolver = applicationContext.contentResolver
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                resolver.takePersistableUriPermission(uriImg, takeFlags)
+            }
+        }
+        user.setProfilePicPathFromUri(uriImg.toString())
+        profilePic.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+        changeCheck = true
+    }
+
+    private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val bitmapImg : Bitmap? = result.data?.getParcelableExtra("data")
+        if (bitmapImg == null || result.resultCode != RESULT_OK) {
+            return@registerForActivityResult
+        }
+        profilePic.setImageDrawable(null)
+        val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
+        file.delete()
+        file.createNewFile()
+        val fileOutputStream = file.outputStream()
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmapImg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        fileOutputStream.write(byteArray)
+        fileOutputStream.flush()
+        fileOutputStream.close()
+        byteArrayOutputStream.close()
+
+        val uriImg = file.toURI()
+
+        user.setProfilePicPathFromUri(uriImg.toString())
+        profilePic.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+        changeCheck = true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +113,6 @@ class EditProfileActivity : AppCompatActivity() {
                 nameET.setText(fullName)
                 bio = t.getBio()
                 bioET.setText(bio)
-                typeOfProfilePic = t.getTypeOfProfilePic()
                 uriImgPathString = t.getProfilePicPathFromUri()
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
@@ -89,21 +140,20 @@ class EditProfileActivity : AppCompatActivity() {
                     tilUsername.helperText = "Username is Empty"
                 }
             } else{
-                var check: Boolean = false
                 if (usernameInET != username) {
                     //must update username field in db - later must check if username is not taken by another user once I set up the Node/Express server
                     user.setUsername(usernameInET)
-                    check = true
+                    changeCheck = true
                 }
                 if (nameInET != fullName) {
                     user.setName(nameInET)
-                    check = true
+                    changeCheck = true
                 }
                 if (bioInET != bio) {
                     user.setBio(bioInET)
-                    check = true
+                    changeCheck = true
                 }
-                if (check) {
+                if (changeCheck) {
                     CoroutineScope(Dispatchers.IO).launch{
                         signedInUserViewModel.updateUser(user)
                     }
@@ -121,4 +171,41 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    fun changePhoto(view: View){
+        val buttonList  = arrayOf("Take Photo", "Choose From Library")
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this,
+            R.style.Theme_AppCompat_Dialog_Alert
+        )
+        builder.setTitle("Change Profile Photo")
+
+        builder.setItems(buttonList) { _, which ->
+            when(which) {
+                0 -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val intentTakePhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        takePhotoLauncher.launch(intentTakePhoto)
+                    }
+                }
+                1 -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        lateinit var intentPickPhoto : Intent
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            intentPickPhoto = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            intentPickPhoto.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                        }
+                        else{
+                            intentPickPhoto = Intent(Intent.ACTION_GET_CONTENT)
+                        }
+                        intentPickPhoto.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+                        intentPickPhoto.type = "image/*"
+                        intentPickPhoto.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        pickPhotoLauncher.launch(intentPickPhoto)
+                    }
+                }
+            }
+        }
+        builder.show()
+    }
+
 }
