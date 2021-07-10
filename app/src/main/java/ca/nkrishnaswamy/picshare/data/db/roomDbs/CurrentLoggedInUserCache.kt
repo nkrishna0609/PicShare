@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 
-@Database(entities= [UserModel::class], version = 2, exportSchema = false)
+@Database(entities= [UserModel::class], version = 3, exportSchema = false)
 abstract class CurrentLoggedInUserCache : RoomDatabase() {
     abstract fun userAccountDAO() : UserAccountDAO
 
@@ -20,8 +20,8 @@ abstract class CurrentLoggedInUserCache : RoomDatabase() {
                 var instance = INSTANCE
 
                 if (instance == null){
-                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv3").addMigrations(
-                        MIGRATION_2_3).build()
+                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv4").addMigrations(
+                        MIGRATION_3_4).build()
                     INSTANCE = instance
                 }
                 return instance

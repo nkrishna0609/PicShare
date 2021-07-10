@@ -143,8 +143,6 @@
             app:hintTextAppearance="@style/TextAppearanceHint"
             android:textColorHint="@color/grey"
             app:boxStrokeColor="@color/white"
-            app:helperText=""
-            app:helperTextTextColor="@color/red"
             android:layout_marginTop="25dp">
 
             <com.google.android.material.textfield.TextInputEditText

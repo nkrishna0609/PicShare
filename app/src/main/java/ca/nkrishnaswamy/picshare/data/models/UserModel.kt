@@ -19,7 +19,9 @@ data class UserModel(
     @ColumnInfo(name="user_profile_pic_path_from_uri")
     private var profilePicPathFromUri: String,
     @ColumnInfo(name="user_type_of_Profile_Pic")
-    private var typeOfProfilePic : Int
+    private var typeOfProfilePic : Int,
+    @ColumnInfo(name="user_bio")
+    private var bio : String
     ): Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -67,6 +69,14 @@ data class UserModel(
 
     fun setTypeOfProfilePic(type : Int) {
         typeOfProfilePic = type
+    }
+
+    fun getBio() : String {
+        return bio
+    }
+
+    fun setBio(enteredBio : String) {
+        bio = enteredBio
     }
 
 }

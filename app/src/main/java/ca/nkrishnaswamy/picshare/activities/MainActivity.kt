@@ -32,11 +32,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var email : String
     private lateinit var username : String
     private lateinit var fullName : String
+    private lateinit var bio : String
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
     private var typeOfProfilePic = NO_PROFILE_PIC
     private lateinit var usernameTV : TextView
     private lateinit var fullNameTV : TextView
+    private lateinit var bioTV : TextView
     private lateinit var editProfileButton : MaterialButton
     private lateinit var verticalPopUpMenuButton : ImageButton
     private lateinit var logOutButton : AppCompatButton
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         profilePic = findViewById(R.id.profileImage)
         usernameTV = findViewById(R.id.username)
         fullNameTV = findViewById(R.id.name)
+        bioTV = findViewById(R.id.bio)
         searchPageButton = findViewById(R.id.searchPageButton)
         editProfileButton = findViewById(R.id.editProfileButton)
         verticalPopUpMenuButton = findViewById(R.id.verticalPopUpMenu)
@@ -66,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                 usernameTV.text = username
                 fullName = t.getName()
                 fullNameTV.text = fullName
+                bio = t.getBio()
+                bioTV.text = bio
                 typeOfProfilePic = t.getTypeOfProfilePic()
                 uriImgPathString = t.getProfilePicPathFromUri()
                 uriImg = Uri.parse(uriImgPathString)

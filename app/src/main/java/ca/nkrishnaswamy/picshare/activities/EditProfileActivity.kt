@@ -24,6 +24,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var username : String
     private lateinit var fullName : String
+    private lateinit var bio : String
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
     private lateinit var nameET : TextInputEditText
@@ -58,6 +59,8 @@ class EditProfileActivity : AppCompatActivity() {
                 usernameET.setText(username)
                 fullName = t.getName()
                 nameET.setText(fullName)
+                bio = t.getBio()
+                bioET.setText(bio)
                 typeOfProfilePic = t.getTypeOfProfilePic()
                 uriImgPathString = t.getProfilePicPathFromUri()
                 uriImg = Uri.parse(uriImgPathString)
@@ -66,10 +69,11 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
         saveButton.setOnClickListener {
-            val tilName : TextInputLayout = findViewById(R.id.tilName)
+            val tilName : TextInputLayout = findViewById(R.id.tilName) //til = text input layout
             val tilUsername : TextInputLayout = findViewById(R.id.tilUsername)
             val usernameInET : String = usernameET.text.toString()
             val nameInET : String = nameET.text.toString()
+            val bioInET : String = bioET.text.toString()
 
             tilName.helperText = ""
             tilUsername.helperText = ""
@@ -93,6 +97,10 @@ class EditProfileActivity : AppCompatActivity() {
                 }
                 if (nameInET != fullName) {
                     user.setName(nameInET)
+                    check = true
+                }
+                if (bioInET != bio) {
+                    user.setBio(bioInET)
                     check = true
                 }
                 if (check) {

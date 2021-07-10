@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:id="@+id/username"
-            android:text="@{viewModel.currentLoggedInUser.username}"
             android:textColor="@color/white"
             android:textSize="30dp"
             android:paddingTop="20dp"
@@ -182,7 +181,6 @@
             android:id="@+id/name"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:text="@{viewModel.currentLoggedInUser.name}"
             android:textStyle="bold"/>
 
         <TextView
