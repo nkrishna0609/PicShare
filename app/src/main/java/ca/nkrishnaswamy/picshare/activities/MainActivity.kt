@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logOutButton : AppCompatButton
     private lateinit var deleteAccountButton : AppCompatButton
     private lateinit var verticalMenuDialog : Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         searchPageButton = findViewById(R.id.searchPageButton)
         editProfileButton = findViewById(R.id.editProfileButton)
         verticalPopUpMenuButton = findViewById(R.id.verticalPopUpMenu)
+
+        verticalMenuDialog = BottomSheetDialog(this)
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
@@ -77,7 +80,6 @@ class MainActivity : AppCompatActivity() {
 
         verticalPopUpMenuButton.setOnClickListener {
             val verticalMenu = layoutInflater.inflate(R.layout.layout_modal_bottom_sheel, null)
-            verticalMenuDialog = BottomSheetDialog(this)
             verticalMenuDialog.setContentView(verticalMenu)
             verticalMenuDialog.show()
 

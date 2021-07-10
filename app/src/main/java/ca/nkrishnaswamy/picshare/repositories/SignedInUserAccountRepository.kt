@@ -5,9 +5,10 @@ import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 
 class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
+    private var livedataUser : LiveData<UserModel> = accountDao.retrieveCurrentLoggedInUser()
 
     fun getCurrentLoggedInUser() : LiveData<UserModel> {
-        return accountDao.retrieveCurrentLoggedInUser()
+        return livedataUser
     }
 
     fun logInUser(account: UserModel) {
@@ -16,6 +17,10 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
 
     fun signOut() {
         accountDao.signOut()
+    }
+
+    fun updateUser(account: UserModel) {
+        accountDao.updateUser(account)
     }
 
 }

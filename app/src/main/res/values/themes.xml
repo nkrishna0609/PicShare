@@ -27,4 +27,8 @@
         <item name="android:textSize">16dp</item>
     </style>
 
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlActivated">@color/blue</item>
+    </style>
+
 </resources>

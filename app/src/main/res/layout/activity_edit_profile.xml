@@ -22,6 +22,7 @@
             android:scaleType="fitCenter"
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_close_24"
+            android:id="@+id/exitButton"
             android:backgroundTint="@color/black" />
 
         <TextView
@@ -38,6 +39,7 @@
             android:paddingStart="15dp" />
 
         <ImageButton
+            android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -57,8 +59,7 @@
         android:layout_marginTop="20dp"
         app:civ_border_color="@color/black"
         android:layout_below="@+id/linLayoutTop"
-        android:layout_centerInParent="true"
-        android:src="@drawable/profile_placeholder_pic"/>
+        android:layout_centerInParent="true" />
 
     <TextView
         android:layout_height="wrap_content"
@@ -82,6 +83,8 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            android:theme="@style/TextInputLayoutAppearance"
             style="@style/Widget.AppTheme.TextInputWhiteOutline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,8 +96,10 @@
             app:helperTextTextColor="@color/red">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/white"
@@ -103,6 +108,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilUsername"
+            android:theme="@style/TextInputLayoutAppearance"
             style="@style/Widget.AppTheme.TextInputWhiteOutline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,8 +122,10 @@
             android:layout_marginTop="25dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernameET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/white"
@@ -125,6 +134,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilBio"
+            android:theme="@style/TextInputLayoutAppearance"
             style="@style/Widget.AppTheme.TextInputWhiteOutline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,8 +148,10 @@
             android:layout_marginTop="25dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bioET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/white"

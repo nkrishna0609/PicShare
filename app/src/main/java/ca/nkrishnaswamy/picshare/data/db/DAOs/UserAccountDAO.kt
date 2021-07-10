@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 
 @Dao
@@ -17,5 +18,8 @@ interface UserAccountDAO {
 
     @Query("DELETE FROM signedInAccount")
     fun signOut()
+
+    @Update
+    fun updateUser(currentUser: UserModel)
 
 }

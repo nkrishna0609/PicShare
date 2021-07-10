@@ -12,9 +12,14 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
 
     private val userAccountDao : UserAccountDAO = CurrentLoggedInUserCache.getInstance(application).userAccountDAO()
     private val repository = SignedInUserAccountRepository(userAccountDao)
+    private var livedataUser : LiveData<UserModel> = repository.getCurrentLoggedInUser()
 
     fun getCurrentLoggedInUser(): LiveData<UserModel> {
-        return repository.getCurrentLoggedInUser()
+        return livedataUser
+    }
+
+    fun updateUser(account: UserModel) {
+        repository.updateUser(account)
     }
 
     fun logInUser(account: UserModel) {
