@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PicShare">
-        <activity android:name="ca.nkrishnaswamy.picshare.ui.activities.LoginActivity">
+        <activity android:name="ca.nkrishnaswamy.picshare.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,7 +41,7 @@
             android:name="ca.nkrishnaswamy.picshare.ui.activities.SearchAccountsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ca.nkrishnaswamy.picshare.ui.activities.MainActivity"
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="ca.nkrishnaswamy.picshare.ui.activities.FindAccountActivity"

@@ -16,7 +16,7 @@ interface UserAccountDAO {
     fun logInUser(currentUser: UserModel)
 
     @Query("DELETE FROM signedInAccount")
-    fun signOut()
+    fun deleteAccount()
 
     @Update
     fun updateUser(currentUser: UserModel)
@@ -30,4 +30,7 @@ interface UserAccountDAO {
 
     @Delete
     fun deletePost(post: UserPost)
+
+    @Query("DELETE FROM userPost")
+    fun deleteAllPosts()
 }

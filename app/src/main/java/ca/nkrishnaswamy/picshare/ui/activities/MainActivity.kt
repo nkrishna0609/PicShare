@@ -161,6 +161,11 @@ class MainActivity : AppCompatActivity() {
                 postCount = t.getPostsNum()
                 postCountTV.text = postCount.toString()
             }
+            else{
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
         })
 
         signedInUserViewModel.getPosts().observe(this, {
@@ -182,15 +187,15 @@ class MainActivity : AppCompatActivity() {
             logOutButton = verticalMenuDialog.findViewById(R.id.logOutButton)
             deleteAccountButton = verticalMenuDialog.findViewById(R.id.deleteAccountButton)
 
-            logOutButton.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch{
-                    signedInUserViewModel.signOut(applicationContext)
-                    authViewModel.signOutUserFromFirebase()
-                }
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
-            }
+            //logOutButton.setOnClickListener {
+                //CoroutineScope(Dispatchers.IO).launch{
+                    //signedInUserViewModel.signOut(applicationContext)
+                    //authViewModel.signOutUserFromFirebase()
+                //}
+                //val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                //startActivity(intent)
+            //}
 
             deleteAccountButton.setOnClickListener {
                 showDialogDeleteAccount()
@@ -262,6 +267,9 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         if (check) {
                             Toast.makeText(baseContext, "Account Deleted", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
                             CoroutineScope(Dispatchers.IO).launch{
                                 //val profilePicCache = File(uriImgPathString)
                                 //if (profilePicCache.exists()) {
@@ -272,12 +280,8 @@ class MainActivity : AppCompatActivity() {
                                         //}
                                     //}
                                 //}
-                                signedInUserViewModel.signOut(applicationContext)
-                                authViewModel.signOutUserFromFirebase()
+                                signedInUserViewModel.deleteUser(applicationContext)
                             }
-                            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
                         }
                     }
                 }

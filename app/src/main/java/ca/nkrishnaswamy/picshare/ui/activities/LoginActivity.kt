@@ -33,13 +33,6 @@ class LoginActivity : AppCompatActivity() {
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
         signedInUserVM = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
 
-        val fireBaseCurrentLoggedInUser = authViewModel.getCurrentSignedInFirebaseUser()
-        if (fireBaseCurrentLoggedInUser != null){
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-        }
-
         emailEnterText = findViewById(R.id.emailEnter)
         passwordEnterText = findViewById(R.id.passwordEnter)
 

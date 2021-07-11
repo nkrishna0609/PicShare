@@ -30,8 +30,13 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         repository.logInUser(account)
     }
 
-    fun signOut(context : Context) {
-        repository.signOut(context)
+    //fun signOut(context : Context) {
+        //repository.signOut(context)
+    //}
+
+    fun deleteUser(context : Context) {
+        deleteAllPosts()
+        repository.deleteAccount(context)
     }
 
     fun addPost(post : UserPost) {
@@ -44,5 +49,9 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
 
     fun deletePost(post: UserPost) {
         repository.deletePost(post)
+    }
+
+    private fun deleteAllPosts() {
+        repository.deleteAllPosts()
     }
 }

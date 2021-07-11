@@ -19,10 +19,9 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         accountDao.logInUser(account)
     }
 
-    fun signOut(context : Context) {
-        accountDao.signOut()
-        context.cacheDir.deleteRecursively()
-    }
+    //fun signOut(context : Context) {
+        //accountDao.signOut()
+    //}
 
     fun updateUser(account: UserModel) {
         accountDao.updateUser(account)
@@ -38,6 +37,15 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
 
     fun deletePost(post : UserPost) {
         accountDao.deletePost(post)
+    }
+
+    fun deleteAllPosts() {
+        accountDao.deleteAllPosts()
+    }
+
+    fun deleteAccount(context : Context) {
+        context.cacheDir.deleteRecursively()
+        accountDao.deleteAccount()
     }
 
 }
