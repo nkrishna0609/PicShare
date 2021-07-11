@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_grey2">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deletePostButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Post"
+        android:textSize="16dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:background="@color/dark_grey2"
+        android:backgroundTint="@color/dark_grey2"
+        />
+
+</RelativeLayout>

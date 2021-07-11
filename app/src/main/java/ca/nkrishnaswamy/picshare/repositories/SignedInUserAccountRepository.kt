@@ -34,4 +34,8 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return livedataPostList
     }
 
+    fun deletePost(post : UserPost) {
+        accountDao.deletePost(post)
+    }
+
 }

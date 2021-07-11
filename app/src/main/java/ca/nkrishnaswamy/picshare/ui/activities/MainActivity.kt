@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
+import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.UserPostsAdapter
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
@@ -35,6 +37,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var user : UserModel
     private lateinit var searchPageButton: ImageButton
     private lateinit var profilePic: CircleImageView
     private lateinit var signedInUserViewModel : SignedInUserViewModel
@@ -56,12 +59,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var verticalMenuDialog : Dialog
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : UserPostsAdapter
+    private lateinit var postCountTV : TextView
+    private lateinit var followingCountTV : TextView
+    private lateinit var followersCountTV : TextView
+    private var postCount : Int = 0
+    private var followingCount : Int = 0
+    private var followersCount : Int = 0
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
         if (uriImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
+        val newPost = UserPost(0,"", "", email)
         val takeFlags = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
         CoroutineScope(Dispatchers.IO).launch {
             val resolver : ContentResolver = applicationContext.contentResolver
@@ -69,9 +79,9 @@ class MainActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
+        newPost.setUriImgPathString(uriImg.toString())
         val intent = Intent(this@MainActivity, NewPostActivity::class.java)
-        intent.putExtra("postPic", uriImg.toString())
-        intent.putExtra("email", email)
+        intent.putExtra("post", newPost)
         startActivity(intent)
     }
 
@@ -80,8 +90,13 @@ class MainActivity : AppCompatActivity() {
         if (bitmapImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
-        val file = File(applicationContext.cacheDir, "tempCachePostPic")
-        file.delete()
+        val newPost = UserPost(0,"", "", email)
+        var fileChildName = "tempCachePostPic" + getRandomString(20)
+        var file = File(applicationContext.cacheDir, fileChildName)
+        while (file.exists()) {
+            fileChildName = "tempCachePostPic" + getRandomString(20)
+            file = File(applicationContext.cacheDir, "tempCachePostPic" + fileChildName)
+        }
         file.createNewFile()
         val fileOutputStream = file.outputStream()
         val byteArrayOutputStream = ByteArrayOutputStream()
@@ -93,10 +108,10 @@ class MainActivity : AppCompatActivity() {
         byteArrayOutputStream.close()
 
         val uriImg = file.toURI()
-
+        newPost.setUriImgPathString(uriImg.toString())
         val intent = Intent(this@MainActivity, NewPostActivity::class.java)
-        intent.putExtra("postPic", uriImg.toString())
-        intent.putExtra("email", email)
+        intent.putExtra("post", newPost)
+        intent.putExtra("fileChildName", fileChildName)
         startActivity(intent)
     }
 
@@ -116,6 +131,9 @@ class MainActivity : AppCompatActivity() {
         usernameTV = findViewById(R.id.username)
         fullNameTV = findViewById(R.id.name)
         bioTV = findViewById(R.id.bio)
+        postCountTV = findViewById(R.id.postCountTV)
+        followersCountTV = findViewById(R.id.followersCountTV)
+        followingCountTV = findViewById(R.id.followingCountTV)
         searchPageButton = findViewById(R.id.searchPageButton)
         editProfileButton = findViewById(R.id.editProfileButton)
         verticalPopUpMenuButton = findViewById(R.id.verticalPopUpMenu)
@@ -125,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
+                user = t
                 email = t.getEmail()
                 username = t.getUsername()
                 usernameTV.text = username
@@ -135,11 +154,19 @@ class MainActivity : AppCompatActivity() {
                 uriImgPathString = t.getProfilePicPathFromUri()
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
+                followersCount = t.getFollowerNum()
+                followersCountTV.text = followersCount.toString()
+                followingCount = t.getFollowingNum()
+                followingCountTV.text = followingCount.toString()
+                postCount = t.getPostsNum()
+                postCountTV.text = postCount.toString()
             }
         })
 
         signedInUserViewModel.getPosts().observe(this, {
-            adapter.setPostList(it[0].userPosts)
+            if (it != null && it.isNotEmpty()) {
+                adapter.setPostList(it[0].userPosts)
+            }
         })
 
         editProfileButton.setOnClickListener {
@@ -148,7 +175,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         verticalPopUpMenuButton.setOnClickListener {
-            val verticalMenu = layoutInflater.inflate(R.layout.layout_modal_bottom_sheel, null)
+            val verticalMenu = layoutInflater.inflate(R.layout.layout_modal_bottom_sheet_account, null)
             verticalMenuDialog.setContentView(verticalMenu)
             verticalMenuDialog.show()
 
@@ -260,6 +287,11 @@ class MainActivity : AppCompatActivity() {
             dialogInterface.dismiss()
         }
         builder.show()
+    }
+
+    private fun getRandomString(length : Int) : String {
+        val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        return (1..length).map { charset.random() }.joinToString("")
     }
 
 }

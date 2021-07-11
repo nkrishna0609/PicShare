@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
+import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.data.models.UserPost
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,8 +35,11 @@ class NewPostActivity : AppCompatActivity() {
     private lateinit var postPhoto : ImageView
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
-    private lateinit var email : String
     private lateinit var signedInUserViewModel : SignedInUserViewModel
+    private var postNum : Int = 0
+    private lateinit var user: UserModel
+    private lateinit var post: UserPost
+    private lateinit var fileChildName : String
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -60,7 +64,7 @@ class NewPostActivity : AppCompatActivity() {
             return@registerForActivityResult
         }
         postPhoto.setImageDrawable(null)
-        val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
+        val file = File(applicationContext.cacheDir, fileChildName)
         file.delete()
         file.createNewFile()
         val fileOutputStream = file.outputStream()
@@ -89,10 +93,18 @@ class NewPostActivity : AppCompatActivity() {
         captionET = findViewById(R.id.postCaption)
         postPhoto = findViewById(R.id.picture)
 
-        email = intent.getStringExtra("email") as String
-        uriImgPathString = intent.getStringExtra("postPic") as String
+        post = intent.getParcelableExtra("post")!!
+        fileChildName = intent.getStringExtra("fileChildName").toString()
+        uriImgPathString = post.getUriImgPathString()
         uriImg = Uri.parse(uriImgPathString)
         postPhoto.setImageURI(uriImg)
+
+        signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
+            if (it != null) {
+                user = it
+                postNum = user.getPostsNum()
+            }
+        })
 
         completePostButton.setOnClickListener {
             val caption: String = captionET.text.toString()
@@ -100,9 +112,12 @@ class NewPostActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "Write a Caption", Toast.LENGTH_LONG).show()
             }
             else {
-                val newPost = UserPost(caption, uriImgPathString, email)
+                post.setCaption(caption)
                 CoroutineScope(Dispatchers.IO).launch {
-                    signedInUserViewModel.addPost(newPost)
+                    signedInUserViewModel.addPost(post)
+                    postNum++
+                    user.setPostsNum(postNum)
+                    signedInUserViewModel.updateUser(user)
                 }
                 val intentExit = Intent(this@NewPostActivity, MainActivity::class.java)
                 startActivity(intentExit)
@@ -163,5 +178,4 @@ class NewPostActivity : AppCompatActivity() {
         }
         builder.show()
     }
-
 }

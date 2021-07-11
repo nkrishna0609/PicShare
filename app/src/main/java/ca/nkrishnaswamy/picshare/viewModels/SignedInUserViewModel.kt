@@ -41,4 +41,7 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return livedataPostList
     }
 
+    fun deletePost(post: UserPost) {
+        repository.deletePost(post)
+    }
 }

@@ -92,12 +92,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
 
-        signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
-            if (t != null) {
-                user = t
-            }
-        })
-
         exitButton = findViewById(R.id.exitButton)
         saveButton = findViewById(R.id.saveButton)
         profilePic = findViewById(R.id.profileImage)

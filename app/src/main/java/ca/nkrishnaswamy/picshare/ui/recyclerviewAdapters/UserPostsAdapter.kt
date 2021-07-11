@@ -1,14 +1,17 @@
 package ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.ui.activities.UserPostViewActivity
 
 class UserPostsAdapter internal constructor(val context: Context) : RecyclerView.Adapter<UserPostsAdapter.UserPostsViewHolder>() {
 
@@ -16,6 +19,7 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
 
     class UserPostsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postImageView: ImageView = itemView.findViewById(R.id.postImage)
+        val relativeLayoutPost : LinearLayout = itemView.findViewById(R.id.postLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostsViewHolder {
@@ -27,6 +31,11 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
     override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].getUriImgPathString()
         holder.postImageView.setImageURI(Uri.parse(uriPath))
+        holder.relativeLayoutPost.setOnClickListener {
+            val intent = Intent(context, UserPostViewActivity::class.java)
+            intent.putExtra("post", postList[position])
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

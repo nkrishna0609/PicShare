@@ -55,6 +55,9 @@
         <activity
             android:name="ca.nkrishnaswamy.picshare.ui.activities.NewPostActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.UserPostViewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

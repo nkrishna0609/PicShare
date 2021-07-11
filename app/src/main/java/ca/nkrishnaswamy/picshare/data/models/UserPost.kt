@@ -3,13 +3,14 @@ package ca.nkrishnaswamy.picshare.data.models
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName="userPost")
 data class UserPost(
+    @PrimaryKey(autoGenerate = true)
+    private var id: Long = 0,
     @ColumnInfo(name="post_caption")
     private var caption: String,
     @ColumnInfo(name="post_uri_img_path_string")
@@ -17,9 +18,6 @@ data class UserPost(
     @ColumnInfo(name="email")
     private var email: String     //identifier of user who has this post
 ): Parcelable {
-
-    @PrimaryKey(autoGenerate = true)
-    private var id: Long = 0
 
     fun getId(): Long{
         return id
@@ -43,5 +41,9 @@ data class UserPost(
 
     fun getUriImgPathString(): String {
         return uriImgPathString
+    }
+
+    fun setUriImgPathString(imgStringPath: String) {
+        uriImgPathString = imgStringPath
     }
 }
