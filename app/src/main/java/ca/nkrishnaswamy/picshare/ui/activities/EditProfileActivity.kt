@@ -101,6 +101,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
+                user = t
                 username = t.getUsername()
                 usernameET.setText(username)
                 fullName = t.getName()

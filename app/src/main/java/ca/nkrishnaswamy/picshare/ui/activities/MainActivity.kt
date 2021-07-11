@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
 
             logOutButton.setOnClickListener {
                 CoroutineScope(Dispatchers.IO).launch{
-                    signedInUserViewModel.signOut()
+                    signedInUserViewModel.signOut(applicationContext)
                     authViewModel.signOutUserFromFirebase()
                 }
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -263,16 +263,16 @@ class MainActivity : AppCompatActivity() {
                         if (check) {
                             Toast.makeText(baseContext, "Account Deleted", Toast.LENGTH_LONG).show()
                             CoroutineScope(Dispatchers.IO).launch{
-                                val profilePicCache = File(uriImgPathString)
-                                if (profilePicCache.exists()) {
-                                    if (!profilePicCache.delete()) {
-                                        profilePicCache.canonicalFile.delete()
-                                        if (profilePicCache.exists()) {
-                                            applicationContext.deleteFile(profilePicCache.name)
-                                        }
-                                    }
-                                }
-                                signedInUserViewModel.signOut()
+                                //val profilePicCache = File(uriImgPathString)
+                                //if (profilePicCache.exists()) {
+                                    //if (!profilePicCache.delete()) {
+                                        //profilePicCache.canonicalFile.delete()
+                                        //if (profilePicCache.exists()) {
+                                            //applicationContext.deleteFile(profilePicCache.name)
+                                        //}
+                                    //}
+                                //}
+                                signedInUserViewModel.signOut(applicationContext)
                                 authViewModel.signOutUserFromFirebase()
                             }
                             val intent = Intent(this@MainActivity, LoginActivity::class.java)

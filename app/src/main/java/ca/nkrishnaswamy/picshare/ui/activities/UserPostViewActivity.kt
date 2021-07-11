@@ -125,15 +125,15 @@ class UserPostViewActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             user.setPostsNum(user.getPostsNum()-1)
             signedInUserViewModel.updateUser(user)
-            val imgCache = File(profilePicStringUriPath)
-            if (imgCache.exists()) {
-                if (!imgCache.delete()) {
-                    imgCache.canonicalFile.delete()
-                    if (imgCache.exists()) {
-                        applicationContext.deleteFile(imgCache.name)
-                    }
-                }
-            }
+            //val imgCache = File(profilePicStringUriPath)
+            //if (imgCache.exists()) {
+                //if (!imgCache.delete()) {
+                    //imgCache.canonicalFile.delete()
+                    //if (imgCache.exists()) {
+                        //applicationContext.deleteFile(imgCache.name)
+                    //}
+                //}
+            //}
         }
         val intent = Intent(this@UserPostViewActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

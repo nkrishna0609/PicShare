@@ -1,5 +1,6 @@
 package ca.nkrishnaswamy.picshare.repositories
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
 import ca.nkrishnaswamy.picshare.data.models.UserModel
@@ -18,8 +19,9 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         accountDao.logInUser(account)
     }
 
-    fun signOut() {
+    fun signOut(context : Context) {
         accountDao.signOut()
+        context.cacheDir.deleteRecursively()
     }
 
     fun updateUser(account: UserModel) {

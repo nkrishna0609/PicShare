@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.viewModels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
@@ -29,8 +30,8 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         repository.logInUser(account)
     }
 
-    fun signOut() {
-        repository.signOut()
+    fun signOut(context : Context) {
+        repository.signOut(context)
     }
 
     fun addPost(post : UserPost) {
