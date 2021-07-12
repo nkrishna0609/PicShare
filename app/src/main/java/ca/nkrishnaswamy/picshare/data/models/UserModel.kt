@@ -25,9 +25,7 @@ data class UserModel(
     @ColumnInfo(name="user_num_followers")
     private var followerNum : Int,
     @ColumnInfo(name="user_num_following")
-    private var followingNum : Int,
-    @ColumnInfo(name="user_num_posts")
-    private var postsNum : Int
+    private var followingNum : Int
     ): Parcelable {
 
     fun getId(): Long{
@@ -89,13 +87,4 @@ data class UserModel(
     fun setFollowingNum(followingCount : Int) {
         followingNum = followingCount
     }
-
-    fun getPostsNum() : Int {
-        return postsNum
-    }
-
-    fun setPostsNum(postsCount : Int) {
-        postsNum = postsCount
-    }
-
 }

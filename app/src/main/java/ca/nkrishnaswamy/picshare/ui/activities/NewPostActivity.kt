@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.data.models.UserPost
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -36,8 +35,6 @@ class NewPostActivity : AppCompatActivity() {
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
     private lateinit var signedInUserViewModel : SignedInUserViewModel
-    private var postNum : Int = 0
-    private lateinit var user: UserModel
     private lateinit var post: UserPost
     private lateinit var fileChildName : String
 
@@ -55,6 +52,7 @@ class NewPostActivity : AppCompatActivity() {
             }
         }
         uriImgPathString = uriImg.toString()
+        post.setUriImgPathString(uriImgPathString)
         postPhoto.setImageURI(Uri.parse(uriImgPathString))
     }
 
@@ -79,6 +77,7 @@ class NewPostActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         uriImgPathString = uriImg.toString()
+        post.setUriImgPathString(uriImgPathString)
         postPhoto.setImageURI(Uri.parse(uriImgPathString))
     }
 
@@ -99,13 +98,6 @@ class NewPostActivity : AppCompatActivity() {
         uriImg = Uri.parse(uriImgPathString)
         postPhoto.setImageURI(uriImg)
 
-        signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
-            if (it != null) {
-                user = it
-                postNum = user.getPostsNum()
-            }
-        })
-
         completePostButton.setOnClickListener {
             val caption: String = captionET.text.toString()
             if (TextUtils.isEmpty(captionET.text)){
@@ -115,9 +107,6 @@ class NewPostActivity : AppCompatActivity() {
                 post.setCaption(caption)
                 CoroutineScope(Dispatchers.IO).launch {
                     signedInUserViewModel.addPost(post)
-                    postNum++
-                    user.setPostsNum(postNum)
-                    signedInUserViewModel.updateUser(user)
                 }
                 val intentExit = Intent(this@NewPostActivity, MainActivity::class.java)
                 startActivity(intentExit)

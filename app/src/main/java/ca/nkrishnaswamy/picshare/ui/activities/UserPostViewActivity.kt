@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.ViewModelProvider
@@ -24,8 +22,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
 
 class UserPostViewActivity : AppCompatActivity() {
     private lateinit var profilePic : CircleImageView
@@ -37,7 +33,6 @@ class UserPostViewActivity : AppCompatActivity() {
     private lateinit var searchButton : ImageButton
     private lateinit var homeButton : ImageButton
     private lateinit var post : UserPost
-    private lateinit var user: UserModel
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var username : String
     private lateinit var profilePicStringUriPath : String
@@ -74,7 +69,6 @@ class UserPostViewActivity : AppCompatActivity() {
         postPic.setImageURI(Uri.parse(postPicUriStringPath))
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
-            user = it
             username = it.getUsername()
             usernameTV.text = it.getUsername()
             profilePicStringUriPath = it.getProfilePicPathFromUri()
@@ -123,8 +117,6 @@ class UserPostViewActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch{
             signedInUserViewModel.deletePost(post)
             adapter.notifyDataSetChanged()
-            user.setPostsNum(user.getPostsNum()-1)
-            signedInUserViewModel.updateUser(user)
             //val imgCache = File(profilePicStringUriPath)
             //if (imgCache.exists()) {
                 //if (!imgCache.delete()) {

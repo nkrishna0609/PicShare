@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var postCountTV : TextView
     private lateinit var followingCountTV : TextView
     private lateinit var followersCountTV : TextView
-    private var postCount : Int = 0
     private var followingCount : Int = 0
     private var followersCount : Int = 0
 
@@ -158,8 +157,6 @@ class MainActivity : AppCompatActivity() {
                 followersCountTV.text = followersCount.toString()
                 followingCount = t.getFollowingNum()
                 followingCountTV.text = followingCount.toString()
-                postCount = t.getPostsNum()
-                postCountTV.text = postCount.toString()
             }
             else{
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -170,6 +167,7 @@ class MainActivity : AppCompatActivity() {
 
         signedInUserViewModel.getPosts().observe(this, {
             if (it != null && it.isNotEmpty()) {
+                postCountTV.text = it[0].userPosts.size.toString()
                 adapter.setPostList(it[0].userPosts)
             }
         })
