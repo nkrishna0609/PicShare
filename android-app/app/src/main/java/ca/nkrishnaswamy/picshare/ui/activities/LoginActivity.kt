@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                             val idToken = currentSignedInUser?.let { user: FirebaseUser ->
                                 authViewModel.getUserIdToken(user)
                             }
+                            //println("The User Id Token is: " + idToken);
                             //TODO: Retrieve account user from Node.js server with idToken
                             //we send the idToken to server and server will validate using Firebase and get a uid from it
                             //if uid is valid on server, it will send back user account to this app

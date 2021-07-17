@@ -41,6 +41,31 @@ router.get('/users', function(request, response){
     });
 });
 
+// GET - fetches user by Firebase ID Token
+router.get('/users/:idToken', function(request, response){
+    var idToken = request.params.idToken
+
+    admin.auth().verifyIdToken(idToken).then((decodeToken) => {
+        const uid = decodeToken.uid
+        var query = {'firebaseUid': uid};
+        
+        User.findOne(query, function(err, userFound) {
+            if (err) {
+                return response.status(500).json({err, userFound});
+            }
+    
+            if (!userFound){
+                return response.status(500).json({err: "The user does not exist in the database."});
+            }
+            response.json({"user": userFound});
+        });
+    })
+    .catch((error) => {
+        return response.status(500).json({err: "Invalid Firebase ID token."})
+    })
+
+})
+
 // POST - adds user to the database
 router.post('/users/:idToken', function(request, response){
     var user = request.body;
@@ -80,40 +105,56 @@ router.post('/users/:idToken', function(request, response){
 });
 
 // PUT - updates an existing user in the database
-router.put('/users/:email', function(request, response){
-    var email = request.params.email;
+router.put('/users/:idToken', function(request, response){
+    var idToken = request.params.idToken;
     var user = request.body;
 
-    if(user && user.email != email) {
-        return response.status(500).json({err: "Did not find a user with the email provided."});
-    }
-
-      var query = {'email': email};
+    admin.auth().verifyIdToken(idToken).then((decodeToken) => {
+        const uid = decodeToken.uid
+        var query = {'firebaseUid': uid};
+        
+        User.findOne(query, function(err, userFound) {
+            if (err) {
+                return response.status(500).json({err, userFound});
+            }
     
-      User.findOneAndUpdate(query, user, {new: true}, (err, user) => {
-        if(err) {
-          return response.status(500).json({err: err.message});
-        }
-    
-        response.json({'user': user, message: 'User updated.'});
-    });
+            if (!userFound){
+                return response.status(500).json({err: "The user does not exist in the database."});
+            }
+            
+            user['firebaseUid'] = uid;
+            
+            User.findOneAndUpdate(query, user, {new: true}, (err, user) => {
+                if(err) {
+                  return response.status(500).json({err: err.message});
+                }
+            
+                response.json({'user': user, message: 'User updated.'});
+            });
+        });
+    })
+    .catch((error) => {
+        return response.status(500).json({err: "Invalid Firebase ID token."})
+    })
 });
 
 // DELETE - deletes existing user from database
-router.delete('/users/:email', function(request, response){
-    var email = request.params.email;
-    var query = {'email': email};
+router.delete('/users/:idToken', function(request, response){
+    var idToken = request.params.idToken;
 
-    User.findOne(query, function(err, userNew) {
-        if (err) {
-            return response.status(500).json({err, userNew});
-        }
+    admin.auth().verifyIdToken(idToken).then((decodeToken) => {
+        const uid = decodeToken.uid
+        var query = {'firebaseUid': uid};
+        
+        User.findOne(query, function(err, userFound) {
+            if (err) {
+                return response.status(500).json({err, userFound});
+            }
+    
+            if (!userFound){
+                return response.status(500).json({err: "The user does not exist in the database."});
+            }
 
-        if (!userNew){
-            return response.status(500).json({err: "Did not find a user with the email provided."});
-        }
-
-        else {
             User.findOneAndDelete(query, function(err, user){
                 if(err) {
                     return response.status(500).json({err: err.message});
@@ -121,8 +162,11 @@ router.delete('/users/:email', function(request, response){
     
                 response.json({'user': user, message: 'User deleted.'});
             });
-        }
-    });
+        });
+    })
+    .catch((error) => {
+        return response.status(500).json({err: "Invalid Firebase ID token."})
+    })
 });
 
 module.exports = router;
