@@ -24,13 +24,28 @@ router.get('/users', function(request, response){
 // POST - adds user to the database
 router.post('/users', function(request, response){
     var user = request.body;
-    User.create(user, function(err, user){
+    var email = user.email;
+    var query = {'email': email};
+
+    User.findOne(query, function(err, userNew) {
         if (err) {
-            return response.status(500).json({err, user});
+            return response.status(500).json({err, userNew});
         }
 
-        response.json({'user': user, message: 'User Created'});
+        if (userNew){
+            return response.status(500).json({err: "The user already exists in the database."});
+        }
 
+        else {
+            User.create(user, function(err, user){
+                if (err) {
+                    return response.status(500).json({err, user});
+                }
+        
+                response.json({'user': user, message: 'User created.'});
+        
+            });
+        }
     });
 });
 
@@ -41,7 +56,7 @@ router.put('/users/:email', function(request, response){
 
     if(user && user.email != email) {
         return response.status(500).json({err: "Did not find a user with the email provided."});
-      }
+    }
 
       var query = {'email': email};
     
@@ -54,5 +69,30 @@ router.put('/users/:email', function(request, response){
     });
 });
 
+// DELETE - deletes existing user from database
+router.delete('/users/:email', function(request, response){
+    var email = request.params.email;
+    var query = {'email': email};
+
+    User.findOne(query, function(err, userNew) {
+        if (err) {
+            return response.status(500).json({err, userNew});
+        }
+
+        if (!userNew){
+            return response.status(500).json({err: "Did not find a user with the email provided."});
+        }
+
+        else {
+            User.findOneAndDelete(query, function(err, user){
+                if(err) {
+                    return response.status(500).json({err: err.message});
+                }
+    
+                response.json({'user': user, message: 'User deleted.'});
+            });
+        }
+    });
+});
 
 module.exports = router;
