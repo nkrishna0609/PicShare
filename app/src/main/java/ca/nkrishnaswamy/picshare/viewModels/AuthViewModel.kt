@@ -25,6 +25,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         return repository.loginWithEmailAndPassword(email, password)
     }
 
+    suspend fun getUserIdToken(user: FirebaseUser): String? {
+        return repository.getUserIdToken(user)
+    }
+
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
         return repository.getCurrentSignedInFirebaseUser()
     }

@@ -44,6 +44,11 @@ class FirebaseAuthentication {
         return check
     }
 
+    suspend fun getUserIdToken(user: FirebaseUser): String? {
+        val task = user.getIdToken(true).await()
+        return task.token
+    }
+
     fun signOut() {
         auth.signOut()
     }

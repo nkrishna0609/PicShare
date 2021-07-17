@@ -153,6 +153,8 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val email :String = user.getEmail()
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
+            //get idToken from authViewModel method
+            //send idToken to server along with user object info, and server will use Firebase itself to retrieve uid from idToken, and will store the token
             signedInUserVM.logInUser(user)
         }
         val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)

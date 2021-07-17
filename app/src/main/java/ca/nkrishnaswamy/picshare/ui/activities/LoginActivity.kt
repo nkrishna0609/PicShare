@@ -13,6 +13,7 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,8 +60,14 @@ class LoginActivity : AppCompatActivity() {
                     else{
                         errorMessageTV.text=""
                         CoroutineScope(Dispatchers.IO).launch{
-                            //TODO: Retrieve account user from Node.js server with entered email
-                            //signedInUserVM.logInUser(account from Node.js server here)
+                            val currentSignedInUser = authViewModel.getCurrentSignedInFirebaseUser()
+                            val idToken = currentSignedInUser?.let { user: FirebaseUser ->
+                                authViewModel.getUserIdToken(user)
+                            }
+                            //TODO: Retrieve account user from Node.js server with idToken
+                            //we send the idToken to server and server will validate using Firebase and get a uid from it
+                            //if uid is valid on server, it will send back user account to this app
+                            //signedInUserVM.logInUser(account from Node.js server here)    //to store current user info into cache (local db)
                         }
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

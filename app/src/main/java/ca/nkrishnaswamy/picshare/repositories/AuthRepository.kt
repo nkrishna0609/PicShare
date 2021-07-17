@@ -22,6 +22,10 @@ class AuthRepository {
         return firebaseauthclass.loginWithEmailAndPassword(email, password)
     }
 
+    suspend fun getUserIdToken(user: FirebaseUser): String? {
+        return firebaseauthclass.getUserIdToken(user);
+    }
+
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {
         return firebaseauthclass.getCurrentSignedOnUser()
     }
