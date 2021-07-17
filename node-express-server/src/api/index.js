@@ -4,6 +4,10 @@
 var express = require('express');
 var User = require('../models/user');
 
+// Import FirebaseAdmin
+var admin = require('firebase-admin')
+var serviceAccount = process.env['FIREBASEADMINAPIKEY'];
+
 // Create a router
 var router = express.Router();
 

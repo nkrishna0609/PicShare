@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase-admin": "^9.11.0",
     "mongoose": "5.13.3"
   },
   "devDependencies": {
