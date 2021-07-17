@@ -4,7 +4,6 @@
 var express = require('express');
 var router = require('./api');
 require('./database');
-require('dotenv').config();
 
 // Configure Express
 var app = express();

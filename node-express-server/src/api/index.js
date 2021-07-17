@@ -4,12 +4,28 @@
 var express = require('express');
 var User = require('../models/user');
 
-// Import FirebaseAdmin
-var admin = require('firebase-admin')
-var serviceAccount = process.env['FIREBASEADMINAPIKEY'];
+// Import .env
+const dotenv = require('dotenv');
+dotenv.config();
+
+// Import Firebase Admin Account
+var admin = require("firebase-admin");
 
 // Create a router
 var router = express.Router();
+
+// Configure Firebase Admin Account
+if (!admin.apps.length){
+    admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY
+        })
+    });
+} else {
+    admin.app();
+}
 
 // API ROUTES
 
@@ -26,10 +42,11 @@ router.get('/users', function(request, response){
 });
 
 // POST - adds user to the database
-router.post('/users', function(request, response){
+router.post('/users/:idToken', function(request, response){
     var user = request.body;
     var email = user.email;
     var query = {'email': email};
+    var idToken = request.params.idToken
 
     User.findOne(query, function(err, userNew) {
         if (err) {
@@ -41,14 +58,23 @@ router.post('/users', function(request, response){
         }
 
         else {
-            User.create(user, function(err, user){
-                if (err) {
-                    return response.status(500).json({err, user});
-                }
-        
-                response.json({'user': user, message: 'User created.'});
-        
-            });
+
+            admin.auth().verifyIdToken(idToken).then((decodeToken) => {
+                const uid = decodeToken.uid
+
+                user['firebaseUid'] = uid;
+
+                User.create(user, function(err, user){
+                    if (err) {
+                        return response.status(500).json({err, user});
+                    }
+            
+                    response.json({'user': user, message: 'User created.'});
+                });
+            })
+            .catch((error) => {
+                return response.status(500).json({err: "Invalid Firebase ID token."})
+            })
         }
     });
 });
