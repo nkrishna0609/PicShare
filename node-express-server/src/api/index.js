@@ -67,6 +67,22 @@ router.get('/users/:idToken', function(request, response){
 
 })
 
+// GET - fetches all users which have usernames or names containing search query
+router.get('/users/search/:searchQuery', function(request, response){
+    var searchQuery = request.params.searchQuery;
+    var regexSearchQuery = new RegExp(searchQuery, 'i');
+
+    //User.find({ $or: [{"username":  {$regex: regex}, "name": {$regex: regex}}] }, function(err, users) {
+        User.find().or( [{"name": {$regex: regexSearchQuery}}, {"username": {$regex: regexSearchQuery}}]).exec(function(err, users) {
+        if (err) {
+            return response.status(500).json({message: err.message});
+        }
+
+        response.json({users: users});
+
+    });
+});
+
 // GET - get all posts of a user
 router.get('/users/posts/:idToken', function(request, response){
     var idToken = request.params.idToken
