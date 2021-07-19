@@ -72,8 +72,7 @@ router.get('/users/search/:searchQuery', function(request, response){
     var searchQuery = request.params.searchQuery;
     var regexSearchQuery = new RegExp(searchQuery, 'i');
 
-    //User.find({ $or: [{"username":  {$regex: regex}, "name": {$regex: regex}}] }, function(err, users) {
-        User.find().or( [{"name": {$regex: regexSearchQuery}}, {"username": {$regex: regexSearchQuery}}]).exec(function(err, users) {
+    User.find().or( [{"name": {$regex: regexSearchQuery}}, {"username": {$regex: regexSearchQuery}}]).exec(function(err, users) {
         if (err) {
             return response.status(500).json({message: err.message});
         }
