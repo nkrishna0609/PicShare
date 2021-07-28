@@ -10,8 +10,8 @@ var userSchema = new mongoose.Schema({
     name: String,
     profilePicPathFromUri: String,
     bio: String,
-    numFollowers: Number,
-    numFollowing: Number,
+    followerNum: Number,
+    followingNum: Number,
     firebaseUid: String
 });
 

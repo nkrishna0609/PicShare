@@ -155,7 +155,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             authViewModel.registerUserByEmailAndPassword(email, password)
             //get idToken from authViewModel method
             //send idToken to server along with user object info, and server will use Firebase itself to retrieve uid from idToken, and will store the token
-            signedInUserVM.logInUser(user)
+            signedInUserVM.registerUser(user)
         }
         val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)

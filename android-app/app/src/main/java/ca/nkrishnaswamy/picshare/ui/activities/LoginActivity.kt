@@ -69,6 +69,9 @@ class LoginActivity : AppCompatActivity() {
                             //we send the idToken to server and server will validate using Firebase and get a uid from it
                             //if uid is valid on server, it will send back user account to this app
                             //signedInUserVM.logInUser(account from Node.js server here)    //to store current user info into cache (local db)
+                            if (idToken != null) {
+                                signedInUserVM.logInUser(idToken)
+                            }
                         }
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

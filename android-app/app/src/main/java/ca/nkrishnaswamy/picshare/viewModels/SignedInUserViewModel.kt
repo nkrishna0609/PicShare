@@ -26,8 +26,12 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         repository.updateUser(account)
     }
 
-    fun logInUser(account: UserModel) {
-        repository.logInUser(account)
+    fun logInUser(firebaseIdToken: String) {
+        repository.logInUser(firebaseIdToken)
+    }
+
+    fun registerUser(account: UserModel) {
+        repository.registerUser(account)
     }
 
     //fun signOut(context : Context) {

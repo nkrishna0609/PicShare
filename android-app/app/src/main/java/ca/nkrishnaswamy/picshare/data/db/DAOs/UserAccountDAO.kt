@@ -13,7 +13,7 @@ interface UserAccountDAO {
     fun retrieveCurrentLoggedInUser() : LiveData<UserModel>
 
     @Insert
-    fun logInUser(currentUser: UserModel)
+    fun insertUser(currentUser: UserModel)
 
     @Query("DELETE FROM signedInAccount")
     fun deleteAccount()

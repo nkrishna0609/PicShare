@@ -120,7 +120,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             val confirmPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 authViewModel.registerUserByEmailAndPassword(email, password)
-                signedInUserVM.logInUser(user)
+                signedInUserVM.registerUser(user)
             }
             confirmPhotoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(confirmPhotoIntent)

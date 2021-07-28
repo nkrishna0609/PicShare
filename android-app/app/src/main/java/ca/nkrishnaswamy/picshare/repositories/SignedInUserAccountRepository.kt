@@ -15,8 +15,13 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return livedataUser
     }
 
-    fun logInUser(account: UserModel) {
-        accountDao.logInUser(account)
+    fun logInUser(firebaseIdToken: String) {
+        //TODO: get user from Node server with firebaseIdToken and pass that user into accountDao.insertUser()
+        //accountDao.insertUser(account)
+    }
+
+    fun registerUser(account: UserModel) {
+        accountDao.insertUser(account)
     }
 
     //fun signOut(context : Context) {
