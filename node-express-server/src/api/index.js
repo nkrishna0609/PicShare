@@ -118,6 +118,7 @@ router.post('/users/:idToken', function(request, response){
     var email = user.email;
     var query = {'email': email};
     var idToken = request.params.idToken
+    var picBase64 = request.body.profilePicBase64
 
     User.findOne(query, function(err, userNew) {
         if (err) {
@@ -134,6 +135,7 @@ router.post('/users/:idToken', function(request, response){
                 const uid = decodeToken.uid
 
                 user['firebaseUid'] = uid;
+                user['profilePicBase64'] = picBase64
 
                 User.create(user, function(err, user){
                     if (err) {
@@ -154,6 +156,7 @@ router.post('/users/:idToken', function(request, response){
 router.post('/users/posts/:idToken', function(request, response){
     var post = request.body;
     var idToken = request.params.idToken;
+    var postPicBase64 = request.body.postPicBase64
 
     admin.auth().verifyIdToken(idToken).then((decodeToken) => {
         const uid = decodeToken.uid;
@@ -169,6 +172,7 @@ router.post('/users/posts/:idToken', function(request, response){
             }
             
             post['firebaseUid'] = uid;
+            post['postPicBase64'] = postPicBase64
             
             Post.create(post, function(err, post){
                 if (err) {
@@ -189,6 +193,7 @@ router.post('/users/posts/:idToken', function(request, response){
 router.put('/users/:idToken', function(request, response){
     var idToken = request.params.idToken;
     var user = request.body;
+    var picBase64 = request.body.profilePicBase64
 
     admin.auth().verifyIdToken(idToken).then((decodeToken) => {
         const uid = decodeToken.uid;
@@ -204,6 +209,7 @@ router.put('/users/:idToken', function(request, response){
             }
             
             user['firebaseUid'] = uid;
+            user['profilePicBase64'] = picBase64
             
             User.findOneAndUpdate(query, user, {new: true}, (err, user) => {
                 if(err) {

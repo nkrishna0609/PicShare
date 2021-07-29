@@ -8,7 +8,7 @@ var userSchema = new mongoose.Schema({
     email: String,
     username: String,
     name: String,
-    profilePicPathFromUri: String,
+    profilePicBase64: String,
     bio: String,
     followerNum: Number,
     followingNum: Number,

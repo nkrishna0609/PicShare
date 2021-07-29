@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var postSchema = new mongoose.Schema({
     id: Number,
     caption: String,
-    uriImgPathString: String,
+    postPicBase64: String,
     firebaseUid: String
 });
 
