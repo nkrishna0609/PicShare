@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -17,13 +18,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -32,6 +36,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var saveButton : ImageButton
     private lateinit var profilePic: CircleImageView
     private lateinit var signedInUserViewModel : SignedInUserViewModel
+    private lateinit var authViewModel : AuthViewModel
     private lateinit var username : String
     private lateinit var fullName : String
     private lateinit var bio : String
@@ -91,6 +96,7 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_profile)
 
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
         exitButton = findViewById(R.id.exitButton)
         saveButton = findViewById(R.id.saveButton)
@@ -149,13 +155,24 @@ class EditProfileActivity : AppCompatActivity() {
                     changeCheck = true
                 }
                 if (changeCheck) {
+                    val context : Context = this
                     CoroutineScope(Dispatchers.IO).launch{
-                        signedInUserViewModel.updateUser(user)
+                        val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
+                        val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
+                            authViewModel.getUserIdToken(user)
+                        }
+                        if (idToken != null) {
+                            val check = signedInUserViewModel.updateUser(context, user, idToken)
+                            if (check) {
+                                withContext(Dispatchers.Main){
+                                    val intentExit = Intent(this@EditProfileActivity, MainActivity::class.java)
+                                    startActivity(intentExit)
+                                    finish()
+                                }
+                            }
+                        }
                     }
                 }
-                val intentExit = Intent(this@EditProfileActivity, MainActivity::class.java)
-                startActivity(intentExit)
-                finish()
             }
 
         }

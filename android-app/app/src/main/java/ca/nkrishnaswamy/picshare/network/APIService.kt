@@ -24,4 +24,7 @@ interface APIService {
     @DELETE("/api/users/{idToken}")
     suspend fun deleteUser(@Path("idToken") idToken: String): Response<ResponseBody>
 
+    @PUT("/api/users/{idToken}")
+    suspend fun updateUser(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
+
 }

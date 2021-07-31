@@ -55,8 +55,29 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return checkSuccess
     }
 
-    fun updateUser(account: UserModel) {
-        accountDao.updateUser(account)
+    suspend fun updateUser(context: Context, account: UserModel, idToken: String) : Boolean {
+        var checkSuccess = false
+        val encodedBase64 : String = getBase64EncodedFromUri(context, account.getProfilePicPathFromUri())
+
+        val jsonObject = JSONObject()
+        jsonObject.put("email", account.getEmail())
+        jsonObject.put("username", account.getUsername())
+        jsonObject.put("name", account.getName())
+        jsonObject.put("profilePicBase64", encodedBase64)
+        jsonObject.put("bio", account.getBio())
+        jsonObject.put("followerNum", account.getFollowerNum())
+        jsonObject.put("followingNum", account.getFollowingNum())
+        jsonObject.put("firebaseUid", "")
+
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        val response = service.updateUser(requestBody, idToken)
+
+        if (response.isSuccessful) {
+            accountDao.updateUser(account)
+            checkSuccess = true
+        }
+        return checkSuccess
     }
 
     fun addPost(post : UserPost) {
