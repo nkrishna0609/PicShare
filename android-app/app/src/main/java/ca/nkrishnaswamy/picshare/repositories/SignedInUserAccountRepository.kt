@@ -75,6 +75,15 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         accountDao.deleteAllPosts()
     }
 
+    suspend fun deleteAccountFromServer(idToken: String) : Boolean{
+        var checkSuccess = false
+        val response = service.deleteUser(idToken)
+        if (response.isSuccessful) {
+            checkSuccess = true
+        }
+        return checkSuccess
+    }
+
     fun deleteAccountFromCache(context : Context) {
         context.cacheDir.deleteRecursively()
         accountDao.deleteAccount()

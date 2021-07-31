@@ -34,9 +34,18 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return repository.registerUser(context, account, idToken)
     }
 
-    fun deleteAccountFromCache(context : Context) {
+    private fun deleteAccountFromCache(context : Context) {
         deleteAllPosts()
         repository.deleteAccountFromCache(context)
+    }
+
+    fun logOutUser(context: Context) {
+        deleteAccountFromCache(context)
+    }
+
+    suspend fun deleteAccount(context: Context, idToken: String) : Boolean {
+        deleteAccountFromCache(context)
+        return repository.deleteAccountFromServer(idToken)
     }
 
     fun addPost(post : UserPost) {

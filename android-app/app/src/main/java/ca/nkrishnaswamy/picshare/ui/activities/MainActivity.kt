@@ -28,6 +28,7 @@ import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -187,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 
             logOutButton.setOnClickListener {
                 CoroutineScope(Dispatchers.IO).launch{
-                    signedInUserViewModel.deleteAccountFromCache(applicationContext)
+                    signedInUserViewModel.logOutUser(applicationContext)
                     authViewModel.signOutUserFromFirebase()
                 }
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -261,15 +262,15 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch{
                 val fireBaseCurrentLoggedInUser = authViewModel.getCurrentSignedInFirebaseUser()
                 if (fireBaseCurrentLoggedInUser != null) {
+                    val idToken = fireBaseCurrentLoggedInUser.let { user: FirebaseUser ->
+                        authViewModel.getUserIdToken(user)
+                    }
                     val check = authViewModel.deleteAccountFromFirebase(fireBaseCurrentLoggedInUser)
-                    withContext(Dispatchers.Main) {
-                        if (check) {
-                            Toast.makeText(baseContext, "Account Deleted", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                            CoroutineScope(Dispatchers.IO).launch{
-                                signedInUserViewModel.deleteAccountFromCache(applicationContext)
+                    if (check && idToken!=null) {
+                        val checkDelete = signedInUserViewModel.deleteAccount(applicationContext, idToken)
+                        if (checkDelete){
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(baseContext, "Account Deleted", Toast.LENGTH_LONG).show()
                             }
                         }
                     }

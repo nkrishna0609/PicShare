@@ -21,4 +21,7 @@ interface APIService {
     @POST("/api/users/{idToken}")
     suspend fun createUser(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
 
+    @DELETE("/api/users/{idToken}")
+    suspend fun deleteUser(@Path("idToken") idToken: String): Response<ResponseBody>
+
 }
