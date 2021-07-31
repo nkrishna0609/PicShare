@@ -30,17 +30,13 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         repository.logInUser(firebaseIdToken)
     }
 
-    fun registerUser(account: UserModel) {
-        repository.registerUser(account)
+    suspend fun registerUser(context: Context, account: UserModel, idToken: String) : Boolean {
+        return repository.registerUser(context, account, idToken)
     }
 
-    //fun signOut(context : Context) {
-        //repository.signOut(context)
-    //}
-
-    fun deleteUser(context : Context) {
+    fun deleteAccountFromCache(context : Context) {
         deleteAllPosts()
-        repository.deleteAccount(context)
+        repository.deleteAccountFromCache(context)
     }
 
     fun addPost(post : UserPost) {

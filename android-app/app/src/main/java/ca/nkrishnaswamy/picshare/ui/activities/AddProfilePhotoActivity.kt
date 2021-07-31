@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
 import android.graphics.Bitmap
@@ -19,9 +20,12 @@ import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -151,14 +155,23 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         )
         user.setProfilePicPathFromUri(uriDefaultImgString)
         val email :String = user.getEmail()
+        val context : Context = this
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
-            //get idToken from authViewModel method
-            //send idToken to server along with user object info, and server will use Firebase itself to retrieve uid from idToken, and will store the token
-            signedInUserVM.registerUser(user)
+            val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
+            val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
+                authViewModel.getUserIdToken(user)
+            }
+            if (idToken != null) {
+                val check = signedInUserVM.registerUser(context, user, idToken)
+                if (check) {
+                    withContext(Main){
+                        val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                    }
+                }
+            }
         }
-        val intent = Intent(this@AddProfilePhotoActivity, MainActivity::class.java)
-        intent.addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
     }
 }

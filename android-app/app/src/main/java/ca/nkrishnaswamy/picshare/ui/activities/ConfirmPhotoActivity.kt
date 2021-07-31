@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -18,10 +19,12 @@ import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -117,13 +120,24 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
             val email : String = user.getEmail()
-            val confirmPhotoIntent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
+            val context : Context = this
             CoroutineScope(Dispatchers.IO).launch{
                 authViewModel.registerUserByEmailAndPassword(email, password)
-                signedInUserVM.registerUser(user)
+                val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
+                val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
+                    authViewModel.getUserIdToken(user)
+                }
+                if (idToken != null) {
+                    val check = signedInUserVM.registerUser(context, user, idToken)
+                    if (check) {
+                        withContext(Dispatchers.Main){
+                            val intent = Intent(this@ConfirmPhotoActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                        }
+                    }
+                }
             }
-            confirmPhotoIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(confirmPhotoIntent)
         }
     }
 

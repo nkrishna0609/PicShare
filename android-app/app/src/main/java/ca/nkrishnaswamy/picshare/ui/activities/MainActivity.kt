@@ -185,15 +185,15 @@ class MainActivity : AppCompatActivity() {
             logOutButton = verticalMenuDialog.findViewById(R.id.logOutButton)
             deleteAccountButton = verticalMenuDialog.findViewById(R.id.deleteAccountButton)
 
-            //logOutButton.setOnClickListener {
-                //CoroutineScope(Dispatchers.IO).launch{
-                    //signedInUserViewModel.signOut(applicationContext)
-                    //authViewModel.signOutUserFromFirebase()
-                //}
-                //val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                //startActivity(intent)
-            //}
+            logOutButton.setOnClickListener {
+                CoroutineScope(Dispatchers.IO).launch{
+                    signedInUserViewModel.deleteAccountFromCache(applicationContext)
+                    authViewModel.signOutUserFromFirebase()
+                }
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
 
             deleteAccountButton.setOnClickListener {
                 showDialogDeleteAccount()
@@ -269,16 +269,7 @@ class MainActivity : AppCompatActivity() {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
                             CoroutineScope(Dispatchers.IO).launch{
-                                //val profilePicCache = File(uriImgPathString)
-                                //if (profilePicCache.exists()) {
-                                    //if (!profilePicCache.delete()) {
-                                        //profilePicCache.canonicalFile.delete()
-                                        //if (profilePicCache.exists()) {
-                                            //applicationContext.deleteFile(profilePicCache.name)
-                                        //}
-                                    //}
-                                //}
-                                signedInUserViewModel.deleteUser(applicationContext)
+                                signedInUserViewModel.deleteAccountFromCache(applicationContext)
                             }
                         }
                     }
