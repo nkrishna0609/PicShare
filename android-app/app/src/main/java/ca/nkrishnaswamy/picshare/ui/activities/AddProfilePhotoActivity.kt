@@ -157,12 +157,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val email :String = user.email
         val context : Context = this
         CoroutineScope(IO).launch{
-            authViewModel.registerUserByEmailAndPassword(email, password)
-            val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
-            val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
-                authViewModel.getUserIdToken(user)
-            }
-            //println("The ID token is: " + idToken)
+            val idToken : String? = authViewModel.registerUserByEmailAndPassword(email, password)
             if (idToken != null) {
                 val check = signedInUserVM.registerUser(context, user, idToken)
                 if (check) {

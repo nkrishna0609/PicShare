@@ -6,8 +6,8 @@ import com.google.firebase.auth.FirebaseUser
 class AuthRepository {
     private val firebaseauthclass = FirebaseAuthentication.instance
 
-    fun registerUserByEmail(email: String, password: String){
-        firebaseauthclass.registerUserWithEmailAndPassword(email, password)
+    suspend fun registerUserByEmail(email: String, password: String): String? {
+        return firebaseauthclass.registerUserWithEmailAndPassword(email, password)
     }
 
     suspend fun checkIfEmailExistsAlready(email: String): Boolean{
@@ -22,8 +22,8 @@ class AuthRepository {
         return firebaseauthclass.loginWithEmailAndPassword(email, password)
     }
 
-    suspend fun getUserIdToken(user: FirebaseUser): String? {
-        return firebaseauthclass.getUserIdToken(user);
+    suspend fun getUserIdToken(): String? {
+        return firebaseauthclass.getUserIdToken();
     }
 
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {

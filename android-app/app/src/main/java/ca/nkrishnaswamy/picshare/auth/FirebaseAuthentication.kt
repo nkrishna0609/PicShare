@@ -13,15 +13,9 @@ class FirebaseAuthentication {
         val auth = FirebaseAuth.getInstance()
     }
 
-    fun registerUserWithEmailAndPassword(email: String, password: String){
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) return@addOnCompleteListener
-
-                //else if(it.isSuccessful){
-
-                //}
-            }
+    suspend fun registerUserWithEmailAndPassword(email: String, password: String) : String?{
+        auth.createUserWithEmailAndPassword(email, password).await()
+        return getUserIdToken()
     }
 
     suspend fun checkIfEmailExistsAlready(email: String): Boolean{
@@ -47,9 +41,10 @@ class FirebaseAuthentication {
         return check
     }
 
-    suspend fun getUserIdToken(user: FirebaseUser): String? {
-        val task = user.getIdToken(true).await()
-        return task.token
+    suspend fun getUserIdToken(): String? {
+        val currentUser = auth.currentUser
+        val task = currentUser?.getIdToken(true)?.await()
+        return task?.token
     }
 
     fun signOut() {

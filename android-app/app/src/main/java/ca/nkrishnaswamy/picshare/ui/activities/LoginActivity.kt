@@ -68,10 +68,7 @@ class LoginActivity : AppCompatActivity() {
                     else{
                         errorMessageTV.text=""
                         CoroutineScope(Dispatchers.IO).launch{
-                            val currentSignedInUser = authViewModel.getCurrentSignedInFirebaseUser()
-                            val idToken = currentSignedInUser?.let { user: FirebaseUser ->
-                                authViewModel.getUserIdToken(user)
-                            }
+                            val idToken = authViewModel.getUserIdToken()
                             if (idToken != null) {
                                 val checkSuccess = signedInUserVM.logInUser(context, idToken)
                                 if (checkSuccess) {

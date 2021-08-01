@@ -262,9 +262,7 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch{
                 val fireBaseCurrentLoggedInUser = authViewModel.getCurrentSignedInFirebaseUser()
                 if (fireBaseCurrentLoggedInUser != null) {
-                    val idToken = fireBaseCurrentLoggedInUser.let { user: FirebaseUser ->
-                        authViewModel.getUserIdToken(user)
-                    }
+                    val idToken = authViewModel.getUserIdToken()
                     val check = authViewModel.deleteAccountFromFirebase(fireBaseCurrentLoggedInUser)
                     if (check && idToken!=null) {
                         val checkDelete = signedInUserViewModel.deleteAccount(applicationContext, idToken)

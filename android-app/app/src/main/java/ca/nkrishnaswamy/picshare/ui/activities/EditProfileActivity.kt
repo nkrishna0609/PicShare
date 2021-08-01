@@ -157,10 +157,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if (changeCheck) {
                     val context : Context = this
                     CoroutineScope(Dispatchers.IO).launch{
-                        val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
-                        val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
-                            authViewModel.getUserIdToken(user)
-                        }
+                        val idToken = authViewModel.getUserIdToken()
                         if (idToken != null) {
                             val check = signedInUserViewModel.updateUser(context, user, idToken)
                             if (check) {

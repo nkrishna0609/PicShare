@@ -9,8 +9,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = AuthRepository()
 
-    fun registerUserByEmailAndPassword(email: String, password: String){
-        repository.registerUserByEmail(email, password)
+    suspend fun registerUserByEmailAndPassword(email: String, password: String) : String? {
+        return repository.registerUserByEmail(email, password)
     }
 
     suspend fun checkIfEmailExistsAlready(email: String): Boolean{
@@ -25,8 +25,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         return repository.loginWithEmailAndPassword(email, password)
     }
 
-    suspend fun getUserIdToken(user: FirebaseUser): String? {
-        return repository.getUserIdToken(user)
+    suspend fun getUserIdToken(): String? {
+        return repository.getUserIdToken()
     }
 
     fun getCurrentSignedInFirebaseUser(): FirebaseUser? {

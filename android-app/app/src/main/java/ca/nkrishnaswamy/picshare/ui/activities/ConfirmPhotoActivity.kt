@@ -122,11 +122,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             val email : String = user.email
             val context : Context = this
             CoroutineScope(Dispatchers.IO).launch{
-                authViewModel.registerUserByEmailAndPassword(email, password)
-                val currentSignedInFireBaseUser = authViewModel.getCurrentSignedInFirebaseUser()
-                val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
-                    authViewModel.getUserIdToken(user)
-                }
+                val idToken : String? = authViewModel.registerUserByEmailAndPassword(email, password)
                 if (idToken != null) {
                     val check = signedInUserVM.registerUser(context, user, idToken)
                     if (check) {
