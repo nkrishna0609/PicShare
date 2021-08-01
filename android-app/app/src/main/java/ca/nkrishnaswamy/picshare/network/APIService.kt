@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.network
 
 import ca.nkrishnaswamy.picshare.BuildConfig
+import ca.nkrishnaswamy.picshare.data.models.JSONPostModel
 import ca.nkrishnaswamy.picshare.data.models.JSONUserModel
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -40,5 +41,8 @@ interface APIService {
 
     @POST("/api/users/posts/{idToken}")
     suspend fun createPost(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
+
+    @GET("/api/users/posts/{idToken}")
+    suspend fun getPostsOfUser(@Path("idToken") idToken: String): Response<List<JSONPostModel>>
 
 }

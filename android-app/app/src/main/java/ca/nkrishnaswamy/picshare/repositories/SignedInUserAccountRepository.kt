@@ -45,6 +45,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
 
                 val account = UserModel(0, email, username, name, profilePicUriPathString, bio, followerNum, followingNum)
                 accountDao.insertUser(account)
+                getPostsFromServer(context, idToken, email)
                 successCheck = true
             }
         }
@@ -158,6 +159,30 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return livedataPostList
     }
 
+    private suspend fun getPostsFromServer(context : Context, idToken : String, email : String) : Boolean {
+        var checkSuccess = false
+        val response = service.getPostsOfUser(idToken)
+
+        if (response.isSuccessful) {
+            val postList = response.body()
+            if (postList != null) {
+                for (i in 0 until postList.count()) {
+                    val id = postList[i].id
+                    val caption = postList[i].caption
+                    val postPicBase64 = postList[i].postPicBase64
+
+                    val uriImgPathString : String = getUriPathStringFromBase64(context, postPicBase64)
+
+                    val postToInsert = UserPost(id, caption, uriImgPathString, email)
+                    accountDao.insertPost(postToInsert)
+                }
+            }
+            checkSuccess = true
+        }
+
+        return checkSuccess
+    }
+
     suspend fun deletePost(post : UserPost, idToken: String) : Boolean {
         var checkSuccess = false
         val response = service.deletePost(idToken, post.id)
@@ -199,7 +224,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         val imageAsByteArray : ByteArray = Base64.decode(base64Encoded, Base64.NO_WRAP)
         val bitmapProfilePic = BitmapFactory.decodeByteArray(imageAsByteArray, 0 ,imageAsByteArray.size)
 
-        val file = File(context.cacheDir, "tempCacheProfilePic")
+        val file = File(context.cacheDir, "tempCachePic" + getRandomString(20))
         file.delete()
         file.createNewFile()
         val fileOutputStream = file.outputStream()
@@ -213,5 +238,10 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
 
         val uriImg = file.toURI()
         return uriImg.toString()
+    }
+
+    private fun getRandomString(length : Int) : String {
+        val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        return (1..length).map { charset.random() }.joinToString("")
     }
 }

@@ -20,7 +20,6 @@ import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -158,6 +157,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val context : Context = this
         CoroutineScope(IO).launch{
             val idToken : String? = authViewModel.registerUserByEmailAndPassword(email, password)
+            //println("The ID Token is " + idToken)
             if (idToken != null) {
                 val check = signedInUserVM.registerUser(context, user, idToken)
                 if (check) {

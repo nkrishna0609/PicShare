@@ -103,7 +103,7 @@ router.get('/users/posts/:idToken', function(request, response){
                     return response.status(500).json({message: err.message});
                 }
         
-                response.json({posts: posts});
+                response.send(posts);
             });
         });
     })
