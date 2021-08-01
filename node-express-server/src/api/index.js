@@ -112,6 +112,23 @@ router.get('/users/posts/:idToken', function(request, response){
     })
 })
 
+// GET - check if username exists already
+router.get('/users/username/:username', function(request, response){
+    var username = request.params.username
+
+    User.findOne({"username": username}, function(err, userFound) {
+        if (err) {
+            return response.status(500).json({err, userFound});
+        }
+
+        if (userFound){
+            return response.status(400).json({err: "The username already exists in the database."});
+        }
+
+        response.json({message: "This username is available."})
+    });
+});
+
 // POST - adds user to the database
 router.post('/users/:idToken', function(request, response){
     var user = request.body;

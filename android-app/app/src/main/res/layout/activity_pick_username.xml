@@ -52,13 +52,23 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="25dp"
             android:text="Next"
             android:id="@+id/nextButton"
             android:textAllCaps="false"
             android:textSize="16dp"
             android:backgroundTint="@color/blue"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/errorMessage"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="16dp"/>
 
     </LinearLayout>
 

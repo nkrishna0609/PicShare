@@ -101,6 +101,19 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return checkSuccess
     }
 
+    suspend fun checkIfUsernameIsAvailable(username: String) : Int {
+        val response = service.checkIfUsernameExists(username)
+        return if (response.isSuccessful) {
+            0
+        }else{
+            if (response.code() == 400) {
+                1
+            } else{
+                2
+            }
+        }
+    }
+
     fun addPost(post : UserPost) {
         accountDao.insertPost(post)
     }

@@ -32,4 +32,7 @@ interface APIService {
     @GET("/api/users/{idToken}")
     suspend fun getUser(@Path("idToken") idToken: String): Response<JSONUserModel>
 
+    @GET("/api/users/username/{username}")
+    suspend fun checkIfUsernameExists(@Path("username") username: String): Response<ResponseBody>
+
 }
