@@ -1,6 +1,7 @@
 package ca.nkrishnaswamy.picshare.ui.activities
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +37,7 @@ class NewPostActivity : AppCompatActivity() {
     private lateinit var uriImg : Uri
     private lateinit var uriImgPathString : String
     private lateinit var signedInUserViewModel : SignedInUserViewModel
+    private lateinit var authViewModel : AuthViewModel
     private lateinit var post: UserPost
     private lateinit var fileChildName : String
 
@@ -52,7 +55,7 @@ class NewPostActivity : AppCompatActivity() {
             }
         }
         uriImgPathString = uriImg.toString()
-        post.setUriImgPathString(uriImgPathString)
+        post.uriImgPathString = uriImgPathString
         postPhoto.setImageURI(Uri.parse(uriImgPathString))
     }
 
@@ -77,7 +80,7 @@ class NewPostActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         uriImgPathString = uriImg.toString()
-        post.setUriImgPathString(uriImgPathString)
+        post.uriImgPathString = uriImgPathString
         postPhoto.setImageURI(Uri.parse(uriImgPathString))
     }
 
@@ -86,6 +89,7 @@ class NewPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_post)
 
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
         cancelButton = findViewById(R.id.cancel_button)
         completePostButton = findViewById(R.id.confirm_button)
@@ -94,7 +98,7 @@ class NewPostActivity : AppCompatActivity() {
 
         post = intent.getParcelableExtra("post")!!
         fileChildName = intent.getStringExtra("fileChildName").toString()
-        uriImgPathString = post.getUriImgPathString()
+        uriImgPathString = post.uriImgPathString
         uriImg = Uri.parse(uriImgPathString)
         postPhoto.setImageURI(uriImg)
 
@@ -104,9 +108,13 @@ class NewPostActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "Write a Caption", Toast.LENGTH_LONG).show()
             }
             else {
-                post.setCaption(caption)
+                post.caption = caption
+                val context: Context = this
                 CoroutineScope(Dispatchers.IO).launch {
-                    signedInUserViewModel.addPost(post)
+                    val idToken = authViewModel.getUserIdToken()
+                    if (idToken != null) {
+                        signedInUserViewModel.addPost(context, post, idToken)
+                    }
                 }
                 val intentExit = Intent(this@NewPostActivity, MainActivity::class.java)
                 startActivity(intentExit)

@@ -26,6 +26,9 @@ interface APIService {
     @DELETE("/api/users/{idToken}")
     suspend fun deleteUser(@Path("idToken") idToken: String): Response<ResponseBody>
 
+    @DELETE("/api/users/posts/{idToken}/{postId}")
+    suspend fun deletePost(@Path("idToken") idToken: String, @Path("postId") postId: Long): Response<ResponseBody>
+
     @PUT("/api/users/{idToken}")
     suspend fun updateUser(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
 
@@ -34,5 +37,8 @@ interface APIService {
 
     @GET("/api/users/username/{username}")
     suspend fun checkIfUsernameExists(@Path("username") username: String): Response<ResponseBody>
+
+    @POST("/api/users/posts/{idToken}")
+    suspend fun createPost(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
 
 }

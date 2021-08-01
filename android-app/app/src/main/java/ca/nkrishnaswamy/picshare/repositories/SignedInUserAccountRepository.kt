@@ -114,16 +114,58 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         }
     }
 
-    fun addPost(post : UserPost) {
+    suspend fun addPost(context: Context, post : UserPost, idToken: String) : Boolean {
         accountDao.insertPost(post)
+
+        val postsList : List<UserPost> = accountDao.getUserModelWithUserPostsNonLiveData()[0].userPosts
+        var newIdAfterInsertion : Long = -1L
+
+        for (p in postsList) {
+            if (post.caption == p.caption && post.email == p.email && post.uriImgPathString == p.uriImgPathString){
+                newIdAfterInsertion = p.id
+            }
+        }
+
+        if (newIdAfterInsertion == -1L) {
+            post.id = newIdAfterInsertion
+            accountDao.deletePost(post)
+            return false
+        }
+
+        var checkSuccess = false
+        val encodedBase64 : String = getBase64EncodedFromUri(context, post.uriImgPathString)
+
+        val jsonObject = JSONObject()
+        jsonObject.put("id", newIdAfterInsertion)
+        jsonObject.put("caption", post.caption)
+        jsonObject.put("postPicBase64", encodedBase64)
+        jsonObject.put("firebaseUid", "")
+
+        val jsonObjectString = jsonObject.toString()
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+        val response = service.createPost(requestBody, idToken)
+
+        if (response.isSuccessful) {
+            checkSuccess = true
+        } else {
+            post.id = newIdAfterInsertion
+            accountDao.deletePost(post)
+        }
+        return checkSuccess
     }
 
     fun getPosts() : LiveData<List<SignedInAccountWithUserPosts>> {
         return livedataPostList
     }
 
-    fun deletePost(post : UserPost) {
-        accountDao.deletePost(post)
+    suspend fun deletePost(post : UserPost, idToken: String) : Boolean {
+        var checkSuccess = false
+        val response = service.deletePost(idToken, post.id)
+        if (response.isSuccessful) {
+            checkSuccess = true
+            accountDao.deletePost(post)
+        }
+        return checkSuccess
     }
 
     fun deleteAllPosts() {

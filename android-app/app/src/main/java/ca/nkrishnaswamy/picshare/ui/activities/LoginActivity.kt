@@ -70,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch{
                             val idToken = authViewModel.getUserIdToken()
                             if (idToken != null) {
+                                //println("The ID token is: " + idToken)
                                 val checkSuccess = signedInUserVM.logInUser(context, idToken)
                                 if (checkSuccess) {
                                     withContext(Dispatchers.Main) {

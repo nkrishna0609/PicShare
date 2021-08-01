@@ -29,7 +29,7 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
-        val uriPath : String = postList[position].getUriImgPathString()
+        val uriPath : String = postList[position].uriImgPathString
         holder.postImageView.setImageURI(Uri.parse(uriPath))
         holder.relativeLayoutPost.setOnClickListener {
             val intent = Intent(context, UserPostViewActivity::class.java)

@@ -296,18 +296,7 @@ router.delete('/users/posts/:idToken/:postId', function(request, response){
             if (!userFound){
                 return response.status(500).json({err: "The post which is to be deleted does not belong to a user."});
             }
-            
-            Post.findOne({'firebaseUid': uid, 'id': postId}).exec(function(err, postFound){
-                if(err) {
-                    return response.status(500).json({err, postFound});
-                }
-
-                if (!postFound){
-                    return response.status(500).json({err: "The post doesn't exist in the database."});
-                }
-            });
-
-            Post.findOneAndDelete({'firebaseUid': uid, 'id': postId}, function(err, post){
+            Post.findOneAndDelete({'firebaseUid': uid, 'id':postId}, function(err, post){
                 if(err) {
                     return response.status(500).json({err: err.message});
                 }

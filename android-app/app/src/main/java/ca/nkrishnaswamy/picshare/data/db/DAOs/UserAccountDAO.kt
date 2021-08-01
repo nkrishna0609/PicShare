@@ -28,6 +28,9 @@ interface UserAccountDAO {
     @Query("SELECT * FROM signedInAccount")
     fun getUserModelWithUserPosts() : LiveData<List<SignedInAccountWithUserPosts>>
 
+    @Query("SELECT * FROM signedInAccount")
+    fun getUserModelWithUserPostsNonLiveData() : List<SignedInAccountWithUserPosts>
+
     @Delete
     fun deletePost(post: UserPost)
 

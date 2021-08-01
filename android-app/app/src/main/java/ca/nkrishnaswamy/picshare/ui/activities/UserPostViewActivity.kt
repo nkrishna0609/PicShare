@@ -16,12 +16,14 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.data.models.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.UserPostsAdapter
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserPostViewActivity : AppCompatActivity() {
     private lateinit var profilePic : CircleImageView
@@ -34,6 +36,7 @@ class UserPostViewActivity : AppCompatActivity() {
     private lateinit var homeButton : ImageButton
     private lateinit var post : UserPost
     private lateinit var signedInUserViewModel : SignedInUserViewModel
+    private lateinit var authViewModel : AuthViewModel
     private lateinit var username : String
     private lateinit var profilePicStringUriPath : String
     private lateinit var postPicUriStringPath : String
@@ -60,10 +63,11 @@ class UserPostViewActivity : AppCompatActivity() {
         verticalMenuDialog = BottomSheetDialog(this)
 
         signedInUserViewModel = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
         post = intent.getParcelableExtra("post")!!
-        caption = post.getCaption()
-        postPicUriStringPath = post.getUriImgPathString()
+        caption = post.caption
+        postPicUriStringPath = post.uriImgPathString
 
         captionTV.text = caption
         postPic.setImageURI(Uri.parse(postPicUriStringPath))
@@ -115,21 +119,19 @@ class UserPostViewActivity : AppCompatActivity() {
 
     private fun showDialogDeletePost() {
         CoroutineScope(Dispatchers.IO).launch{
-            signedInUserViewModel.deletePost(post)
-            adapter.notifyDataSetChanged()
-            //val imgCache = File(profilePicStringUriPath)
-            //if (imgCache.exists()) {
-                //if (!imgCache.delete()) {
-                    //imgCache.canonicalFile.delete()
-                    //if (imgCache.exists()) {
-                        //applicationContext.deleteFile(imgCache.name)
-                    //}
-                //}
-            //}
+            val idToken = authViewModel.getUserIdToken()
+            if (idToken != null) {
+                val checkDelete = signedInUserViewModel.deletePost(post, idToken)
+                if (checkDelete){
+                    adapter.notifyDataSetChanged()
+                    withContext(Dispatchers.Main) {
+                        val intent = Intent(this@UserPostViewActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                    }
+                }
+            }
         }
-        val intent = Intent(this@UserPostViewActivity, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
     }
 
 }

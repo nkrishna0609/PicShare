@@ -28,7 +28,6 @@ import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
-        newPost.setUriImgPathString(uriImg.toString())
+        newPost.uriImgPathString = uriImg.toString()
         val intent = Intent(this@MainActivity, NewPostActivity::class.java)
         intent.putExtra("post", newPost)
         startActivity(intent)
@@ -108,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         byteArrayOutputStream.close()
 
         val uriImg = file.toURI()
-        newPost.setUriImgPathString(uriImg.toString())
+        newPost.uriImgPathString = uriImg.toString()
         val intent = Intent(this@MainActivity, NewPostActivity::class.java)
         intent.putExtra("post", newPost)
         intent.putExtra("fileChildName", fileChildName)
