@@ -58,7 +58,7 @@ router.get('/users/:idToken', function(request, response){
             if (!userFound){
                 return response.status(500).json({err: "The user does not exist in the database."});
             }
-            response.json({"user": userFound});
+            response.send(userFound);
         });
     })
     .catch((error) => {

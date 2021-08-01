@@ -61,8 +61,8 @@ class EditProfileActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
-        user.setProfilePicPathFromUri(uriImg.toString())
-        profilePic.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+        user.profilePicPathFromUri = uriImg.toString()
+        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
         changeCheck = true
     }
 
@@ -86,8 +86,8 @@ class EditProfileActivity : AppCompatActivity() {
 
         val uriImg = file.toURI()
 
-        user.setProfilePicPathFromUri(uriImg.toString())
-        profilePic.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+        user.profilePicPathFromUri = uriImg.toString()
+        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
         changeCheck = true
     }
 
@@ -108,13 +108,13 @@ class EditProfileActivity : AppCompatActivity() {
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
-                username = t.getUsername()
+                username = t.username
                 usernameET.setText(username)
-                fullName = t.getName()
+                fullName = t.name
                 nameET.setText(fullName)
-                bio = t.getBio()
+                bio = t.bio
                 bioET.setText(bio)
-                uriImgPathString = t.getProfilePicPathFromUri()
+                uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
             }
@@ -143,15 +143,15 @@ class EditProfileActivity : AppCompatActivity() {
             } else{
                 if (usernameInET != username) {
                     //must update username field in db - later must check if username is not taken by another user once I set up the Node/Express server
-                    user.setUsername(usernameInET)
+                    user.username = usernameInET
                     changeCheck = true
                 }
                 if (nameInET != fullName) {
-                    user.setName(nameInET)
+                    user.name = nameInET
                     changeCheck = true
                 }
                 if (bioInET != bio) {
-                    user.setBio(bioInET)
+                    user.bio = bioInET
                     changeCheck = true
                 }
                 if (changeCheck) {

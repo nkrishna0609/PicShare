@@ -19,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         val password = intent.getStringExtra("password")
 
         usernameTextView = findViewById(R.id.username)
-        usernameTextView.text = user?.getUsername()
+        usernameTextView.text = user?.username
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {

@@ -18,7 +18,7 @@ class AuthRepository {
         firebaseauthclass.sendPasswordResetEmail(email)
     }
 
-    suspend fun loginWithEmailAndPassword(email: String, password: String): Boolean{
+    suspend fun loginWithEmailAndPassword(email: String, password: String): Int{
         return firebaseauthclass.loginWithEmailAndPassword(email, password)
     }
 

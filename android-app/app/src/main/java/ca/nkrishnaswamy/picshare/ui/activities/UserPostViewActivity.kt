@@ -69,9 +69,9 @@ class UserPostViewActivity : AppCompatActivity() {
         postPic.setImageURI(Uri.parse(postPicUriStringPath))
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
-            username = it.getUsername()
-            usernameTV.text = it.getUsername()
-            profilePicStringUriPath = it.getProfilePicPathFromUri()
+            username = it.username
+            usernameTV.text = username
+            profilePicStringUriPath = it.profilePicPathFromUri
             profilePic.setImageURI(Uri.parse(profilePicStringUriPath))
         })
 

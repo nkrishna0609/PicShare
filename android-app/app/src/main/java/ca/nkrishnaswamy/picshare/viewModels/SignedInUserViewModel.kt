@@ -26,8 +26,8 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return repository.updateUser(context, account, idToken)
     }
 
-    fun logInUser(firebaseIdToken: String) {
-        repository.logInUser(firebaseIdToken)
+    suspend fun logInUser(context: Context, idToken: String) : Boolean {
+        return repository.logInUser(context, idToken)
     }
 
     suspend fun registerUser(context: Context, account: UserModel, idToken: String) : Boolean {

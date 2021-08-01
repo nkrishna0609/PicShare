@@ -144,19 +144,19 @@ class MainActivity : AppCompatActivity() {
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
-                email = t.getEmail()
-                username = t.getUsername()
+                email = t.email
+                username = t.username
                 usernameTV.text = username
-                fullName = t.getName()
+                fullName = t.name
                 fullNameTV.text = fullName
-                bio = t.getBio()
+                bio = t.bio
                 bioTV.text = bio
-                uriImgPathString = t.getProfilePicPathFromUri()
+                uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
-                followersCount = t.getFollowerNum()
+                followersCount = t.followerNum
                 followersCountTV.text = followersCount.toString()
-                followingCount = t.getFollowingNum()
+                followingCount = t.followingNum
                 followingCountTV.text = followingCount.toString()
             }
             else{

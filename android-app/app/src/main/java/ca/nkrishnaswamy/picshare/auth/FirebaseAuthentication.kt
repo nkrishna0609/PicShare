@@ -1,8 +1,8 @@
 package ca.nkrishnaswamy.picshare.auth
 
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
@@ -33,13 +33,16 @@ class FirebaseAuthentication {
         auth.sendPasswordResetEmail(email).await()
     }
 
-    suspend fun loginWithEmailAndPassword(email: String, password: String): Boolean {
-        var check: Boolean = true
+    suspend fun loginWithEmailAndPassword(email: String, password: String): Int {
+        var check: Int = 0
         try {
             auth.signInWithEmailAndPassword(email, password).await()
         }
         catch (e: FirebaseAuthInvalidCredentialsException){
-            check=false
+            check=1
+        }
+        catch (e: FirebaseAuthInvalidUserException) {
+            check=2
         }
         return check
     }

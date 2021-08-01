@@ -1,5 +1,6 @@
 package ca.nkrishnaswamy.picshare.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
@@ -50,11 +52,17 @@ class LoginActivity : AppCompatActivity() {
                 errorMessageTV.text = "Email Format is Invalid"
             }
             else{
+                val context : Context = this
                 CoroutineScope(Dispatchers.IO).launch{
-                    val check: Boolean = authViewModel.loginWithEmailAndPassword(email, password)
-                    if (!check){
+                    val check: Int = authViewModel.loginWithEmailAndPassword(email, password)
+                    if (check == 1){
                         withContext(Dispatchers.Main){
                             errorMessageTV.text = "Email and/or Password are Incorrect"
+                        }
+                    }
+                    else if (check == 2){
+                        withContext(Dispatchers.Main){
+                            errorMessageTV.text = "Account does not Exist"
                         }
                     }
                     else{
@@ -64,18 +72,18 @@ class LoginActivity : AppCompatActivity() {
                             val idToken = currentSignedInUser?.let { user: FirebaseUser ->
                                 authViewModel.getUserIdToken(user)
                             }
-                            //println("The User Id Token is: " + idToken);
-                            //TODO: Retrieve account user from Node.js server with idToken
-                            //we send the idToken to server and server will validate using Firebase and get a uid from it
-                            //if uid is valid on server, it will send back user account to this app
-                            //signedInUserVM.logInUser(account from Node.js server here)    //to store current user info into cache (local db)
                             if (idToken != null) {
-                                signedInUserVM.logInUser(idToken)
+                                val checkSuccess = signedInUserVM.logInUser(context, idToken)
+                                if (checkSuccess) {
+                                    withContext(Dispatchers.Main) {
+                                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
+                                        Toast.makeText(baseContext, "Logged In", Toast.LENGTH_LONG).show()
+                                    }
+                                }
                             }
                         }
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
                     }
                 }
             }

@@ -21,7 +21,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         repository.sendPasswordResetEmail(email)
     }
 
-    suspend fun loginWithEmailAndPassword(email: String, password: String): Boolean{
+    suspend fun loginWithEmailAndPassword(email: String, password: String): Int{
         return repository.loginWithEmailAndPassword(email, password)
     }
 

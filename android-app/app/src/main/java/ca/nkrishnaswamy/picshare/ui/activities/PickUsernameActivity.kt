@@ -26,7 +26,7 @@ class PickUsernameActivity : AppCompatActivity() {
             if (!TextUtils.isEmpty(pickUsername.text)){
                 val username = pickUsername.text.toString()
                 val intent = Intent(this@PickUsernameActivity, WelcomeActivity::class.java)
-                user?.setUsername(username)
+                user?.username = username
                 intent.putExtra("userAccount", user)
                 intent.putExtra("password", password)
                 startActivity(intent)

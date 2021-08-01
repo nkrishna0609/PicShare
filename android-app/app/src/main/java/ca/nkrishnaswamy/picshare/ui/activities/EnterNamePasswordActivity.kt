@@ -38,7 +38,7 @@ class EnterNamePasswordActivity : AppCompatActivity() {
             else{
                 errorMessageTV.text=""
                 val name: String = nameEditText.text.toString()
-                user?.setName(name)
+                user?.name = name
                 val intent = Intent(this@EnterNamePasswordActivity, PickUsernameActivity::class.java)
                 intent.putExtra("userAccount", user)
                 intent.putExtra("password", password)

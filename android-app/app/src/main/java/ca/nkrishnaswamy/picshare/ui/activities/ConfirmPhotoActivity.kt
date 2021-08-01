@@ -51,7 +51,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
-        user.setProfilePicPathFromUri(uriImg.toString())
+        user.profilePicPathFromUri = uriImg.toString()
         lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
         val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
@@ -81,7 +81,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
 
         val uriImg = file.toURI()
 
-        user.setProfilePicPathFromUri(uriImg.toString())
+        user.profilePicPathFromUri = uriImg.toString()
         if (lastPhotoTakenType == LAST_PROFILE_PIC_FROM_GALLERY) {
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
             val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
@@ -93,7 +93,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         }
         else{
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            img.setImageURI(Uri.parse(user.getProfilePicPathFromUri()))
+            img.setImageURI(Uri.parse(user.profilePicPathFromUri))
         }
     }
 
@@ -112,14 +112,14 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         password = intent.getStringExtra("password") as String
         lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", NO_PROFILE_PIC)
 
-        selectedProfilePicPath = user.getProfilePicPathFromUri()
+        selectedProfilePicPath = user.profilePicPathFromUri
 
         img = findViewById(R.id.profilePic)
         img.setImageURI(Uri.parse(selectedProfilePicPath))
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
-            val email : String = user.getEmail()
+            val email : String = user.email
             val context : Context = this
             CoroutineScope(Dispatchers.IO).launch{
                 authViewModel.registerUserByEmailAndPassword(email, password)

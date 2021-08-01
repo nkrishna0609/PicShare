@@ -53,7 +53,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
-        user.setProfilePicPathFromUri(uriImg.toString())
+        user.profilePicPathFromUri = uriImg.toString()
         lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
@@ -81,7 +81,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
 
         val uriImg = file.toURI()
 
-        user.setProfilePicPathFromUri(uriImg.toString())
+        user.profilePicPathFromUri = uriImg.toString()
         lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
@@ -153,8 +153,8 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         ) + '/' + resources.getResourceTypeName(R.drawable.profile_placeholder_pic) + '/' + resources.getResourceEntryName(
             R.drawable.profile_placeholder_pic
         )
-        user.setProfilePicPathFromUri(uriDefaultImgString)
-        val email :String = user.getEmail()
+        user.profilePicPathFromUri = uriDefaultImgString
+        val email :String = user.email
         val context : Context = this
         CoroutineScope(IO).launch{
             authViewModel.registerUserByEmailAndPassword(email, password)
@@ -162,6 +162,7 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             val idToken = currentSignedInFireBaseUser?.let { user: FirebaseUser ->
                 authViewModel.getUserIdToken(user)
             }
+            //println("The ID token is: " + idToken)
             if (idToken != null) {
                 val check = signedInUserVM.registerUser(context, user, idToken)
                 if (check) {
