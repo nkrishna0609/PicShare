@@ -1,8 +1,8 @@
 package ca.nkrishnaswamy.picshare.network
 
 import ca.nkrishnaswamy.picshare.BuildConfig
-import ca.nkrishnaswamy.picshare.data.models.JSONPostModel
-import ca.nkrishnaswamy.picshare.data.models.JSONUserModel
+import ca.nkrishnaswamy.picshare.data.models.jsonModels.JSONPostModel
+import ca.nkrishnaswamy.picshare.data.models.jsonModels.JSONUserModel
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response

@@ -7,7 +7,7 @@ import android.text.TextUtils
 import android.widget.EditText
 import android.widget.TextView
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import com.google.android.material.button.MaterialButton
 
 class EnterNamePasswordActivity : AppCompatActivity() {

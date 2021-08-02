@@ -20,7 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import kotlinx.coroutines.CoroutineScope

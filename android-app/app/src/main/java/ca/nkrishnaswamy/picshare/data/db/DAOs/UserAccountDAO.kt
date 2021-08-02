@@ -2,8 +2,8 @@ package ca.nkrishnaswamy.picshare.data.db.DAOs
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.data.models.relations.SignedInAccountWithUserPosts
 
 @Dao

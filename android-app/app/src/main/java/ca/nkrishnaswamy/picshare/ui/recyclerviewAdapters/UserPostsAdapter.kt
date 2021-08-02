@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.UserPostViewActivity
 
 class UserPostsAdapter internal constructor(val context: Context) : RecyclerView.Adapter<UserPostsAdapter.UserPostsViewHolder>() {

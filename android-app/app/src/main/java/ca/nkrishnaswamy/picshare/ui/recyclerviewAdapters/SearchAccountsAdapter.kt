@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SearchAccountsAdapter internal constructor(val context: Context, private val listener : OnItemClickListener) : RecyclerView.Adapter<SearchAccountsAdapter.SearchAccountsViewHolder>(){

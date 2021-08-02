@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare.data.models
+package ca.nkrishnaswamy.picshare.data.models.roomModels
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

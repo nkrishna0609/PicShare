@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.SearchedAccountPostViewActivity
 
 class SearchedAccountPostsAdapter internal constructor(val context: Context, private val searchedAccount: UserModel) : RecyclerView.Adapter<SearchedAccountPostsAdapter.SearchedAccountPostsViewHolder>() {

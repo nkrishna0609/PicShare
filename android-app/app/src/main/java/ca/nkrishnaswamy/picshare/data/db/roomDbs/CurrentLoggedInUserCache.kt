@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
-import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 
 @Database(entities= [UserModel::class, UserPost::class], version = 11, exportSchema = false)
 abstract class CurrentLoggedInUserCache : RoomDatabase() {

@@ -1,4 +1,4 @@
-package ca.nkrishnaswamy.picshare.data.models
+package ca.nkrishnaswamy.picshare.data.models.jsonModels
 
 import com.google.gson.annotations.SerializedName
 

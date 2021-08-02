@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope

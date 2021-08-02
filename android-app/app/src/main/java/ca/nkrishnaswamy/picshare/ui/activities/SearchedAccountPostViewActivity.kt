@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ca.nkrishnaswamy.picshare.R
-import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SearchedAccountPostViewActivity : AppCompatActivity() {

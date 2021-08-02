@@ -7,9 +7,9 @@ import android.net.Uri
 import android.util.Base64
 import androidx.lifecycle.LiveData
 import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
-import ca.nkrishnaswamy.picshare.data.models.JSONUserModel
-import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.data.models.jsonModels.JSONUserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
+import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.data.models.relations.SignedInAccountWithUserPosts
 import ca.nkrishnaswamy.picshare.network.APIService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
