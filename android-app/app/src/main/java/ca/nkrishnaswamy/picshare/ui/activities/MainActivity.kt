@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : UserPostsAdapter
     private lateinit var postCountTV : TextView
+    private lateinit var postTV : TextView
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -131,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         editProfileButton = findViewById(R.id.editProfileButton)
         verticalPopUpMenuButton = findViewById(R.id.verticalPopUpMenu)
         newPostButton = findViewById(R.id.newPostButton)
+        postTV = findViewById(R.id.postTV)
 
         verticalMenuDialog = BottomSheetDialog(this)
 
@@ -158,6 +160,11 @@ class MainActivity : AppCompatActivity() {
         signedInUserViewModel.getPosts().observe(this, {
             if (it != null && it.isNotEmpty()) {
                 postCountTV.text = it[0].userPosts.size.toString()
+                if (it[0].userPosts.size == 1) {
+                    postTV.text = "Post"
+                } else {
+                    postTV.text = "Posts"
+                }
                 adapter.setPostList(it[0].userPosts)
             }
         })

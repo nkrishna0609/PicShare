@@ -68,43 +68,34 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             app:civ_border_width="2dp"
-            app:civ_border_color="@color/black"/>
+            app:civ_border_color="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingStart="16dp"
-                android:layout_gravity="center_horizontal">
+                android:id="@+id/postCountTV"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="monospace"
+                android:gravity="center_vertical"
+                android:paddingLeft="45dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:id="@+id/postCountTV"
-                        android:textColor="@color/white"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        android:typeface="monospace"
-                        android:layout_gravity="center"
-                        android:paddingTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="25dp"
+                android:id="@+id/postTV"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="Posts"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center|top"
-                        android:textSize="18dp" />
-
-            </LinearLayout>
 
     </LinearLayout>
 

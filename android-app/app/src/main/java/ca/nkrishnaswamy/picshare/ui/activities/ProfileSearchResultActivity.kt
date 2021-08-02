@@ -27,6 +27,7 @@ class ProfileSearchResultActivity : AppCompatActivity() {
     private lateinit var postCountTV : TextView
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : SearchedAccountPostsAdapter
+    private lateinit var postTV : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class ProfileSearchResultActivity : AppCompatActivity() {
         postCountTV = findViewById(R.id.postNum)
         searchPageButton = findViewById(R.id.searchPageButton)
         myAccountPageButton = findViewById(R.id.myAccountPageButton)
+        postTV = findViewById(R.id.postTV)
 
         user = intent.getParcelableExtra("searchedAccount")!!
         postList = intent.getParcelableArrayListExtra<UserPost>("postList") as ArrayList<UserPost>
@@ -55,6 +57,11 @@ class ProfileSearchResultActivity : AppCompatActivity() {
         bioTV.text = user.bio
         profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
         postCountTV.text = postList.size.toString()
+        if (postList.size == 1) {
+            postTV.text = "Post"
+        } else {
+            postTV.text = "Posts"
+        }
 
         myAccountPageButton.setOnClickListener {
             val myAccountPageIntent = Intent(this@ProfileSearchResultActivity, MainActivity::class.java)
