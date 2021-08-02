@@ -140,37 +140,56 @@ class EditProfileActivity : AppCompatActivity() {
                     tilUsername.helperText = "Username is Empty"
                 }
             } else{
-                if (usernameInET != username) {
-                    //must update username field in db - later must check if username is not taken by another user once I set up the Node/Express server
-                    user.username = usernameInET
-                    changeCheck = true
-                }
-                if (nameInET != fullName) {
-                    user.name = nameInET
-                    changeCheck = true
-                }
-                if (bioInET != bio) {
-                    user.bio = bioInET
-                    changeCheck = true
-                }
-                if (changeCheck) {
-                    val context : Context = this
-                    CoroutineScope(Dispatchers.IO).launch{
-                        val idToken = authViewModel.getUserIdToken()
-                        if (idToken != null) {
-                            val check = signedInUserViewModel.updateUser(context, user, idToken)
-                            if (check) {
-                                withContext(Dispatchers.Main){
-                                    val intentExit = Intent(this@EditProfileActivity, MainActivity::class.java)
-                                    startActivity(intentExit)
-                                    finish()
+                val context : Context = this
+                CoroutineScope(Dispatchers.IO).launch{
+                    val checkUsernameValidity = signedInUserViewModel.checkIfUsernameIsAvailable(usernameInET, user.email)
+                    when (checkUsernameValidity) {
+                        1 -> {
+                            withContext(Dispatchers.Main){
+                                tilUsername.helperText = "Username Not Available"
+                            }
+                            changeCheck = false
+                        }
+                        2 -> {
+                            withContext(Dispatchers.Main){
+                                tilUsername.helperText = "Error. Try Again"
+                            }
+                            changeCheck = false
+                        }
+                        else -> {
+                            withContext(Dispatchers.Main){
+                                if (usernameInET != username) {
+                                    user.username = usernameInET
+                                    changeCheck = true
+                                }
+                                if (nameInET != fullName) {
+                                    user.name = nameInET
+                                    changeCheck = true
+                                }
+                                if (bioInET != bio) {
+                                    user.bio = bioInET
+                                    changeCheck = true
+                                }
+                                if (changeCheck) {
+                                    withContext(Dispatchers.IO){
+                                        val idToken = authViewModel.getUserIdToken()
+                                        if (idToken != null) {
+                                            val check = signedInUserViewModel.updateUser(context, user, idToken)
+                                            if (check) {
+                                                withContext(Dispatchers.Main){
+                                                    val intentExit = Intent(this@EditProfileActivity, MainActivity::class.java)
+                                                    startActivity(intentExit)
+                                                    finish()
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
         }
 
         exitButton.setOnClickListener {

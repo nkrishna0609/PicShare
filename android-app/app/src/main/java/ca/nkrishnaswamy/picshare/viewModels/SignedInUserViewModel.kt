@@ -30,8 +30,8 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return repository.logInUser(context, idToken)
     }
 
-    suspend fun checkIfUsernameIsAvailable(username: String) :Int {
-        return repository.checkIfUsernameIsAvailable(username)
+    suspend fun checkIfUsernameIsAvailable(username: String, email: String) :Int {
+        return repository.checkIfUsernameIsAvailable(username, email)
     }
 
     suspend fun registerUser(context: Context, account: UserModel, idToken: String) : Boolean {

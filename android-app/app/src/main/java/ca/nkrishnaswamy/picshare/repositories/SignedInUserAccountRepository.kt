@@ -14,7 +14,9 @@ import ca.nkrishnaswamy.picshare.data.models.relations.SignedInAccountWithUserPo
 import ca.nkrishnaswamy.picshare.network.APIService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
 import org.json.JSONObject
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -96,8 +98,14 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return checkSuccess
     }
 
-    suspend fun checkIfUsernameIsAvailable(username: String) : Int {
-        val response = service.checkIfUsernameExists(username)
+    suspend fun checkIfUsernameIsAvailable(username: String, email: String) : Int {
+
+        val response : Response<ResponseBody> = if (email.isBlank()) {
+            service.checkIfUsernameExistsRegister(username)
+        } else {
+            service.checkIfUsernameExistsEditProfile(username, email)
+        }
+
         return if (response.isSuccessful) {
             0
         }else{

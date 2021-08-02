@@ -157,7 +157,6 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val context : Context = this
         CoroutineScope(IO).launch{
             val idToken : String? = authViewModel.registerUserByEmailAndPassword(email, password)
-            //println("The ID Token is " + idToken)
             if (idToken != null) {
                 val check = signedInUserVM.registerUser(context, user, idToken)
                 if (check) {

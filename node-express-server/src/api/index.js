@@ -143,7 +143,7 @@ router.get('/users/search/posts/:idToken/:email', function(request, response){
     })
 })
 
-// GET - check if username exists already
+// GET - check if username exists already - register
 router.get('/users/username/:username', function(request, response){
     var username = request.params.username
 
@@ -157,6 +157,26 @@ router.get('/users/username/:username', function(request, response){
         }
 
         response.json({message: "This username is available."})
+    });
+});
+
+// GET - check if username exists already - edit profile
+router.get('/users/username/:username/:email', function(request, response){
+    var username = request.params.username
+    var email = request.params.email
+
+    User.findOne({"username": username}, function(err, userFound) {
+        if (err) {
+            return response.status(500).json({err, userFound});
+        }
+
+        if (userFound){
+            if (userFound.email != email) {
+                return response.status(400).json({err: "The username already exists in the database."});
+            }
+        }
+
+        response.json({message: "This username is available OR the username which was entered did not get changed."})
     });
 });
 

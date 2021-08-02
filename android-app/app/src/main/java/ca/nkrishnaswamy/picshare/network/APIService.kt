@@ -25,7 +25,10 @@ interface APIService {
     suspend fun getUser(@Path("idToken") idToken: String): Response<JSONUserModel>
 
     @GET("/api/users/username/{username}")
-    suspend fun checkIfUsernameExists(@Path("username") username: String): Response<ResponseBody>
+    suspend fun checkIfUsernameExistsRegister(@Path("username") username: String): Response<ResponseBody>
+
+    @GET("/api/users/username/{username}/{email}")
+    suspend fun checkIfUsernameExistsEditProfile(@Path("username") username: String, @Path("email") email: String): Response<ResponseBody>
 
     @GET("/api/users/posts/{idToken}")
     suspend fun getPostsOfLoggingInUser(@Path("idToken") idToken: String): Response<List<JSONPostModel>>

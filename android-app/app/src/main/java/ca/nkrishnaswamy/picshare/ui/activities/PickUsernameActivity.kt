@@ -39,7 +39,7 @@ class PickUsernameActivity : AppCompatActivity() {
             if (!TextUtils.isEmpty(pickUsername.text)){
                 val username = pickUsername.text.toString()
                 CoroutineScope(Dispatchers.IO).launch{
-                    when (signedInUserVM.checkIfUsernameIsAvailable(username)) {
+                    when (signedInUserVM.checkIfUsernameIsAvailable(username, "")) {
                         0 -> {
                             withContext(Dispatchers.Main){
                                 errorMessageTV.text = ""
