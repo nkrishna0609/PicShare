@@ -8,7 +8,7 @@ import ca.nkrishnaswamy.picshare.data.db.DAOs.UserAccountDAO
 import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.data.models.UserPost
 
-@Database(entities= [UserModel::class, UserPost::class], version = 10, exportSchema = false)
+@Database(entities= [UserModel::class, UserPost::class], version = 11, exportSchema = false)
 abstract class CurrentLoggedInUserCache : RoomDatabase() {
     abstract fun userAccountDAO() : UserAccountDAO
 
@@ -21,8 +21,8 @@ abstract class CurrentLoggedInUserCache : RoomDatabase() {
                 var instance = INSTANCE
 
                 if (instance == null){
-                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv10").addMigrations(
-                        MIGRATION_9_10).build()
+                    instance = Room.databaseBuilder(context.applicationContext, CurrentLoggedInUserCache::class.java, "currentLoggedInUserDbv11").addMigrations(
+                        MIGRATION_10_11).build()
                     INSTANCE = instance
                 }
                 return instance

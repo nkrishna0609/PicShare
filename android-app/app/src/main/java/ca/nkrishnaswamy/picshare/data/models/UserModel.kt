@@ -21,9 +21,5 @@ data class UserModel(
     @ColumnInfo(name="user_profile_pic_path_from_uri")
     var profilePicPathFromUri: String,
     @ColumnInfo(name="user_bio")
-    var bio : String,
-    @ColumnInfo(name="user_num_followers")
-    var followerNum : Int,
-    @ColumnInfo(name="user_num_following")
-    var followingNum : Int
+    var bio : String
     ): Parcelable

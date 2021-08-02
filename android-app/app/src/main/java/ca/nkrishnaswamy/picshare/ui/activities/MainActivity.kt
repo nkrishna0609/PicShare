@@ -60,10 +60,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : UserPostsAdapter
     private lateinit var postCountTV : TextView
-    private lateinit var followingCountTV : TextView
-    private lateinit var followersCountTV : TextView
-    private var followingCount : Int = 0
-    private var followersCount : Int = 0
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -131,8 +127,6 @@ class MainActivity : AppCompatActivity() {
         fullNameTV = findViewById(R.id.name)
         bioTV = findViewById(R.id.bio)
         postCountTV = findViewById(R.id.postCountTV)
-        followersCountTV = findViewById(R.id.followersCountTV)
-        followingCountTV = findViewById(R.id.followingCountTV)
         searchPageButton = findViewById(R.id.searchPageButton)
         editProfileButton = findViewById(R.id.editProfileButton)
         verticalPopUpMenuButton = findViewById(R.id.verticalPopUpMenu)
@@ -153,10 +147,6 @@ class MainActivity : AppCompatActivity() {
                 uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
                 profilePic.setImageURI(uriImg)
-                followersCount = t.followerNum
-                followersCountTV.text = followersCount.toString()
-                followingCount = t.followingNum
-                followingCountTV.text = followingCount.toString()
             }
             else{
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)

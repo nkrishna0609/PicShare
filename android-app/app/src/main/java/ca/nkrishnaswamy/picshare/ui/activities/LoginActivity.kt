@@ -15,7 +15,6 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                         CoroutineScope(Dispatchers.IO).launch{
                             val idToken = authViewModel.getUserIdToken()
                             if (idToken != null) {
-                                //println("The ID token is: " + idToken)
                                 val checkSuccess = signedInUserVM.logInUser(context, idToken)
                                 if (checkSuccess) {
                                     withContext(Dispatchers.Main) {

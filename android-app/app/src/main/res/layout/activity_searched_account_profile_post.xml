@@ -88,15 +88,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_home_24"
-            android:backgroundTint="@color/black"/>
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:id="@+id/searchPageButton"
             android:layout_gravity="center"
             android:scaleType="fitCenter"

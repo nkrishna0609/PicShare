@@ -51,7 +51,7 @@ class EnterEmailActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main){
                         if (emailExistCheck){ //if email address is NOT associated to an existing account
                             errorMessageTV.text=""
-                            newAccount = UserModel(0, email,"", "", "", "", 0, 0)
+                            newAccount = UserModel(0, email,"", "", "", "")
                             val intent = Intent(this@EnterEmailActivity, EnterNamePasswordActivity::class.java)
                             intent.putExtra("userAccount", newAccount)
                             startActivity(intent)

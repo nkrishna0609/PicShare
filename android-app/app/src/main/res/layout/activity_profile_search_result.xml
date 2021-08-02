@@ -27,7 +27,6 @@
         android:orientation="horizontal"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:weightSum="10"
         android:id="@+id/linLayoutProfile">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -38,95 +37,40 @@
             app:civ_border_color="@color/black"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:paddingLeft="16dp"
-            android:paddingStart="16dp">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/postNum"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Posts"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/postNum"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:typeface="monospace"
+                    android:layout_gravity="center"
+                    android:paddingTop="20dp"/>
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Posts"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center|top"
+                    android:textSize="18dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/followersNum"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Followers"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/followingNum"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Following"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -160,29 +104,13 @@
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linLayoutNameBio"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        android:text="Follow"
-        android:textAllCaps="false"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:strokeColor="@color/dark_grey"
-        app:strokeWidth="2dp"
-        android:backgroundTint="@color/blue"
-        android:id="@+id/followButton"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/followButton"
-        android:layout_above="@id/linLayoutBottom"/>
+        android:layout_above="@id/linLayoutBottom"
+        android:layout_below="@id/linLayoutNameBio"
+        android:layout_marginTop="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,15 +118,6 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/linLayoutBottom">
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_home_24"
-            android:backgroundTint="@color/black"/>
 
         <ImageButton
             android:layout_width="0dp"

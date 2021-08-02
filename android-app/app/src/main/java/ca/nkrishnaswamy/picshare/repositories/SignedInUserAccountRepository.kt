@@ -38,12 +38,10 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
                 val name : String = retrievedUser.name
                 val profilePicBase64 : String = retrievedUser.profilePicBase64
                 val bio : String = retrievedUser.bio
-                val followerNum : Int = retrievedUser.followerNum
-                val followingNum : Int = retrievedUser.followingNum
 
                 val profilePicUriPathString : String = getUriPathStringFromBase64(context, profilePicBase64)
 
-                val account = UserModel(0, email, username, name, profilePicUriPathString, bio, followerNum, followingNum)
+                val account = UserModel(0, email, username, name, profilePicUriPathString, bio)
                 accountDao.insertUser(account)
                 getPostsFromServerAndInsertIntoDb(context, idToken, email)
                 successCheck = true
@@ -62,8 +60,6 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         jsonObject.put("name", account.name)
         jsonObject.put("profilePicBase64", encodedBase64)
         jsonObject.put("bio", account.bio)
-        jsonObject.put("followerNum", account.followerNum)
-        jsonObject.put("followingNum", account.followingNum)
         jsonObject.put("firebaseUid", "")
 
         val jsonObjectString = jsonObject.toString()
@@ -87,8 +83,6 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         jsonObject.put("name", account.name)
         jsonObject.put("profilePicBase64", encodedBase64)
         jsonObject.put("bio", account.bio)
-        jsonObject.put("followerNum", account.followerNum)
-        jsonObject.put("followingNum", account.followingNum)
         jsonObject.put("firebaseUid", "")
 
         val jsonObjectString = jsonObject.toString()
@@ -249,12 +243,10 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
                     val name : String = postList[i].name
                     val profilePicBase64 : String = postList[i].profilePicBase64
                     val bio : String = postList[i].bio
-                    val followerNum : Int = postList[i].followerNum
-                    val followingNum : Int = postList[i].followingNum
 
                     val profilePicUriPathString : String = getUriPathStringFromBase64(context, profilePicBase64)
 
-                    val account = UserModel(0, email, username, name, profilePicUriPathString, bio, followerNum, followingNum)
+                    val account = UserModel(0, email, username, name, profilePicUriPathString, bio)
                     searchedUsers.add(account)
                 }
             }

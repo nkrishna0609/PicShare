@@ -19,7 +19,6 @@ import ca.nkrishnaswamy.picshare.data.models.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

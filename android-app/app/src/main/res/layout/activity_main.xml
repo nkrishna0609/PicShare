@@ -61,7 +61,6 @@
         android:orientation="horizontal"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:weightSum="10"
         android:id="@+id/linLayoutProfile">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -72,97 +71,42 @@
             app:civ_border_color="@color/black"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:paddingLeft="16dp"
-            android:paddingStart="16dp">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/postCountTV"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Posts"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/postCountTV"
+                        android:textColor="@color/white"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        android:typeface="monospace"
+                        android:layout_gravity="center"
+                        android:paddingTop="20dp"/>
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Posts"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center|top"
+                        android:textSize="18dp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/followersCountTV"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Followers"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/followingCountTV"
-                android:textColor="@color/white"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:typeface="monospace"
-                android:layout_gravity="center"
-                android:paddingTop="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Following"
-                android:textColor="@color/white"
-                android:layout_gravity="center|top"
-                android:textSize="18dp" />
-
-        </LinearLayout>
+    </LinearLayout>
 
     </LinearLayout>
 
@@ -223,15 +167,6 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/linLayoutBottom">
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_home_24"
-            android:backgroundTint="@color/black" />
 
         <ImageButton
             android:layout_width="0dp"

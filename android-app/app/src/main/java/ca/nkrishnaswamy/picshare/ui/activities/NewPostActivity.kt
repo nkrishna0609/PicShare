@@ -123,17 +123,6 @@ class NewPostActivity : AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener {
-            //CoroutineScope(Dispatchers.IO).launch {
-                //val picCache = File(uriImgPathString)
-                //if (picCache.exists()) {
-                    //if (!picCache.delete()) {
-                        //picCache.canonicalFile.delete()
-                        //if (picCache.exists()) {
-                            //applicationContext.deleteFile(picCache.name)
-                        //}
-                    //}
-                //}
-            //}
             val intentExit = Intent(this@NewPostActivity, MainActivity::class.java)
             startActivity(intentExit)
             finish()

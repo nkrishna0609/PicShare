@@ -13,10 +13,6 @@ data class JSONUserModel(
     var profilePicBase64: String,
     @SerializedName("bio")
     var bio : String,
-    @SerializedName("followerNum")
-    var followerNum : Int,
-    @SerializedName("followingNum")
-    var followingNum : Int,
     @SerializedName("firebaseUid")
     var firebaseUid : String
 )

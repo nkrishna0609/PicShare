@@ -25,8 +25,6 @@ class ProfileSearchResultActivity : AppCompatActivity() {
     private lateinit var fullNameTV : TextView
     private lateinit var bioTV : TextView
     private lateinit var postCountTV : TextView
-    private lateinit var followingCountTV : TextView
-    private lateinit var followersCountTV : TextView
     private lateinit var recyclerView : RecyclerView
     private lateinit var adapter : SearchedAccountPostsAdapter
 
@@ -41,8 +39,6 @@ class ProfileSearchResultActivity : AppCompatActivity() {
         fullNameTV = findViewById(R.id.name)
         bioTV = findViewById(R.id.bio)
         postCountTV = findViewById(R.id.postNum)
-        followersCountTV = findViewById(R.id.followersNum)
-        followingCountTV = findViewById(R.id.followingNum)
         searchPageButton = findViewById(R.id.searchPageButton)
         myAccountPageButton = findViewById(R.id.myAccountPageButton)
 
@@ -57,8 +53,6 @@ class ProfileSearchResultActivity : AppCompatActivity() {
         usernameTV.text = user.username
         fullNameTV.text = user.name
         bioTV.text = user.bio
-        followersCountTV.text = user.followerNum.toString()
-        followingCountTV.text = user.followingNum.toString()
         profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
         postCountTV.text = postList.size.toString()
 
