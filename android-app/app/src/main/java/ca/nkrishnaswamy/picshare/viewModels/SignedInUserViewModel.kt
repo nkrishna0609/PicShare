@@ -52,12 +52,16 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return repository.deleteAccountFromServer(idToken)
     }
 
-    suspend fun addPost(context: Context, post : UserPost, idToken: String) : Boolean {
-        return repository.addPost(context, post, idToken)
+    suspend fun addPost(context: Context, post : UserPost, idToken: String, email: String) : Boolean {
+        return repository.addPost(context, post, idToken, email)
     }
 
     fun getPosts(): LiveData<List<SignedInAccountWithUserPosts>> {
         return livedataPostList
+    }
+
+    suspend fun getPostsForUserSearch(context : Context, idToken : String, email : String) : ArrayList<UserPost> {
+        return repository.getPostsForUserSearch(context, idToken, email)
     }
 
     suspend fun searchForAccounts(context: Context, searchQuery : String) : ArrayList<UserModel> {

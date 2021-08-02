@@ -167,13 +167,22 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         android:text="Follow"
         android:textAllCaps="false"
         android:textSize="16dp"
         android:textStyle="bold"
         app:strokeColor="@color/dark_grey"
         app:strokeWidth="2dp"
-        android:backgroundTint="@color/blue"/>
+        android:backgroundTint="@color/blue"
+        android:id="@+id/followButton"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/followButton"
+        android:layout_above="@id/linLayoutBottom"/>
 
     <LinearLayout
         android:layout_width="match_parent"

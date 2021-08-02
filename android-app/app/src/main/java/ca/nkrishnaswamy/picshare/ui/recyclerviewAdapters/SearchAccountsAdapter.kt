@@ -11,17 +11,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
-import ca.nkrishnaswamy.picshare.ui.activities.ProfileSearchResultActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
-class SearchAccountsAdapter internal constructor(val context: Context) : RecyclerView.Adapter<SearchAccountsAdapter.SearchAccountsViewHolder>(){
+class SearchAccountsAdapter internal constructor(val context: Context, private val listener : OnItemClickListener) : RecyclerView.Adapter<SearchAccountsAdapter.SearchAccountsViewHolder>(){
 
     private var searchedAccountsList = mutableListOf<UserModel>()
 
     class SearchAccountsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameVal : TextView = itemView.findViewById(R.id.username)
-        val profilePic : CircleImageView = itemView.findViewById(R.id.profileImage)
+        private val usernameVal : TextView = itemView.findViewById(R.id.username)
+        private val profilePic : CircleImageView = itemView.findViewById(R.id.profileImage)
         val layout : LinearLayout = itemView.findViewById(R.id.searchedAccountsLayout)
+
+        fun bind(account : UserModel, listener : OnItemClickListener) {
+            usernameVal.text = account.username
+            profilePic.setImageURI(Uri.parse(account.profilePicPathFromUri))
+
+            itemView.setOnClickListener {
+                listener.onItemClick(account)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAccountsViewHolder {
@@ -35,14 +43,7 @@ class SearchAccountsAdapter internal constructor(val context: Context) : Recycle
     }
 
     override fun onBindViewHolder(holder: SearchAccountsViewHolder, position: Int) {
-        holder.usernameVal.text = searchedAccountsList[position].username
-        holder.profilePic.setImageURI(Uri.parse(searchedAccountsList[position].profilePicPathFromUri))
-
-        holder.layout.setOnClickListener {
-            val intent = Intent(context, ProfileSearchResultActivity::class.java)
-            intent.putExtra("searchedAccount", searchedAccountsList[position])
-            context.startActivity(intent)
-        }
+        holder.bind(searchedAccountsList[position], listener)
     }
 
     internal fun setSearchedAccountsList(accountsList: List<UserModel>) {

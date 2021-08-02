@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.UserModel
+import ca.nkrishnaswamy.picshare.data.models.UserPost
+import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.OnItemClickListener
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.SearchAccountsAdapter
+import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +28,34 @@ class SearchAccountsActivity : AppCompatActivity() {
     private lateinit var searchBoxET : EditText
     private lateinit var searchButton : ImageButton
     private lateinit var signedInUserVM : SignedInUserViewModel
+    private lateinit var authViewModel: AuthViewModel
     private lateinit var searchedUserList : ArrayList<UserModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_profiles)
 
+        val context: Context = this
+
         signedInUserVM = ViewModelProvider(this).get(SignedInUserViewModel::class.java)
+        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
         recyclerView = findViewById(R.id.recyclerView)
-        val recyclerViewAdapter = SearchAccountsAdapter(this)
+        val recyclerViewAdapter = SearchAccountsAdapter(this, object: OnItemClickListener {
+            override fun onItemClick(account: UserModel) {
+                CoroutineScope(Dispatchers.IO).launch{
+                    val idToken = authViewModel.getUserIdToken()
+                    if (idToken != null) {
+                        val postList : ArrayList<UserPost> = signedInUserVM.getPostsForUserSearch(context, idToken, account.email)
+                        withContext(Dispatchers.Main) {
+                            val intent = Intent(context, ProfileSearchResultActivity::class.java)
+                            intent.putExtra("searchedAccount", account)
+                            intent.putParcelableArrayListExtra("postList", postList)
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
+        })
 
         searchBoxET = findViewById(R.id.searchBox)
 
@@ -42,13 +64,13 @@ class SearchAccountsActivity : AppCompatActivity() {
             val searchQuery: String = searchBoxET.text.toString()
 
             if (!TextUtils.isEmpty(searchBoxET.text)){
-                val context: Context = this
                 CoroutineScope(Dispatchers.IO).launch{
                     searchedUserList = signedInUserVM.searchForAccounts(context, searchQuery)
                     withContext(Dispatchers.Main) {
                         recyclerViewAdapter.setSearchedAccountsList(searchedUserList)
                         recyclerView.adapter = recyclerViewAdapter
                         recyclerView.layoutManager = LinearLayoutManager(context)
+
                     }
                 }
             }

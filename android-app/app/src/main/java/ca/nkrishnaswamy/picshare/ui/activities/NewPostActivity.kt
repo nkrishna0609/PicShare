@@ -113,7 +113,7 @@ class NewPostActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     val idToken = authViewModel.getUserIdToken()
                     if (idToken != null) {
-                        signedInUserViewModel.addPost(context, post, idToken)
+                        signedInUserViewModel.addPost(context, post, idToken, post.email)
                     }
                 }
                 val intentExit = Intent(this@NewPostActivity, MainActivity::class.java)

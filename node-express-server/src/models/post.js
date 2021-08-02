@@ -8,7 +8,8 @@ var postSchema = new mongoose.Schema({
     id: Number,
     caption: String,
     postPicBase64: String,
-    firebaseUid: String
+    firebaseUid: String,
+    email: String
 });
 
 // Build model

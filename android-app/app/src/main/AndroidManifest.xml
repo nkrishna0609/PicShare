@@ -62,6 +62,9 @@
         <activity
             android:name="ca.nkrishnaswamy.picshare.ui.activities.ProfileSearchResultActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="ca.nkrishnaswamy.picshare.ui.activities.SearchedAccountPostViewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

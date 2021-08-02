@@ -43,7 +43,10 @@ interface APIService {
     suspend fun createPost(@Body requestBody: RequestBody, @Path("idToken") idToken: String): Response<ResponseBody>
 
     @GET("/api/users/posts/{idToken}")
-    suspend fun getPostsOfUser(@Path("idToken") idToken: String): Response<List<JSONPostModel>>
+    suspend fun getPostsOfLoggingInUser(@Path("idToken") idToken: String): Response<List<JSONPostModel>>
+
+    @GET("/api/users/search/posts/{idToken}/{email}")
+    suspend fun getPostsOfUserSearch(@Path("idToken") idToken: String, @Path("email") email: String): Response<List<JSONPostModel>>
 
     @GET("/api/users/search/{searchQuery}")
     suspend fun searchForUsers(@Path("searchQuery") searchQuery : String): Response<List<JSONUserModel>>

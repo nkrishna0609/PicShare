@@ -82,7 +82,7 @@ router.get('/users/search/:searchQuery', function(request, response){
     });
 });
 
-// GET - get all posts of a user
+// GET - get all posts of a user (for login)
 router.get('/users/posts/:idToken', function(request, response){
     var idToken = request.params.idToken
 
@@ -99,6 +99,37 @@ router.get('/users/posts/:idToken', function(request, response){
                 return response.status(500).json({err: "The user does not exist in the database."});
             }
             Post.find(query, function(err, posts){
+                if (err) {
+                    return response.status(500).json({message: err.message});
+                }
+        
+                response.send(posts);
+            });
+        });
+    })
+    .catch((error) => {
+        return response.status(500).json({err: "Invalid Firebase ID token."})
+    })
+})
+
+// GET - get all posts of a user (for user search)
+router.get('/users/search/posts/:idToken/:email', function(request, response){
+    var idToken = request.params.idToken
+    var email = request.params.email
+
+    admin.auth().verifyIdToken(idToken).then((decodeToken) => {
+        const uid = decodeToken.uid
+        var query = {'firebaseUid': uid};
+        
+        User.findOne(query, function(err, userFound) {
+            if (err) {
+                return response.status(500).json({err, userFound});
+            }
+    
+            if (!userFound){
+                return response.status(500).json({err: "Unauthorized search request."});
+            }
+            Post.find({'email': email}, function(err, posts){
                 if (err) {
                     return response.status(500).json({message: err.message});
                 }
@@ -189,7 +220,8 @@ router.post('/users/posts/:idToken', function(request, response){
             }
             
             post['firebaseUid'] = uid;
-            post['postPicBase64'] = postPicBase64
+            post['postPicBase64'] = postPicBase64;
+            post['email'] = userFound.email;
             
             Post.create(post, function(err, post){
                 if (err) {

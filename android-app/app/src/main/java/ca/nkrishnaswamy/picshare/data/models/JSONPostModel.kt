@@ -10,5 +10,7 @@ data class JSONPostModel(
     @SerializedName("postPicBase64")
     var postPicBase64: String,
     @SerializedName("firebaseUid")
-    var firebaseUid: String
+    var firebaseUid: String,
+    @SerializedName("email")
+    var email: String
 )

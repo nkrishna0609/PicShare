@@ -45,7 +45,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
 
                 val account = UserModel(0, email, username, name, profilePicUriPathString, bio, followerNum, followingNum)
                 accountDao.insertUser(account)
-                getPostsFromServer(context, idToken, email)
+                getPostsFromServerAndInsertIntoDb(context, idToken, email)
                 successCheck = true
             }
         }
@@ -115,7 +115,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         }
     }
 
-    suspend fun addPost(context: Context, post : UserPost, idToken: String) : Boolean {
+    suspend fun addPost(context: Context, post : UserPost, idToken: String, email : String) : Boolean {
         accountDao.insertPost(post)
 
         val postsList : List<UserPost> = accountDao.getUserModelWithUserPostsNonLiveData()[0].userPosts
@@ -141,6 +141,7 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         jsonObject.put("caption", post.caption)
         jsonObject.put("postPicBase64", encodedBase64)
         jsonObject.put("firebaseUid", "")
+        jsonObject.put("email", email)
 
         val jsonObjectString = jsonObject.toString()
         val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
@@ -159,9 +160,9 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         return livedataPostList
     }
 
-    private suspend fun getPostsFromServer(context : Context, idToken : String, email : String) : Boolean {
+    private suspend fun getPostsFromServerAndInsertIntoDb(context : Context, idToken : String, email : String) : Boolean {
         var checkSuccess = false
-        val response = service.getPostsOfUser(idToken)
+        val response = service.getPostsOfLoggingInUser(idToken)
 
         if (response.isSuccessful) {
             val postList = response.body()
@@ -181,6 +182,29 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         }
 
         return checkSuccess
+    }
+
+    suspend fun getPostsForUserSearch(context : Context, idToken : String, email: String) : ArrayList<UserPost> {
+        val response = service.getPostsOfUserSearch(idToken, email)
+
+        val resultPostList : ArrayList<UserPost> = ArrayList()
+        if (response.isSuccessful) {
+            val postList = response.body()
+            if (postList != null) {
+                for (i in 0 until postList.count()) {
+                    val id = postList[i].id
+                    val caption = postList[i].caption
+                    val postPicBase64 = postList[i].postPicBase64
+
+                    val uriImgPathString : String = getUriPathStringFromBase64(context, postPicBase64)
+
+                    val post = UserPost(id, caption, uriImgPathString, email)
+                    resultPostList.add(post)
+                }
+            }
+        }
+
+        return resultPostList
     }
 
     suspend fun deletePost(post : UserPost, idToken: String) : Boolean {
