@@ -60,6 +60,10 @@ class SignedInUserViewModel(application: Application) : AndroidViewModel(applica
         return livedataPostList
     }
 
+    suspend fun searchForAccounts(context: Context, searchQuery : String) : ArrayList<UserModel> {
+        return repository.searchForAccounts(context, searchQuery)
+    }
+
     suspend fun deletePost(post: UserPost, idToken: String) : Boolean {
         return repository.deletePost(post, idToken)
     }

@@ -211,6 +211,34 @@ class SignedInUserAccountRepository(private val accountDao: UserAccountDAO) {
         accountDao.deleteAccount()
     }
 
+    suspend fun searchForAccounts(context: Context, searchQuery: String) : ArrayList<UserModel> {
+        val searchedUsers = arrayListOf<UserModel>()
+
+        val response = service.searchForUsers(searchQuery)
+
+        if (response.isSuccessful) {
+            val postList = response.body()
+            if (postList != null) {
+                for (i in 0 until postList.count()) {
+                    val email : String = postList[i].email
+                    val username : String = postList[i].username
+                    val name : String = postList[i].name
+                    val profilePicBase64 : String = postList[i].profilePicBase64
+                    val bio : String = postList[i].bio
+                    val followerNum : Int = postList[i].followerNum
+                    val followingNum : Int = postList[i].followingNum
+
+                    val profilePicUriPathString : String = getUriPathStringFromBase64(context, profilePicBase64)
+
+                    val account = UserModel(0, email, username, name, profilePicUriPathString, bio, followerNum, followingNum)
+                    searchedUsers.add(account)
+                }
+            }
+        }
+
+        return searchedUsers
+    }
+
     private fun getBase64EncodedFromUri(context: Context, uriString: String): String {
         val uriImg: Uri = Uri.parse(uriString)
         val bitmap: Bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uriImg))

@@ -7,43 +7,23 @@
     tools:context=".ui.activities.MainActivity"
     android:background="@color/black">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:weightSum="5"
-        android:id="@+id/linLayoutTop">
-
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:paddingRight="50dp"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24"
-            android:backgroundTint="@color/black"
-            android:paddingEnd="50dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="searchedProfileResult"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
+        android:id="@+id/username"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linLayoutTop"
+        android:layout_below="@+id/username"
         android:orientation="horizontal"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -69,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="0"
+                android:id="@+id/postNum"
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold"
@@ -100,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="0"
+                android:id="@+id/followersNum"
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold"
@@ -131,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="0"
+                android:id="@+id/followingNum"
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold"
@@ -165,7 +145,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Big Chungus"
+            android:id="@+id/name"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -173,7 +153,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bio"
+            android:id="@+id/bio"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:layout_gravity="left"/>

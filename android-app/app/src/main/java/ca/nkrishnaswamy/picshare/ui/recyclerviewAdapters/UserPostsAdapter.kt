@@ -19,7 +19,7 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
 
     class UserPostsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val postImageView: ImageView = itemView.findViewById(R.id.postImage)
-        val relativeLayoutPost : LinearLayout = itemView.findViewById(R.id.postLayout)
+        val linearLayoutPost : LinearLayout = itemView.findViewById(R.id.postLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostsViewHolder {
@@ -31,7 +31,7 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
     override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].uriImgPathString
         holder.postImageView.setImageURI(Uri.parse(uriPath))
-        holder.relativeLayoutPost.setOnClickListener {
+        holder.linearLayoutPost.setOnClickListener {
             val intent = Intent(context, UserPostViewActivity::class.java)
             intent.putExtra("post", postList[position])
             context.startActivity(intent)

@@ -77,7 +77,7 @@ router.get('/users/search/:searchQuery', function(request, response){
             return response.status(500).json({message: err.message});
         }
 
-        response.json({users: users});
+        response.send(users);
 
     });
 });

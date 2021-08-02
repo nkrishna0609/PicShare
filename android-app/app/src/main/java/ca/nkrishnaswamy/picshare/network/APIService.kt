@@ -45,4 +45,7 @@ interface APIService {
     @GET("/api/users/posts/{idToken}")
     suspend fun getPostsOfUser(@Path("idToken") idToken: String): Response<List<JSONPostModel>>
 
+    @GET("/api/users/search/{searchQuery}")
+    suspend fun searchForUsers(@Path("searchQuery") searchQuery : String): Response<List<JSONUserModel>>
+
 }

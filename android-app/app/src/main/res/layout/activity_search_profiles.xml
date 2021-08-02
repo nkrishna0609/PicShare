@@ -5,38 +5,51 @@
     android:background="@color/black">
 
     <LinearLayout
+        android:id="@+id/linLayoutTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:id="@+id/linLayoutTop"
-        android:layout_marginTop="15dp">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="4dp"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24"
-            android:backgroundTint="@color/black"
-            />
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <EditText
-            android:layout_width="match_parent"
+            android:id="@+id/searchBox"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="9"
             android:background="@color/dark_grey"
-            android:inputType="text"
             android:hint="Search"
-            android:textColorHint="@color/grey"
-            android:singleLine="true"
+            android:inputType="text"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textColor="@color/white"/>
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/grey" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_baseline_search_24" />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/linLayoutBottom"
+        android:layout_below="@id/linLayoutTop"
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

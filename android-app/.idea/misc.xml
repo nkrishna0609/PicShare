@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_find_account.xml" value="0.1" />
         <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_login.xml" value="0.1640625" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
         <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_pick_username.xml" value="0.1640625" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_profile_search_result.xml" value="0.22" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_search_profiles.xml" value="0.22" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_user_profile_post.xml" value="0.1" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/activity_welcome_page.xml" value="0.1" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/searched_account_row.xml" value="0.22" />
+        <entry key="..\:/Users/niran/AndroidStudioProjects/PicShare/PicShare/android-app/app/src/main/res/layout/user_post_grid_cell.xml" value="0.1" />
       </map>
     </option>
   </component>
