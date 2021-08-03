@@ -12,6 +12,7 @@ I was inspired by the Instagram mobile app, and created PicShare with my family 
 PicShare has 2 main components - the Android app, and the Node.js/Express.js server (with MongoDB as the database). The Android app was written entirely in Kotlin, and of course, the Node/Express server in JavaScript. 
 
 ## Features
+_**Please click on the images - each will take you to its respective YouTube video showcasing the feature**_
 ### Registering Account
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/MXn0vvcxvIc/0.jpg)](https://www.youtube.com/watch?v=MXn0vvcxvIc "PicShare Demo - Registering Account")
 
