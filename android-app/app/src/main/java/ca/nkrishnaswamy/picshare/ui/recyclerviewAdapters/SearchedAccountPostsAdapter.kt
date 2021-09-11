@@ -13,6 +13,7 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.SearchedAccountPostViewActivity
+import com.bumptech.glide.Glide
 
 class SearchedAccountPostsAdapter internal constructor(val context: Context, private val searchedAccount: UserModel) : RecyclerView.Adapter<SearchedAccountPostsAdapter.SearchedAccountPostsViewHolder>() {
 
@@ -31,7 +32,7 @@ class SearchedAccountPostsAdapter internal constructor(val context: Context, pri
 
     override fun onBindViewHolder(holder: SearchedAccountPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].uriImgPathString
-        holder.postImageView.setImageURI(Uri.parse(uriPath))
+        Glide.with(context).load(Uri.parse(uriPath)).into(holder.postImageView)
         holder.linearLayoutPost.setOnClickListener {
             val intent = Intent(context, SearchedAccountPostViewActivity::class.java)
             intent.putExtra("post", postList[position])

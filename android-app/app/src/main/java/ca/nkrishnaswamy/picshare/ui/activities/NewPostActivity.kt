@@ -23,6 +23,7 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class NewPostActivity : AppCompatActivity() {
         }
         uriImgPathString = uriImg.toString()
         post.uriImgPathString = uriImgPathString
-        postPhoto.setImageURI(Uri.parse(uriImgPathString))
+        Glide.with(this).load(Uri.parse(uriImgPathString)).into(postPhoto)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -81,7 +82,7 @@ class NewPostActivity : AppCompatActivity() {
 
         uriImgPathString = uriImg.toString()
         post.uriImgPathString = uriImgPathString
-        postPhoto.setImageURI(Uri.parse(uriImgPathString))
+        Glide.with(this).load(Uri.parse(uriImgPathString)).into(postPhoto)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +101,7 @@ class NewPostActivity : AppCompatActivity() {
         fileChildName = intent.getStringExtra("fileChildName").toString()
         uriImgPathString = post.uriImgPathString
         uriImg = Uri.parse(uriImgPathString)
-        postPhoto.setImageURI(uriImg)
+        Glide.with(this).load(uriImg).into(postPhoto)
 
         completePostButton.setOnClickListener {
             val caption: String = captionET.text.toString()

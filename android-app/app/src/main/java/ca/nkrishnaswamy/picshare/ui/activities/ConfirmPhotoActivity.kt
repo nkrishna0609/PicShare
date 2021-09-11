@@ -18,6 +18,7 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -92,7 +93,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         }
         else{
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            img.setImageURI(Uri.parse(user.profilePicPathFromUri))
+            Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).into(img)
         }
     }
 
@@ -114,7 +115,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         selectedProfilePicPath = user.profilePicPathFromUri
 
         img = findViewById(R.id.profilePic)
-        img.setImageURI(Uri.parse(selectedProfilePicPath))
+        Glide.with(this).load(Uri.parse(selectedProfilePicPath)).into(img)
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {

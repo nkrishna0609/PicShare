@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.UserPostViewActivity
+import com.bumptech.glide.Glide
 
 class UserPostsAdapter internal constructor(val context: Context) : RecyclerView.Adapter<UserPostsAdapter.UserPostsViewHolder>() {
 
@@ -30,7 +31,7 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
 
     override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].uriImgPathString
-        holder.postImageView.setImageURI(Uri.parse(uriPath))
+        Glide.with(context).load(Uri.parse(uriPath)).into(holder.postImageView)
         holder.linearLayoutPost.setOnClickListener {
             val intent = Intent(context, UserPostViewActivity::class.java)
             intent.putExtra("post", postList[position])

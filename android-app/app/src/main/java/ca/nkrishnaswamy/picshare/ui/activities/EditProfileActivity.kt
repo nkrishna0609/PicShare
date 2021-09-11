@@ -20,6 +20,7 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import de.hdodenhof.circleimageview.CircleImageView
@@ -61,7 +62,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
         user.profilePicPathFromUri = uriImg.toString()
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).into(profilePic)
         changeCheck = true
     }
 
@@ -86,7 +87,7 @@ class EditProfileActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.profilePicPathFromUri = uriImg.toString()
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).into(profilePic)
         changeCheck = true
     }
 
@@ -115,7 +116,7 @@ class EditProfileActivity : AppCompatActivity() {
                 bioET.setText(bio)
                 uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
-                profilePic.setImageURI(uriImg)
+                Glide.with(this).load(uriImg).into(profilePic)
             }
         })
 

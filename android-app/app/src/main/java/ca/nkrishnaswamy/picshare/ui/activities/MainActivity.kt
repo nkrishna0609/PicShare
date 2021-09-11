@@ -26,6 +26,7 @@ import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.UserPostsAdapter
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
@@ -148,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                 bioTV.text = bio
                 uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
-                profilePic.setImageURI(uriImg)
+                Glide.with(this).load(uriImg).into(profilePic)
             }
             else{
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)

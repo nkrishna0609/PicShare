@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SearchedAccountPostViewActivity : AppCompatActivity() {
@@ -38,8 +39,8 @@ class SearchedAccountPostViewActivity : AppCompatActivity() {
 
         captionTV.text = post.caption
         usernameTV.text = user.username
-        postPic.setImageURI(Uri.parse(post.uriImgPathString))
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        Glide.with(this).load(Uri.parse(post.uriImgPathString)).into(postPic)
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).into(profilePic)
 
         searchButton.setOnClickListener {
             val searchPageIntent = Intent(this@SearchedAccountPostViewActivity, SearchAccountsActivity::class.java)
