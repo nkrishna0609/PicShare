@@ -60,4 +60,26 @@ The MVVM architecture ensures that:
 * the ViewModel has direct reference to the Repository which is the single source of truth - the Repository has reference to the remote data source logic and the local database
 * the ViewModel updates the View via LiveData - no need to manually update the View whenever the exposed data changes (the View observes the ViewModel)
 
+## Local Installation
+### Android Studio
+1. Download Android Studio here: https://developer.android.com/studio 
+2. Navigate to Tools -> SDK Manager and install 1 of the latest SDKs (primarily the latest stable version is second from the top of the list)
+3. Go to SDK Tools and install the Android Emulator, SDK Platform Tools, SDK Build Tools, SDK Tools and Intel x86 Accelerator (HAXM)
+4. Configure an AVD by following https://developer.android.com/studio/run/managing-avds
+5. Clone this Git Repo and open the Android project with Android Studio
 
+### Firebase Authentication
+1. Create a Firebase account here: https://firebase.google.com/
+2. Follow https://firebase.google.com/docs/android/setup#create-firebase-project to create a Firebase project on your account to connect to the PicShare Android app
+3. Add the PicShare Android app to your Firebase account via https://firebase.google.com/docs/android/setup#register-app
+4. Download google-services.json to obtain your Firebase Android config file (google-services.json) and move the file into the "app" directory of the PicShare Android app
+
+### Node
+1. If you haven't already, install dependencies 
+2. Go to https://console.firebase.google.com/u/0/project/_/settings/serviceaccounts/adminsdk to get your Firebase Project ID and Firebase Private Key, and enter them in a new ".env" file (located in the node-express-server folder) with the following key names: **FIREBASE_PROJECT_ID**, **FIREBASE_CLIENT_EMAIL**, **FIREBASE_PRIVATE_KEY**
+
+## Local Operation
+1. Open a terminal and navigate to the node-express-server directory, and type in "lt --port 3000" (localtunnel - a tunnelling service). Don't close this terminal!
+2. Take the URL outputted from the command entered in the previous step, open the PicShare project on Android Studio, and navigate to Gradle Scripts -> local.properties. At the very end of the file, type in _baseUrl="**LINK**"_, where **LINK** is the URL you got from the previous step (make sure the URL is in double quotes
+3. Open another terminal and navigate to the node-express-server directory, and type in "nodemon". Don't close this terminal!
+4. Finally, run the Android app on your emulator by clicking the green "Run" button (arrow-shaped) in Android Studio, and have fun!
