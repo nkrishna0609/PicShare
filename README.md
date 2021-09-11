@@ -5,6 +5,7 @@
 * An **Android** photo-sharing app written in **Kotlin**, with a **Node/Express** back end using **Firebase Authentication** with **MongoDB** as the database
 * Allows for users to create, update, search for, and delete their accounts, while being able to create PicShare posts for photo sharing 
 * Utilized the **MVVM** architecture for modular, readable and scalable code
+* Wrote unit tests to ensure proper CRUD operation of DAO/Room DB (including LiveData support)
 
 ## Overview
 I was inspired by the Instagram mobile app, and created PicShare with my family circle in mind. PicShare allows for my close family and friends to display and share photos with each other by creating "posts". PicShare users can manage their accounts and search for other users on the app, and they can share their pictures by creating posts.
