@@ -1,5 +1,3 @@
-package ca.nkrishnaswamy.picshare
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.CountDownLatch
