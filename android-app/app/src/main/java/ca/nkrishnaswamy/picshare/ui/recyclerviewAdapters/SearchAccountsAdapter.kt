@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import com.bumptech.glide.Glide
-<<<<<<< HEAD
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-=======
->>>>>>> 8e4c999994bd23414b5372364c85af9f4d11e93a
 import de.hdodenhof.circleimageview.CircleImageView
 
 class SearchAccountsAdapter internal constructor(val context: Context, private val listener : OnItemClickListener) : RecyclerView.Adapter<SearchAccountsAdapter.SearchAccountsViewHolder>(){
@@ -29,12 +26,8 @@ class SearchAccountsAdapter internal constructor(val context: Context, private v
 
         fun bind(account : UserModel, listener : OnItemClickListener, context: Context) {
             usernameVal.text = account.username
-<<<<<<< HEAD
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
             Glide.with(context).load(Uri.parse(account.profilePicPathFromUri)).apply(requestOptions).into(profilePic)
-=======
-            Glide.with(context).load(Uri.parse(account.profilePicPathFromUri)).into(profilePic)
->>>>>>> 8e4c999994bd23414b5372364c85af9f4d11e93a
 
             itemView.setOnClickListener {
                 listener.onItemClick(account)
