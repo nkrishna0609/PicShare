@@ -80,6 +80,6 @@ The MVVM architecture ensures that:
 
 ## Local Operation
 1. Open a terminal and navigate to the node-express-server directory, and type in "lt --port 3000" (localtunnel - a tunnelling service). Don't close this terminal!
-2. Take the URL outputted from the command entered in the previous step, open the PicShare project on Android Studio, and navigate to Gradle Scripts -> local.properties. At the very end of the file, type in _baseUrl="**LINK**"_, where **LINK** is the URL you got from the previous step (make sure the URL is in double quotes
+2. Take the URL outputted from the command entered in the previous step, open the PicShare project in Android Studio, and navigate to Gradle Scripts -> local.properties. At the very end of the file, type in _baseUrl="**LINK**"_, where **LINK** is the URL you got from the previous step (make sure the URL is in double quotes)
 3. Open another terminal and navigate to the node-express-server directory, and type in "nodemon". Don't close this terminal!
 4. Finally, run the Android app on your emulator by clicking the green "Run" button (arrow-shaped) in Android Studio, and have fun!
