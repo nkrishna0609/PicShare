@@ -13,6 +13,9 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.SearchedAccountPostViewActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 class SearchedAccountPostsAdapter internal constructor(val context: Context, private val searchedAccount: UserModel) : RecyclerView.Adapter<SearchedAccountPostsAdapter.SearchedAccountPostsViewHolder>() {
 
@@ -31,7 +34,8 @@ class SearchedAccountPostsAdapter internal constructor(val context: Context, pri
 
     override fun onBindViewHolder(holder: SearchedAccountPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].uriImgPathString
-        holder.postImageView.setImageURI(Uri.parse(uriPath))
+        val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(context).load(Uri.parse(uriPath)).apply(requestOptions).into(holder.postImageView)
         holder.linearLayoutPost.setOnClickListener {
             val intent = Intent(context, SearchedAccountPostViewActivity::class.java)
             intent.putExtra("post", postList[position])

@@ -16,6 +16,9 @@ import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.UserPostsAdapter
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -68,13 +71,15 @@ class UserPostViewActivity : AppCompatActivity() {
         postPicUriStringPath = post.uriImgPathString
 
         captionTV.text = caption
-        postPic.setImageURI(Uri.parse(postPicUriStringPath))
+
+        val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(this).load(Uri.parse(postPicUriStringPath)).apply(requestOptions).into(postPic)
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
             username = it.username
             usernameTV.text = username
             profilePicStringUriPath = it.profilePicPathFromUri
-            profilePic.setImageURI(Uri.parse(profilePicStringUriPath))
+            Glide.with(this).load(Uri.parse(profilePicStringUriPath)).apply(requestOptions).into(profilePic)
         })
 
         optionsButton.setOnClickListener {

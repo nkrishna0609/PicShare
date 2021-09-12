@@ -12,6 +12,9 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.SearchedAccountPostsAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -55,7 +58,8 @@ class ProfileSearchResultActivity : AppCompatActivity() {
         usernameTV.text = user.username
         fullNameTV.text = user.name
         bioTV.text = user.bio
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(profilePic)
         postCountTV.text = postList.size.toString()
         if (postList.size == 1) {
             postTV.text = "Post"

@@ -26,6 +26,9 @@ import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.recyclerviewAdapters.UserPostsAdapter
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
@@ -61,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter : UserPostsAdapter
     private lateinit var postCountTV : TextView
     private lateinit var postTV : TextView
+    private lateinit var requestOptions : RequestOptions
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -136,6 +140,8 @@ class MainActivity : AppCompatActivity() {
 
         verticalMenuDialog = BottomSheetDialog(this)
 
+        requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
@@ -148,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 bioTV.text = bio
                 uriImgPathString = t.profilePicPathFromUri
                 uriImg = Uri.parse(uriImgPathString)
-                profilePic.setImageURI(uriImg)
+                Glide.with(this).load(uriImg).apply(requestOptions).into(profilePic)
             }
             else{
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)

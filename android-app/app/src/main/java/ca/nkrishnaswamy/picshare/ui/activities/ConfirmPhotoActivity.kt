@@ -18,6 +18,9 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.button.MaterialButton
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +39,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var authViewModel : AuthViewModel
     private lateinit var selectedProfilePicPath: String
     private var lastPhotoTakenType = NO_PROFILE_PIC
+    private lateinit var requestOptions : RequestOptions
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -92,7 +96,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         }
         else{
             lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            img.setImageURI(Uri.parse(user.profilePicPathFromUri))
+            Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(img)
         }
     }
 
@@ -114,7 +118,8 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         selectedProfilePicPath = user.profilePicPathFromUri
 
         img = findViewById(R.id.profilePic)
-        img.setImageURI(Uri.parse(selectedProfilePicPath))
+        requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(this).load(Uri.parse(selectedProfilePicPath)).apply(requestOptions).into(img)
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {

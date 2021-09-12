@@ -20,6 +20,9 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserModel
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import de.hdodenhof.circleimageview.CircleImageView
@@ -39,13 +42,17 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var username : String
     private lateinit var fullName : String
     private lateinit var bio : String
-    private lateinit var uriImg : Uri
-    private lateinit var uriImgPathString : String
     private lateinit var nameET : TextInputEditText
     private lateinit var usernameET : TextInputEditText
     private lateinit var bioET : TextInputEditText
     private lateinit var user: UserModel
+    private lateinit var requestOptions: RequestOptions
+
     private var changeCheck : Boolean = false
+    private var changedBitmapImgCamera : Bitmap? = null
+    private var changedUriImgGallery : Uri? = null
+    private var changedFlagsImgGallery : Int = 0
+    private var lastTakenPicFormat : Int = 0 // 1 = camera, 2 = gallery, 0 = default
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -53,15 +60,11 @@ class EditProfileActivity : AppCompatActivity() {
             return@registerForActivityResult
         }
         profilePic.setImageDrawable(null)
-        val takeFlags = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
-        CoroutineScope(Dispatchers.IO).launch {
-            val resolver : ContentResolver = applicationContext.contentResolver
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                resolver.takePersistableUriPermission(uriImg, takeFlags)
-            }
-        }
-        user.profilePicPathFromUri = uriImg.toString()
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        changedUriImgGallery = uriImg
+        changedFlagsImgGallery = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
+        changedBitmapImgCamera = null
+        lastTakenPicFormat = 2
+        Glide.with(this).load(uriImg).apply(requestOptions).into(profilePic)
         changeCheck = true
     }
 
@@ -71,22 +74,11 @@ class EditProfileActivity : AppCompatActivity() {
             return@registerForActivityResult
         }
         profilePic.setImageDrawable(null)
-        val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
-        file.delete()
-        file.createNewFile()
-        val fileOutputStream = file.outputStream()
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmapImg.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-        fileOutputStream.write(byteArray)
-        fileOutputStream.flush()
-        fileOutputStream.close()
-        byteArrayOutputStream.close()
-
-        val uriImg = file.toURI()
-
-        user.profilePicPathFromUri = uriImg.toString()
-        profilePic.setImageURI(Uri.parse(user.profilePicPathFromUri))
+        changedBitmapImgCamera = bitmapImg
+        changedUriImgGallery = null
+        changedFlagsImgGallery = 0
+        lastTakenPicFormat = 1
+        Glide.with(this).load(changedBitmapImgCamera).apply(requestOptions).into(profilePic)
         changeCheck = true
     }
 
@@ -104,6 +96,8 @@ class EditProfileActivity : AppCompatActivity() {
         usernameET = findViewById(R.id.usernameET)
         bioET = findViewById(R.id.bioET)
 
+        requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
@@ -113,9 +107,7 @@ class EditProfileActivity : AppCompatActivity() {
                 nameET.setText(fullName)
                 bio = t.bio
                 bioET.setText(bio)
-                uriImgPathString = t.profilePicPathFromUri
-                uriImg = Uri.parse(uriImgPathString)
-                profilePic.setImageURI(uriImg)
+                Glide.with(this).load(Uri.parse(t.profilePicPathFromUri)).apply(requestOptions).into(profilePic)
             }
         })
 
@@ -171,6 +163,35 @@ class EditProfileActivity : AppCompatActivity() {
                                     changeCheck = true
                                 }
                                 if (changeCheck) {
+
+                                    if (lastTakenPicFormat == 1) {
+
+                                        withContext(Dispatchers.IO){
+                                            val file = File(applicationContext.cacheDir, "tempCacheProfilePic")
+                                            file.delete()
+                                            file.createNewFile()
+                                            val fileOutputStream = file.outputStream()
+                                            val byteArrayOutputStream = ByteArrayOutputStream()
+                                            changedBitmapImgCamera?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                                            val byteArray = byteArrayOutputStream.toByteArray()
+                                            fileOutputStream.write(byteArray)
+                                            fileOutputStream.flush()
+                                            fileOutputStream.close()
+                                            byteArrayOutputStream.close()
+                                            val uriImg = file.toURI()
+                                            user.profilePicPathFromUri = uriImg.toString()
+                                        }
+                                    } else if (lastTakenPicFormat == 2) {
+
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            val resolver : ContentResolver = applicationContext.contentResolver
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                                resolver.takePersistableUriPermission(changedUriImgGallery!!, changedFlagsImgGallery)
+                                            }
+                                            user.profilePicPathFromUri = changedUriImgGallery.toString()
+                                        }
+                                    }
+
                                     withContext(Dispatchers.IO){
                                         val idToken = authViewModel.getUserIdToken()
                                         if (idToken != null) {

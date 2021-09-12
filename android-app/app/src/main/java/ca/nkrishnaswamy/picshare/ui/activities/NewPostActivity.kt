@@ -23,6 +23,9 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.viewModels.AuthViewModel
 import ca.nkrishnaswamy.picshare.viewModels.SignedInUserViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +43,7 @@ class NewPostActivity : AppCompatActivity() {
     private lateinit var authViewModel : AuthViewModel
     private lateinit var post: UserPost
     private lateinit var fileChildName : String
+    private lateinit var requestOptions : RequestOptions
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -56,7 +60,7 @@ class NewPostActivity : AppCompatActivity() {
         }
         uriImgPathString = uriImg.toString()
         post.uriImgPathString = uriImgPathString
-        postPhoto.setImageURI(Uri.parse(uriImgPathString))
+        Glide.with(this).load(Uri.parse(uriImgPathString)).apply(requestOptions).into(postPhoto)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -81,7 +85,7 @@ class NewPostActivity : AppCompatActivity() {
 
         uriImgPathString = uriImg.toString()
         post.uriImgPathString = uriImgPathString
-        postPhoto.setImageURI(Uri.parse(uriImgPathString))
+        Glide.with(this).load(Uri.parse(uriImgPathString)).apply(requestOptions).into(postPhoto)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +104,8 @@ class NewPostActivity : AppCompatActivity() {
         fileChildName = intent.getStringExtra("fileChildName").toString()
         uriImgPathString = post.uriImgPathString
         uriImg = Uri.parse(uriImgPathString)
-        postPhoto.setImageURI(uriImg)
+        requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+        Glide.with(this).load(uriImg).apply(requestOptions).into(postPhoto)
 
         completePostButton.setOnClickListener {
             val caption: String = captionET.text.toString()
