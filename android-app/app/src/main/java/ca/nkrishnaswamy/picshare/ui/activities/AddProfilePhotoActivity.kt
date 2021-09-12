@@ -28,17 +28,12 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-const val LAST_PROFILE_PIC_FROM_CAMERA = 1
-const val LAST_PROFILE_PIC_FROM_GALLERY = 2
-const val NO_PROFILE_PIC = 0
-
 class AddProfilePhotoActivity : AppCompatActivity() {
     private lateinit var addPhotoButton: MaterialButton
     private lateinit var user: UserModel
     private lateinit var password: String
     private lateinit var authViewModel: AuthViewModel
     private lateinit var signedInUserVM : SignedInUserViewModel
-    private var lastPhotoTakenType = NO_PROFILE_PIC
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         val uriImg : Uri? = result.data?.data
@@ -53,11 +48,9 @@ class AddProfilePhotoActivity : AppCompatActivity() {
             }
         }
         user.profilePicPathFromUri = uriImg.toString()
-        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
-        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         startActivity(intent)
     }
 
@@ -81,11 +74,9 @@ class AddProfilePhotoActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.profilePicPathFromUri = uriImg.toString()
-        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
         val intent = Intent(this@AddProfilePhotoActivity, ConfirmPhotoActivity::class.java)
         intent.putExtra("userAccount", user)
         intent.putExtra("password", password)
-        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
         startActivity(intent)
     }
 

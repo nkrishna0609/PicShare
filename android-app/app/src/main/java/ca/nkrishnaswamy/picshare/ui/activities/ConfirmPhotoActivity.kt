@@ -37,8 +37,6 @@ class ConfirmPhotoActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var signedInUserVM : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
-    private lateinit var selectedProfilePicPath: String
-    private var lastPhotoTakenType = NO_PROFILE_PIC
     private lateinit var requestOptions : RequestOptions
 
     private val pickPhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -55,13 +53,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             }
         }
         user.profilePicPathFromUri = uriImg.toString()
-        lastPhotoTakenType = LAST_PROFILE_PIC_FROM_GALLERY
-        val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
-        intent.putExtra("userAccount", user)
-        intent.putExtra("password", password)
-        intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
-        startActivity(intent)
-        finish()
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(img)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -85,19 +77,7 @@ class ConfirmPhotoActivity : AppCompatActivity() {
         val uriImg = file.toURI()
 
         user.profilePicPathFromUri = uriImg.toString()
-        if (lastPhotoTakenType == LAST_PROFILE_PIC_FROM_GALLERY) {
-            lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            val intent = Intent(this@ConfirmPhotoActivity, ConfirmPhotoActivity::class.java)
-            intent.putExtra("userAccount", user)
-            intent.putExtra("password", password)
-            intent.putExtra("lastPhotoTakenType", lastPhotoTakenType)
-            startActivity(intent)
-            finish()
-        }
-        else{
-            lastPhotoTakenType = LAST_PROFILE_PIC_FROM_CAMERA
-            Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(img)
-        }
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(img)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,13 +93,10 @@ class ConfirmPhotoActivity : AppCompatActivity() {
             }
         }
         password = intent.getStringExtra("password") as String
-        lastPhotoTakenType = intent.getIntExtra("lastPhotoTakenType", NO_PROFILE_PIC)
-
-        selectedProfilePicPath = user.profilePicPathFromUri
 
         img = findViewById(R.id.profilePic)
         requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-        Glide.with(this).load(Uri.parse(selectedProfilePicPath)).apply(requestOptions).into(img)
+        Glide.with(this).load(Uri.parse(user.profilePicPathFromUri)).apply(requestOptions).into(img)
 
         nextButton = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {

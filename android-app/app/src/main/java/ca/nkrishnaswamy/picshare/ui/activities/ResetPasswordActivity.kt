@@ -14,11 +14,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ResetPasswordActivity : AppCompatActivity() {
-    lateinit var backButton: ImageButton
-    lateinit var resetPasswordTV: TextView
-    lateinit var sendResetPswdEmailTV : TextView
-    lateinit var authViewModel: AuthViewModel
-    lateinit var email: String
+    private lateinit var backButton: ImageButton
+    private lateinit var resetPasswordTV: TextView
+    private lateinit var sendResetPswdEmailTV : TextView
+    private lateinit var authViewModel: AuthViewModel
+    private lateinit var email: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)

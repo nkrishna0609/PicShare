@@ -37,8 +37,6 @@ class NewPostActivity : AppCompatActivity() {
     private lateinit var completePostButton : ImageButton
     private lateinit var captionET : EditText
     private lateinit var postPhoto : ImageView
-    private lateinit var uriImg : Uri
-    private lateinit var uriImgPathString : String
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
     private lateinit var post: UserPost
@@ -58,9 +56,8 @@ class NewPostActivity : AppCompatActivity() {
                 resolver.takePersistableUriPermission(uriImg, takeFlags)
             }
         }
-        uriImgPathString = uriImg.toString()
-        post.uriImgPathString = uriImgPathString
-        Glide.with(this).load(Uri.parse(uriImgPathString)).apply(requestOptions).into(postPhoto)
+        post.uriImgPathString = uriImg.toString()
+        Glide.with(this).load(Uri.parse(post.uriImgPathString)).apply(requestOptions).into(postPhoto)
     }
 
     private val takePhotoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -83,9 +80,8 @@ class NewPostActivity : AppCompatActivity() {
 
         val uriImg = file.toURI()
 
-        uriImgPathString = uriImg.toString()
-        post.uriImgPathString = uriImgPathString
-        Glide.with(this).load(Uri.parse(uriImgPathString)).apply(requestOptions).into(postPhoto)
+        post.uriImgPathString = uriImg.toString()
+        Glide.with(this).load(Uri.parse(post.uriImgPathString)).apply(requestOptions).into(postPhoto)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,8 +98,7 @@ class NewPostActivity : AppCompatActivity() {
 
         post = intent.getParcelableExtra("post")!!
         fileChildName = intent.getStringExtra("fileChildName").toString()
-        uriImgPathString = post.uriImgPathString
-        uriImg = Uri.parse(uriImgPathString)
+        val uriImg = Uri.parse(post.uriImgPathString)
         requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
         Glide.with(this).load(uriImg).apply(requestOptions).into(postPhoto)
 

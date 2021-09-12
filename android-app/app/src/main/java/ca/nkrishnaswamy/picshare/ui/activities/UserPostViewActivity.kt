@@ -38,10 +38,6 @@ class UserPostViewActivity : AppCompatActivity() {
     private lateinit var post : UserPost
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
-    private lateinit var username : String
-    private lateinit var profilePicStringUriPath : String
-    private lateinit var postPicUriStringPath : String
-    private lateinit var caption : String
     private lateinit var verticalMenuDialog : Dialog
     private lateinit var deletePostButton : AppCompatButton
     private lateinit var adapter : RecyclerView.Adapter<UserPostsAdapter.UserPostsViewHolder>
@@ -67,18 +63,16 @@ class UserPostViewActivity : AppCompatActivity() {
         authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
 
         post = intent.getParcelableExtra("post")!!
-        caption = post.caption
-        postPicUriStringPath = post.uriImgPathString
+        val postPicUriStringPath = post.uriImgPathString
 
-        captionTV.text = caption
+        captionTV.text = post.caption
 
         val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
         Glide.with(this).load(Uri.parse(postPicUriStringPath)).apply(requestOptions).into(postPic)
 
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, {
-            username = it.username
-            usernameTV.text = username
-            profilePicStringUriPath = it.profilePicPathFromUri
+            usernameTV.text = it.username
+            val profilePicStringUriPath = it.profilePicPathFromUri
             Glide.with(this).load(Uri.parse(profilePicStringUriPath)).apply(requestOptions).into(profilePic)
         })
 

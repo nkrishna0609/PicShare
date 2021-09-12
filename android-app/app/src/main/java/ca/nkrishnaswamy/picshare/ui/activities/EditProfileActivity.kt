@@ -39,9 +39,6 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var profilePic: CircleImageView
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
-    private lateinit var username : String
-    private lateinit var fullName : String
-    private lateinit var bio : String
     private lateinit var nameET : TextInputEditText
     private lateinit var usernameET : TextInputEditText
     private lateinit var bioET : TextInputEditText
@@ -101,12 +98,9 @@ class EditProfileActivity : AppCompatActivity() {
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
-                username = t.username
-                usernameET.setText(username)
-                fullName = t.name
-                nameET.setText(fullName)
-                bio = t.bio
-                bioET.setText(bio)
+                usernameET.setText(t.username)
+                nameET.setText(t.name)
+                bioET.setText(t.bio)
                 Glide.with(this).load(Uri.parse(t.profilePicPathFromUri)).apply(requestOptions).into(profilePic)
             }
         })
@@ -150,15 +144,15 @@ class EditProfileActivity : AppCompatActivity() {
                         }
                         else -> {
                             withContext(Dispatchers.Main){
-                                if (usernameInET != username) {
+                                if (usernameInET != user.username) {
                                     user.username = usernameInET
                                     changeCheck = true
                                 }
-                                if (nameInET != fullName) {
+                                if (nameInET != user.name) {
                                     user.name = nameInET
                                     changeCheck = true
                                 }
-                                if (bioInET != bio) {
+                                if (bioInET != user.bio) {
                                     user.bio = bioInET
                                     changeCheck = true
                                 }

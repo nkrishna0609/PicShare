@@ -45,12 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var profilePic: CircleImageView
     private lateinit var signedInUserViewModel : SignedInUserViewModel
     private lateinit var authViewModel : AuthViewModel
-    private lateinit var email : String
-    private lateinit var username : String
-    private lateinit var fullName : String
-    private lateinit var bio : String
-    private lateinit var uriImg : Uri
-    private lateinit var uriImgPathString : String
     private lateinit var usernameTV : TextView
     private lateinit var fullNameTV : TextView
     private lateinit var bioTV : TextView
@@ -71,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         if (uriImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
-        val newPost = UserPost(0,"", "", email)
+        val newPost = UserPost(0,"", "", user.email)
         val takeFlags = result.data!!.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION
         CoroutineScope(Dispatchers.IO).launch {
             val resolver : ContentResolver = applicationContext.contentResolver
@@ -90,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         if (bitmapImg == null || result.resultCode != RESULT_OK) {
             return@registerForActivityResult
         }
-        val newPost = UserPost(0,"", "", email)
+        val newPost = UserPost(0,"", "", user.email)
         var fileChildName = "tempCachePostPic" + getRandomString(20)
         var file = File(applicationContext.cacheDir, fileChildName)
         while (file.exists()) {
@@ -145,15 +139,10 @@ class MainActivity : AppCompatActivity() {
         signedInUserViewModel.getCurrentLoggedInUser().observe(this, { t ->
             if (t != null){
                 user = t
-                email = t.email
-                username = t.username
-                usernameTV.text = username
-                fullName = t.name
-                fullNameTV.text = fullName
-                bio = t.bio
-                bioTV.text = bio
-                uriImgPathString = t.profilePicPathFromUri
-                uriImg = Uri.parse(uriImgPathString)
+                usernameTV.text = t.username
+                fullNameTV.text = t.name
+                bioTV.text = t.bio
+                val uriImg = Uri.parse(t.profilePicPathFromUri)
                 Glide.with(this).load(uriImg).apply(requestOptions).into(profilePic)
             }
             else{
@@ -259,7 +248,7 @@ class MainActivity : AppCompatActivity() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this,
             R.style.Theme_AppCompat_Dialog_Alert
         )
-        builder.setTitle("Delete " + username +  "?")
+        builder.setTitle("Delete " + user.username +  "?")
         builder.setPositiveButton("Delete", DialogInterface.OnClickListener { _, _ ->
             CoroutineScope(Dispatchers.IO).launch{
                 val fireBaseCurrentLoggedInUser = authViewModel.getCurrentSignedInFirebaseUser()
