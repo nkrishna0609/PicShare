@@ -72,7 +72,7 @@ The MVVM architecture ensures that:
 1. Create a Firebase account here: https://firebase.google.com/
 2. Follow https://firebase.google.com/docs/android/setup#create-firebase-project to create a Firebase project on your account to connect to the PicShare Android app
 3. Add the PicShare Android app to your Firebase account via https://firebase.google.com/docs/android/setup#register-app
-4. Download google-services.json to obtain your Firebase Android config file (google-services.json) and move the file into the "app" directory of the PicShare Android app
+4. Download google-services.json (from Firebase: Project Settings -> SDK setup and configuration) to obtain your Firebase Android config file (google-services.json) and move the file into the "app" directory of the PicShare Android app
 
 ### Node
 1. If you haven't already, install dependencies 
