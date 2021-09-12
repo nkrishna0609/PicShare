@@ -13,8 +13,11 @@ import ca.nkrishnaswamy.picshare.R
 import ca.nkrishnaswamy.picshare.data.models.roomModels.UserPost
 import ca.nkrishnaswamy.picshare.ui.activities.UserPostViewActivity
 import com.bumptech.glide.Glide
+<<<<<<< HEAD
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+=======
+>>>>>>> 8e4c999994bd23414b5372364c85af9f4d11e93a
 
 class UserPostsAdapter internal constructor(val context: Context) : RecyclerView.Adapter<UserPostsAdapter.UserPostsViewHolder>() {
 
@@ -33,8 +36,12 @@ class UserPostsAdapter internal constructor(val context: Context) : RecyclerView
 
     override fun onBindViewHolder(holder: UserPostsViewHolder, position: Int) {
         val uriPath : String = postList[position].uriImgPathString
+<<<<<<< HEAD
         val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
         Glide.with(context).load(Uri.parse(uriPath)).apply(requestOptions).into(holder.postImageView)
+=======
+        Glide.with(context).load(Uri.parse(uriPath)).into(holder.postImageView)
+>>>>>>> 8e4c999994bd23414b5372364c85af9f4d11e93a
         holder.linearLayoutPost.setOnClickListener {
             val intent = Intent(context, UserPostViewActivity::class.java)
             intent.putExtra("post", postList[position])
