@@ -21,7 +21,7 @@ _**Please click on the images - each will take you to its respective YouTube vid
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/fX1CL9WUEUc/0.jpg)](https://www.youtube.com/watch?v=fX1CL9WUEUc "PicShare Demo - Login and Deletion of Account")
 
 ### Editing Account
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/rrMuWxVIMCo/0.jpg)](https://www.youtube.com/watch?v=rrMuWxVIMCo "PicShare Demo - Editing Account")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/08cvNloMqeE/0.jpg)](https://www.youtube.com/watch?v=08cvNloMqeE "PicShare Demo - Editing Account")
 
 ### Persistence of Account
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/ujG2HoYCnJk/0.jpg)](https://www.youtube.com/watch?v=ujG2HoYCnJk "PicShare Demo - Persistence of User Account")
