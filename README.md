@@ -30,7 +30,7 @@ _**Please click on the images - each will take you to its respective YouTube vid
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/SViiZ3IvGQI/0.jpg)](https://www.youtube.com/watch?v=SViiZ3IvGQI "PicShare Demo - Search Function")
 
 ### Resetting Password
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/jE3GccUIF5E/0.jpg)](https://www.youtube.com/watch?v=jE3GccUIF5E "PicShare Demo - Resetting Password")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/_XrpyXCIEok/0.jpg)](https://www.youtube.com/watch?v=_XrpyXCIEok "PicShare Demo - Resetting Password")
 
 ### Creating and Viewing Posts
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/sWlbJbiSCbI/0.jpg)](https://www.youtube.com/watch?v=sWlbJbiSCbI "PicShare Demo - Creating and Viewing a Post")
